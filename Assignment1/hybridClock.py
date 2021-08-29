@@ -50,7 +50,7 @@ def recv_event(pipe, pid: int, physical_time: float, logical_time: float, c_valu
         c_value += 1
     elif (sender_logical_time == new_logical_time):
         c_value = sender_c_value + 1
-    elif (physical_time == new_logical_time):
+    if (physical_time == new_logical_time):
         c_value = 0
     
     print('process{} receives a message from process{}!\n{}'.format(str(pid), str(sender), hlc_timestamp(physical_time, new_logical_time, c_value)))
