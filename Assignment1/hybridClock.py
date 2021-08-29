@@ -60,48 +60,53 @@ def recv_event(pipe, pid: int, physical_time: float, logical_time: float, c_valu
 def process_one(pipe12):
     pid = getpid()
     logical_time, c_value = 0, 0
-    logical_time, c_value = local_event(pid, get_physical_time() + 100, logical_time, c_value)
     logical_time, c_value = send_event(pipe12, pid, get_physical_time() + 100, logical_time, c_value)
     logical_time, c_value  = local_event(pid, get_physical_time() + 100, logical_time, c_value)
-    logical_time, c_value = recv_event(pipe12, pid, get_physical_time() + 100, logical_time, c_value)
+    logical_time, c_value  = local_event(pid, get_physical_time() + 100, logical_time, c_value)
     logical_time, c_value  = local_event(pid, get_physical_time() + 100, logical_time, c_value)
 
-def process_two(pipe21, pipe23):
+def process_two(pipe21, pipe23, pipe24):
     pid = getpid()
     logical_time, c_value = 0, 0
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
     logical_time, c_value = recv_event(pipe21, pid, get_physical_time(), logical_time, c_value)
-    logical_time, c_value = send_event(pipe21, pid, get_physical_time(), logical_time, c_value)
     logical_time, c_value = send_event(pipe23, pid, get_physical_time(), logical_time, c_value)
-    logical_time, c_value = recv_event(pipe23, pid, get_physical_time(), logical_time, c_value)
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
+    logical_time, c_value = recv_event(pipe24, pid, get_physical_time(), logical_time, c_value)
 
 def process_three(pipe32, pipe34):
     pid = getpid()
     logical_time, c_value = 0, 0
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
     logical_time, c_value = recv_event(pipe32, pid, get_physical_time(), logical_time, c_value)
-    logical_time, c_value = send_event(pipe32, pid, get_physical_time(), logical_time, c_value)
     logical_time, c_value = send_event(pipe34, pid, get_physical_time(), logical_time, c_value)
-    logical_time, c_value = recv_event(pipe34, pid, get_physical_time(), logical_time, c_value)
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
 
-def process_four(pipe43):
+def process_four(pipe43, pipe42):
     pid = getpid()
     logical_time, c_value = 0, 0
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
+    logical_time, c_value  = local_event(pid, get_physical_time(), logical_time, c_value)
     logical_time, c_value = recv_event(pipe43, pid, get_physical_time(), logical_time, c_value)
-    logical_time, c_value = send_event(pipe43, pid, get_physical_time(), logical_time, c_value)
+    logical_time, c_value = send_event(pipe42, pid, get_physical_time(), logical_time, c_value)
 
 
 if __name__ == '__main__':
     one_and_two, two_and_one = Pipe()
     two_and_three, three_and_two = Pipe()
     three_and_four, four_and_three = Pipe()
+    two_and_four, four_and_two = Pipe()
 
     process1 = Process(target=process_one, 
                        args=(one_and_two, ))
     process2 = Process(target=process_two, 
-                       args=(two_and_one, two_and_three))
+                       args=(two_and_one, two_and_three, two_and_four))
     process3 = Process(target=process_three, 
                        args=(three_and_two, three_and_four))
     process4 = Process(target=process_four, 
-                       args=(four_and_three, ))
+                       args=(four_and_three, four_and_two))
 
     process1.start()
     process2.start()
