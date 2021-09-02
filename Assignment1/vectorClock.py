@@ -54,7 +54,11 @@ def process_one(pipe12):
     pid = 1
     observed = 0
     partial_vt = set([(1, 0)])
+    print('process{} Start!\n{}'
+        .format(str(pid), vector_timestamp(partial_vt)))
+
     send_event(pipe12, pid, partial_vt)
+    partial_vt = recv_event(pipe12, pid, partial_vt)
     partial_vt, observed = event_observed(pid, partial_vt, observed)
     send_event(pipe12, pid, partial_vt)
 
@@ -62,7 +66,11 @@ def process_two(pipe21, pipe23):
     pid = 2
     observed = 0
     partial_vt = set([(2, 0)])
+    print('process{} Start!\n{}'
+        .format(str(pid), vector_timestamp(partial_vt)))
+
     partial_vt = recv_event(pipe21, pid, partial_vt)
+    send_event(pipe21, pid, partial_vt)
     send_event(pipe23, pid, partial_vt)
     partial_vt = recv_event(pipe21, pid, partial_vt)
     partial_vt = recv_event(pipe23, pid, partial_vt)
@@ -72,6 +80,9 @@ def process_three(pipe32):
     pid = 3
     observed = 0
     partial_vt = set([(3, 0)])
+    print('process{} Start!\n{}'
+        .format(str(pid), vector_timestamp(partial_vt)))
+
     partial_vt, observed = event_observed(pid, partial_vt, observed)
     partial_vt = recv_event(pipe32, pid, partial_vt)
     partial_vt, observed = event_observed(pid, partial_vt, observed)
