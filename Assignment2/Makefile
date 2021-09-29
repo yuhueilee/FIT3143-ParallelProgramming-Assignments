@@ -1,0 +1,10 @@
+ALL: main
+
+main: main.c 
+	mpicc -Wall main.c sensor_node.c -o mainOut -lm
+
+run:
+	mpirun -oversubscribe -np 10 mainOut 3 3 6000
+
+clean :
+	/bin/rm -f mainOut *.o
