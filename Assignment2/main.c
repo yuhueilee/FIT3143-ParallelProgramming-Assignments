@@ -57,6 +57,7 @@ int main(int argc, char *argv[]) {
         printf("Root Rank: %d; Comm Size: %d; Grid Dimension = [%d x %d]; Threashold: %f;\n", my_rank, size, dims[0], dims[1], threashold);
     } else {
         /* Create cartesian topology */
+        MPI_Dims_create(size - 1, ndims, dims); // create dimensions
         ierr = MPI_Cart_create(MPI_COMM_WORLD, ndims, dims, wrap_around, reorder, &cart_comm);
         if(ierr != 0) {
             printf("ERROR[%d] creating 2D CART\n", ierr);
