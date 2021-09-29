@@ -4,7 +4,7 @@
 #SBATCH --mem=36G				 ### memory setting is max @ 4 GB per core
 #SBATCH --ntasks=9			 ### launch 9 process
 #SBATCH --cpus-per-task=1		 ### single-threaded processes
-#SBATCH --ntasks-per-node=1   ### 1 per node
+#SBATCH --ntasks-per-node=9   ### 9 per node
 
 #SBATCH --partition=short,comp,gpu
 
