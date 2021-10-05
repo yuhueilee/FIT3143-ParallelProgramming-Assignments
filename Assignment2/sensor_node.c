@@ -13,6 +13,9 @@ This file contains function for simulating wireless sensor node
 #define CYCLE 5 // cycle for sea water column height generation
 #define LOWER_BOUND 5500.0 // lower bound for sea water column height
 #define UPPER_BOUND 6500.0 // upper bound for sea water column height
+#define SHIFT_ROW 0
+#define SHIFT_COL 1
+#define DISP 1
 
 /* Function prototype */
 float rand_float(unsigned int seed, float min, float max);
@@ -21,10 +24,10 @@ float rand_float(unsigned int seed, float min, float max);
 void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_comm, MPI_Comm nodes_comm) {
     bool terminate = 0; // set terminate to false initially
     int i, my_rank, my_cart_rank;
+    int num_nbrs = 4;
     int ndims = 2, reorder = 1, ierr = 0;
-    int dims[ndims];
-    int coord[ndims];
-    int wrap_around[ndims];
+    int dims[ndims], coord[ndims], wrap_around[ndims], nbrs[num_nbrs];
+    int recv_vals[4] = { -1, -1, -1, -1 };
     MPI_Comm cart_comm;
 
     // assign rows and cols to dims array
@@ -47,7 +50,10 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     
     MPI_Cart_coords(cart_comm, my_rank, ndims, coord); // use my rank to find my coordinates in the cartesian communicator group
     MPI_Cart_rank(cart_comm, coord, &my_cart_rank); // use my cartesian coordinates to find my cart rank in cartesian group
-    
+    /* Get the adjacent neighbor's rank number (top, bottom, left, right) */
+    MPI_Cart_shift(cart_comm, SHIFT_ROW, DISP, &nbrs[0], &nbrs[1]);
+	MPI_Cart_shift(cart_comm, SHIFT_COL, DISP, &nbrs[2], &nbrs[3]);
+
     printf("Cart rank: %d; Cart Coord: (%d, %d);\n", my_cart_rank, coord[0], coord[1]);
     
     sleep(my_rank); // this is to have different seed value for random float generator
