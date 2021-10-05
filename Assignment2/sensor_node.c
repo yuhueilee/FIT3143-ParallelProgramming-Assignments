@@ -37,10 +37,8 @@ void sensor_node(int num_rows, int num_cols, double threshold, MPI_Comm world_co
         printf("ERROR[%d] creating 2D CART\n", ierr);
     }
     
-    // find my coordinates in the cartesian communicator group
-    MPI_Cart_coords(cart_comm, my_rank, ndims, coord); // coordinated is returned into the coord array
-    // use my cartesian coordinates to find my rank in cartesian group
-    MPI_Cart_rank(cart_comm, coord, &my_cart_rank);
+    MPI_Cart_coords(cart_comm, my_rank, ndims, coord); // use my rank to find my coordinates in the cartesian communicator group
+    MPI_Cart_rank(cart_comm, coord, &my_cart_rank); // use my cartesian coordinates to find my cart rank in cartesian group
     
     printf("Cart rank: %d; Cart Coord: (%d, %d);\n", my_cart_rank, coord[0], coord[1]);
     
