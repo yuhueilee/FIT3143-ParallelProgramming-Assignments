@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
     /* Variables declaration */
     int my_rank, size, num_rows, num_cols;
-    double threashold;
+    float threashold;
     MPI_Comm nodes_comm;
 
     /* Initialize MPI */
@@ -27,14 +27,13 @@ int main(int argc, char *argv[]) {
     if (argc == 4) {
         num_rows = atoi(argv[1]);
         num_cols = atoi(argv[2]);
+        threashold = atof(argv[3]);
         // check if number of processes matches the value of rows * cols
         if (num_rows * num_cols != (size - 1)) {
             if(my_rank == 0) printf("ERROR: rows(%d) * cols(%d) != size - 1(%d)", num_rows, num_cols, size - 1);
             MPI_Finalize(); 
             return 0; 
         }
-        char *p_end = NULL;
-        threashold = strtod(argv[3], &p_end);
     } else {
         if(my_rank == 0) printf("ERROR: Number of arguments is not 3.");
         MPI_Finalize(); 
