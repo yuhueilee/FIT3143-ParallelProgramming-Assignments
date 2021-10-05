@@ -34,8 +34,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     /* Store the rank number from nodes_comm */
     MPI_Comm_rank(nodes_comm, &my_rank);
 
-    /* Set periodic shift to false by initializing
-    wrap_around array to 0 */
+    /* Set periodic shift to false by initializing wrap_around array to 0 */
     for (i = 0; i < ndims; i++) {
         wrap_around[i] = 0;
     }
