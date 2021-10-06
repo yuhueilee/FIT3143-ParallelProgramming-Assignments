@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <omp.h>
 #include <mpi.h>
 #include <time.h>
 #include <unistd.h>
@@ -11,12 +12,17 @@
 int main(int argc, char *argv[]) {
 
     /* Variables declaration */
-    int my_rank, size, num_rows, num_cols;
+    int my_rank, size, num_rows, num_cols, provided;
     float threashold;
     MPI_Comm nodes_comm;
 
     /* Initialize MPI */
-    MPI_Init(&argc, &argv);
+    MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
+    // check if the threading support level macthes with the one provided by the implementation
+    if(provided < MPI_THREAD_MULTIPLE) {
+        printf("The threading support level is lesser than that demanded.\n");
+        MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
+    }
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
