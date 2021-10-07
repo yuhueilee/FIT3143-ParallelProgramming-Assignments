@@ -111,13 +111,15 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                             int request = 1;
                             MPI_Isend(&request, 1, MPI_INT, p_nbrs[i], 1, cart_comm, &p_req[i]);
                         }
+                        MPI_Waitall(num_nbrs, p_req, p_status);
                         
-                        /* Blocking receive SMA from all neighbors with tag 1 */
+                        /* Non-blocking receive SMA from all neighbors with tag 1 */
                         for (i = 0; i < num_nbrs; i++) {
                             MPI_Irecv(&p_recv_vals[i], 1, MPI_FLOAT, p_nbrs[i], 1, cart_comm, &p_req[i]);
                         }
+                        MPI_Waitall(num_nbrs, p_req, p_status);
 
-                        printf("\tCart rank: %d; Received top: %.2f; bottom: %.2f; left: %.2f; right: %.2f;\n", my_rank, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
+                        printf("Cart rank: %d; Received top: %.2f; bottom: %.2f; left: %.2f; right: %.2f;\n", my_rank, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
                         
                         /* STEP 2: Compare SMA between neighbors */
                         int count = 0;
@@ -148,7 +150,8 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             int counter = 0;
             do {
                 printf("Cart rank %d; Sea moving average: %.2f;\n", my_rank, sea_moving_avg);
-                MPI_Status status;
+                MPI_Status status, temp_status;
+                int temp;
                 int flag = 0; // placeholder to indicate a message is received or not
                 
                 /* Non-blocking test for a message */
@@ -156,6 +159,8 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
 
                 // send back SMA if flag is true
                 if (flag) {
+                    MPI_Recv(&temp, 1, MPI_INT, status.MPI_SOURCE, 1, cart_comm, &temp_status);
+                    printf("Cart rank %d sends SMA %.2f.\n", my_rank, sea_moving_avg);
                     /* Blocking send the SMA to requester */
                     MPI_Send(&sea_moving_avg, 1, MPI_FLOAT, status.MPI_SOURCE, 1, cart_comm);
                 }
