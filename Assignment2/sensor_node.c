@@ -29,11 +29,11 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     int num_nbrs = 4;
     int ndims = 2, reorder = 1, ierr = 0;
     int p_dims[ndims], p_coord[ndims], p_wrap_around[ndims], p_nbrs[num_nbrs];
-    int p_recv_vals[4] = { -1, -1, -1, -1 };
     int index = 0; // pointer to the array storing sea values
     int window_size = 5; // size of the array storing sea values
     float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
     float sea_moving_avg = 0.0;
+    float p_recv_vals[4] = { -1.0, -1.0, -1.0, -1.0 };
     MPI_Comm cart_comm;
 
     // assign rows and cols to dims array
