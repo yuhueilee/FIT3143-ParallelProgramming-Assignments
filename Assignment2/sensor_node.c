@@ -120,7 +120,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                         printf("\tCart rank: %d; Received top: %.2f; bottom: %.2f; left: %.2f; right: %.2f;\n", my_rank, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
                         
                         /* STEP 2: Compare SMA between neighbors */
-                        int count;
+                        int count = 0;
                         for (i = 0; i < num_nbrs; i++) {
                             float range = fabs(p_recv_vals[i] - sea_moving_avg);
                             if (p_recv_vals[i] != -1 && range <= RANGE) {
