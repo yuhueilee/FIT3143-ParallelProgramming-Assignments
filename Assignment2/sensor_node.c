@@ -107,7 +107,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 if (p_sea_array[index] != 0.0) {
                     sum = 0.0;
                     for (j = 0; j < window_size; j++) {
-                        sum += p_sea_array[i];
+                        sum += p_sea_array[j];
                     }
                     /* Calculate the new SMA */
                     #pragma omp critical 
@@ -118,15 +118,15 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                     // check if the SMA exceeds the threshold
                     if (l_sea_moving_avg > threshold) {
                         /* Non-blocking send request to all neighbors with tag REQ_MSG */
-                        for (i = 0; i < num_nbrs; i++) {
+                        for (j = 0; j < num_nbrs; j++) {
                             int request = 1;
-                            MPI_Isend(&request, 1, MPI_INT, p_nbrs[i], REQ_MSG, cart_comm, &p_req[i]);
+                            MPI_Isend(&request, 1, MPI_INT, p_nbrs[j], REQ_MSG, cart_comm, &p_req[j]);
                         }
                         MPI_Waitall(num_nbrs, p_req, p_status);
                         
                         /* Non-blocking receive SMA from all neighbors with tag SMA_MSG */
                         for (j = 0; j < num_nbrs; j++) {
-                            MPI_Irecv(&p_recv_vals[i], 1, MPI_FLOAT, p_nbrs[i], SMA_MSG, cart_comm, &p_req[i]);
+                            MPI_Irecv(&p_recv_vals[j], 1, MPI_FLOAT, p_nbrs[j], SMA_MSG, cart_comm, &p_req[j]);
                         }
                         MPI_Waitall(num_nbrs, p_req, p_status);
 
@@ -134,9 +134,9 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                         
                         /* STEP 2: Compare SMA between neighbors */
                         count = 0;
-                        for (j = 0; j < num_nbrs; j++) {
-                            float range = fabs(p_recv_vals[i] - l_sea_moving_avg);
-                            if (p_recv_vals[i] != -1 && range <= RANGE) {
+                        for (j = 0; j < num_nbrs; j++) {    
+                            float range = fabs(p_recv_vals[j] - l_sea_moving_avg);
+                            if (p_nbrs[j] != -2 && range <= RANGE) {
                                 count += 1;
                             }
                         }
