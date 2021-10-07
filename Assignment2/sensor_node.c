@@ -85,7 +85,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             MPI_Status probe_status;
             int j;
             int flag; // placeholder to indicate a message is received or not
-            int msg;
+            int base_station_msg;
             int l_terminate = 0; // local terminiate variable
             int count; // count the number of matched SMA
             float sum;
@@ -149,9 +149,9 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 
                 // receive message from base station if flag is true
                 if (flag) {
-                    MPI_Recv(&msg, 1, MPI_INT, probe_status.MPI_SOURCE, 0, world_comm, &probe_status);
+                    MPI_Recv(&base_station_msg, 1, MPI_INT, probe_status.MPI_SOURCE, 0, world_comm, &probe_status);
                     #pragma omp critical 
-                    g_terminate = msg;
+                    g_terminate = base_station_msg;
                 }
 
                 /* Retrieve terminate value from shared variable */
@@ -184,7 +184,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
 
                 // send back SMA if flag is true
                 if (flag) {
-                    flag = 0;
+                    flag = 0; // reset flag to false
                     MPI_Recv(&req_msg, 1, MPI_INT, probe_status.MPI_SOURCE, 1, cart_comm, MPI_STATUS_IGNORE);
                     printf("Cart rank %d sends SMA %.2f.\n", my_rank, l_sea_moving_avg);
                     /* Blocking send the SMA to requester */
