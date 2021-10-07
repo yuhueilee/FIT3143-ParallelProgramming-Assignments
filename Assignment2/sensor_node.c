@@ -120,7 +120,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                     if (l_sea_moving_avg > threshold) {
                         // initialize array to -1.0
                         for (j = 0; j < num_nbrs; j++) {
-                            p_recv_vals[i] = -1.0;
+                            p_recv_vals[j] = -1.0;
                         }
 
                         /* Non-blocking send request to all neighbors with tag REQ_MSG */
