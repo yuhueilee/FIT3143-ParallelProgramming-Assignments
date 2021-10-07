@@ -37,10 +37,10 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     int ndims = 2, reorder = 1, ierr = 0;
     int p_dims[ndims], p_coord[ndims], p_wrap_around[ndims], p_nbrs[num_nbrs];
     int index = 0; // pointer to the array storing sea values
-    int window_size = 5; // size of the array storing sea values
+    int window_size = 10; // size of the array storing sea values
     float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
     float g_sea_moving_avg = 0.0;
-    float p_recv_vals[4] = { -1.0, -1.0, -1.0, -1.0 };
+    float *p_recv_vals = calloc(window_size, sizeof(float));
     MPI_Comm cart_comm;
 
     // assign rows and cols to dims array
@@ -118,6 +118,11 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
 
                     // check if the SMA exceeds the threshold
                     if (l_sea_moving_avg > threshold) {
+                        // initialize array to -1.0
+                        for (j = 0; j < window_size; j++) {
+                            p_recv_vals[i] = -1.0;
+                        }
+
                         /* Non-blocking send request to all neighbors with tag REQ_MSG */
                         for (j = 0; j < num_nbrs; j++) {
                             MPI_Isend(&request, 1, MPI_INT, p_nbrs[j], REQ_MSG, cart_comm, &p_req[j]);
@@ -136,7 +141,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                         count = 0;
                         for (j = 0; j < num_nbrs; j++) {    
                             float range = fabs(p_recv_vals[j] - l_sea_moving_avg);
-                            if (p_nbrs[j] != -2 && range <= RANGE) {
+                            if (p_recv_vals[j] != -1 && p_nbrs[j] != -2 && range <= RANGE) {
                                 count += 1;
                             }
                         }
