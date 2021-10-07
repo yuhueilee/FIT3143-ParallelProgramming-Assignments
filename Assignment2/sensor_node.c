@@ -86,7 +86,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             MPI_Request p_req[num_nbrs];
             MPI_Status p_status[num_nbrs];
             MPI_Status probe_status;
-            int j;
+            int j, request = 1;
             int flag; // placeholder to indicate a message is received or not
             int base_station_msg;
             int l_terminate = 0; // local terminiate variable
@@ -119,7 +119,6 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                     if (l_sea_moving_avg > threshold) {
                         /* Non-blocking send request to all neighbors with tag REQ_MSG */
                         for (j = 0; j < num_nbrs; j++) {
-                            int request = 1;
                             MPI_Isend(&request, 1, MPI_INT, p_nbrs[j], REQ_MSG, cart_comm, &p_req[j]);
                         }
                         MPI_Waitall(num_nbrs, p_req, p_status);
