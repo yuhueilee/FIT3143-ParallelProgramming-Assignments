@@ -1,5 +1,8 @@
 /*
 This file contains function for simulating wireless sensor node
+
+Abbreviations:
+    - SMA: Sea moving average
 */
 #include <stdio.h>
 #include <math.h>
@@ -12,8 +15,9 @@ This file contains function for simulating wireless sensor node
 #include <stdbool.h>
 
 #define CYCLE 5 // cycle for sea water column height generation
-#define LOWER_BOUND 5500.0 // lower bound for sea water column height
+#define LOWER_BOUND 6400.0 // lower bound for sea water column height
 #define UPPER_BOUND 6500.0 // upper bound for sea water column height
+#define RANGE 100.0 // tolerence range to compare SMA between nodes
 #define SHIFT_ROW 0
 #define SHIFT_COL 1
 #define DISP 1
@@ -24,7 +28,7 @@ float rand_float(unsigned int seed, float min, float max);
 /* Wireless sensor node simulation */
 void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_comm, MPI_Comm nodes_comm) {
     bool terminate = 0; // set terminate to false initially
-    bool nbr_request = 0; // set the request sent by neighbor to false initially
+    bool notification = 0; // set the notification to send report to base station to false initially
     int i, my_rank, my_cart_rank;
     int num_nbrs = 4;
     int ndims = 2, reorder = 1, ierr = 0;
@@ -76,6 +80,10 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
          */
         #pragma omp section 
         {
+            /* Create request and status array */
+            MPI_Request p_req[num_nbrs];
+            MPI_Status p_status[num_nbrs];
+
             int counter = 0;
             do {
                 /* STEP 1: Generate random sea value */
@@ -95,8 +103,38 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                     /* Calculate the new SMA */
                     #pragma omp critical 
                     sea_moving_avg = sum / window_size; // lock the shared variable
+
+                    // check if the SMA exceeds the threshold
+                    if (sea_moving_avg > threshold) {
+                        /* Non-blocking send request to all neighbors with tag 1 */
+                        for (i = 0; i < num_nbrs; i++) {
+                            int request = 1;
+                            MPI_Isend(&request, 1, MPI_INT, p_nbrs[i], 1, cart_comm, &p_req[i]);
+                        }
+                        
+                        /* Blocking receive SMA from all neighbors with tag 1 */
+                        for (i = 0; i < num_nbrs; i++) {
+                            MPI_Irecv(&p_recv_vals[i], 1, MPI_FLOAT, p_nbrs[i], 1, cart_comm, &p_req[i]);
+                        }
+
+                        printf("\tCart rank: %d; Received top: %.2f; bottom: %.2f; left: %.2f; right: %.2f;\n", my_rank, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
+                        
+                        /* STEP 2: Compare SMA between neighbors */
+                        int count;
+                        for (i = 0; i < num_nbrs; i++) {
+                            float range = fabs(p_recv_vals[i] - sea_moving_avg);
+                            if (p_recv_vals[i] != -1 && range <= RANGE) {
+                                count += 1;
+                            }
+                        }
+                        // set notification to true when at least two neighbors have similar SMA
+                        if (count >= 2) {
+                            notification = 1;
+                            printf("Cart rank: %d; Matched occur;\n", my_rank);
+                            notification = 0;
+                        }
+                    }
                 }
-                printf("Rank %d. Random sea level: %.2f. Sea moving average: %.2f.\n", my_rank, rand_sea_height, sea_moving_avg);
                 
                 sleep(CYCLE);
                 counter++;
@@ -109,7 +147,18 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
         {
             int counter = 0;
             do {
-                printf("Rank %d. Sea moving average: %.2f\n", my_rank, sea_moving_avg);
+                printf("Cart rank %d; Sea moving average: %.2f;\n", my_rank, sea_moving_avg);
+                MPI_Status status;
+                int flag = 0; // placeholder to indicate a message is received or not
+                
+                /* Non-blocking test for a message */
+                MPI_Iprobe(MPI_ANY_SOURCE, 1, cart_comm, &flag, &status);
+
+                // send back SMA if flag is true
+                if (flag) {
+                    /* Blocking send the SMA to requester */
+                    MPI_Send(&sea_moving_avg, 1, MPI_FLOAT, status.MPI_SOURCE, 1, cart_comm);
+                }
                 
                 sleep(CYCLE);
                 counter++;
