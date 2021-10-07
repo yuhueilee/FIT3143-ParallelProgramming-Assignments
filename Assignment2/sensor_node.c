@@ -132,7 +132,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                         /* STEP 2: Compare SMA between neighbors */
                         count = 0;
                         for (j = 0; j < num_nbrs; j++) {
-                            float range = fabs(p_recv_vals[i] - g_sea_moving_avg);
+                            float range = fabs(p_recv_vals[i] - l_sea_moving_avg);
                             if (p_recv_vals[i] != -1 && range <= RANGE) {
                                 count += 1;
                             }
