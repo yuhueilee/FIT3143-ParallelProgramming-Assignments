@@ -18,6 +18,7 @@ Abbreviations:
 #define LOWER_BOUND 6400.0 // lower bound for sea water column height
 #define UPPER_BOUND 6500.0 // upper bound for sea water column height
 #define RANGE 100.0 // tolerence range to compare SMA between nodes
+#define BASE_STATION_RANK 0
 #define BASE_STATION_MSG 0
 #define REQ_MSG 1
 #define SMA_MSG 2
@@ -147,7 +148,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 }
                 
                 /* STEP 3: Listen to base station */
-                MPI_Iprobe(0, BASE_STATION_MSG, world_comm, &flag, &probe_status);
+                MPI_Iprobe(BASE_STATION_RANK, BASE_STATION_MSG, world_comm, &flag, &probe_status);
                 
                 // receive message from base station if flag is true
                 if (flag) {
