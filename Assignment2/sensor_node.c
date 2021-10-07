@@ -206,7 +206,11 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             } while (! l_terminate);
         }
     }
-    
+
+    /* Free the heap array */
+    free(p_sea_array);
+    free(p_recv_vals);
+
     MPI_Comm_free(&cart_comm);
 }
 
