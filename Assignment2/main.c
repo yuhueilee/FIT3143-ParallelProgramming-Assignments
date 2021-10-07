@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     /* Switch case to call different function based on rank number */
     switch (my_rank) {
         case 0: {
-            printf("Root Rank: %d; Comm Size: %d; Grid Dimension = [%d x %d]; Threashold: %f;\n", my_rank, size, num_rows, num_cols, threashold);
+            printf("Root Rank: %d. Comm Size: %d. Grid Dimension = [%d x %d]. Threshold: %f.\n", my_rank, size, num_rows, num_cols, threashold);
             /* Base station */
             break;
         }
