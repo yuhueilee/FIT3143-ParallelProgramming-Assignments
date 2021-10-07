@@ -40,7 +40,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     int window_size = 10; // size of the array storing sea values
     float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
     float g_sea_moving_avg = 0.0;
-    float *p_recv_vals = calloc(window_size, sizeof(float));
+    float *p_recv_vals = calloc(num_nbrs, sizeof(float));
     MPI_Comm cart_comm;
 
     // assign rows and cols to dims array
@@ -119,7 +119,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                     // check if the SMA exceeds the threshold
                     if (l_sea_moving_avg > threshold) {
                         // initialize array to -1.0
-                        for (j = 0; j < window_size; j++) {
+                        for (j = 0; j < num_nbrs; j++) {
                             p_recv_vals[i] = -1.0;
                         }
 
