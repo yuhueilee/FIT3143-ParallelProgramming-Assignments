@@ -40,7 +40,6 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     int window_size = 10; // size of the array storing sea values
     float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
     float g_sea_moving_avg = 0.0;
-    float *p_recv_vals = calloc(num_nbrs, sizeof(float));
     MPI_Comm cart_comm;
 
     // assign rows and cols to dims array
@@ -84,16 +83,17 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
         #pragma omp section 
         {
             /* Create request and status array */
-            MPI_Request p_req[num_nbrs];
-            MPI_Status p_status[num_nbrs];
+            MPI_Request p_req[num_nbrs * 2];
+            MPI_Status p_status[num_nbrs * 2];
             MPI_Status probe_status;
             int j, request = 1;
-            int flag; // placeholder to indicate a message is received or not
+            int send_recv_flag = 0, flag = 0; // placeholder to indicate a message is received or not
             int base_station_msg;
             int l_terminate = 0; // local terminiate variable
             int count; // count the number of matched SMA
             float sum;
             float l_sea_moving_avg = 0.0; // local SMA variable
+            float p_recv_vals[4] = { -1.0, -1.0, -1.0, -1.0 };
 
             do {
                 /* STEP 1: Generate random sea value */
@@ -118,36 +118,46 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
 
                     // check if the SMA exceeds the threshold
                     if (l_sea_moving_avg > threshold) {
-                        // initialize array to -1.0
-                        for (j = 0; j < num_nbrs; j++) {
-                            p_recv_vals[j] = -1.0;
-                        }
-
                         /* Non-blocking send request to all neighbors with tag REQ_MSG */
                         for (j = 0; j < num_nbrs; j++) {
                             MPI_Isend(&request, 1, MPI_INT, p_nbrs[j], REQ_MSG, cart_comm, &p_req[j]);
                         }
-                        MPI_Waitall(num_nbrs, p_req, p_status);
-                        
+
                         /* Non-blocking receive SMA from all neighbors with tag SMA_MSG */
                         for (j = 0; j < num_nbrs; j++) {
-                            MPI_Irecv(&p_recv_vals[j], 1, MPI_FLOAT, p_nbrs[j], SMA_MSG, cart_comm, &p_req[j]);
+                            p_recv_vals[j] = -1.0; // initialize to -1.0
+                            MPI_Irecv(&p_recv_vals[j], 1, MPI_FLOAT, p_nbrs[j], SMA_MSG, cart_comm, &p_req[num_nbrs + j]);
                         }
-                        MPI_Waitall(num_nbrs, p_req, p_status);
 
-                        printf("Cart rank: %d. Received top: %.2f. bottom: %.2f. left: %.2f. right: %.2f.\n", my_rank, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
+                        double curr_time = MPI_Wtime();
+                        double time_taken = MPI_Wtime() - curr_time;
+                        /* Loop until all requests have completed and time taken less than 2 times the cycle */
+                        do {
+                            send_recv_flag = 0; // reset flag to false
+                            /* Test for all previously initiated requests */
+                            MPI_Testall(num_nbrs * 2, p_req, &send_recv_flag, p_status);
+                            time_taken = MPI_Wtime() - curr_time; // calculate the time taken
+                        } while ((! send_recv_flag) && time_taken < 2 * CYCLE);
+
+                        if (! send_recv_flag) {
+                            MPI_Cancel(p_req); // cancel all requests
+                            printf("Cart rank %d time taken %.2f hence cancel all requests.\n", my_rank, time_taken);
+                        } else {
+                            send_recv_flag = 0; // reset flag to false
+                            printf("Cart rank %d has SMA %.2f. Received top: %.2f, bottom: %.2f, left: %.2f, right: %.2f.\n", my_rank, l_sea_moving_avg, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
                         
-                        /* STEP 2: Compare SMA between neighbors */
-                        count = 0;
-                        for (j = 0; j < num_nbrs; j++) {    
-                            float range = fabs(p_recv_vals[j] - l_sea_moving_avg);
-                            if (p_recv_vals[j] != -1 && p_nbrs[j] != -2 && range <= RANGE) {
-                                count += 1;
+                            /* STEP 2: Compare SMA between neighbors */
+                            count = 0;
+                            for (j = 0; j < num_nbrs; j++) {    
+                                float range = fabs(p_recv_vals[j] - l_sea_moving_avg);
+                                if (p_recv_vals[j] != -1.0 && p_nbrs[j] != -2 && range <= RANGE) {
+                                    count += 1;
+                                }
                             }
-                        }
-                        // set notification to true when at least two neighbors have similar SMA
-                        if (count >= 2) {
-                            printf("Cart rank %d reports to base station.\n", my_rank);
+                            // set notification to true when at least two neighbors have similar SMA
+                            if (count >= 2) {
+                                printf("Cart rank %d sends report to base station.\n", my_rank);
+                            }
                         }
                     }
                 }
@@ -157,8 +167,12 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 
                 // receive message from base station if flag is true
                 if (flag) {
+                    flag = 0; // reset flag to false
                     /* Blocking receive from base station with tag BASE_STATION_MSG */
                     MPI_Recv(&base_station_msg, 1, MPI_INT, probe_status.MPI_SOURCE, BASE_STATION_MSG, world_comm, &probe_status);
+                    printf("Cart rank %d received terminate from base station.\n", my_rank);
+                    
+                    /* Assign received terminate value to shared variable */
                     #pragma omp critical 
                     g_terminate = base_station_msg;
                 }
@@ -193,7 +207,6 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                     flag = 0; // reset flag to false
                     /* Blocking receive from source with tag REQ_MSG */
                     MPI_Recv(&req_msg, 1, MPI_INT, probe_status.MPI_SOURCE, REQ_MSG, cart_comm, MPI_STATUS_IGNORE);
-                    printf("Cart rank %d sends SMA %.2f to %d.\n", my_rank, l_sea_moving_avg, probe_status.MPI_SOURCE);
                     /* Blocking send the SMA to requester with tag SMA_MSG */
                     MPI_Send(&l_sea_moving_avg, 1, MPI_FLOAT, probe_status.MPI_SOURCE, SMA_MSG, cart_comm);
                 }
@@ -202,14 +215,12 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 #pragma omp critical
                 l_terminate = g_terminate;
 
-                sleep(1);
             } while (! l_terminate);
         }
     }
 
     /* Free the heap array */
     free(p_sea_array);
-    free(p_recv_vals);
 
     MPI_Comm_free(&cart_comm);
 }
