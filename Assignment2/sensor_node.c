@@ -36,9 +36,6 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     int num_nbrs = 4;
     int ndims = 2, reorder = 1, ierr = 0;
     int p_dims[ndims], p_coord[ndims], p_wrap_around[ndims], p_nbrs[num_nbrs];
-    int index = 0; // pointer to the array storing sea values
-    int window_size = 10; // size of the array storing sea values
-    float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
     float g_sea_moving_avg = 0.0;
     MPI_Comm cart_comm;
 
@@ -91,9 +88,13 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             int base_station_msg;
             int l_terminate = 0; // local terminiate variable
             int count; // count the number of matched SMA
+            int index = 0; // pointer to the array storing sea values
+            int window_size = 10; // size of the array storing sea values
             float sum;
             float l_sea_moving_avg = 0.0; // local SMA variable
+            float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
             float p_recv_vals[4] = { -1.0, -1.0, -1.0, -1.0 };
+            struct timespec p_timestamp[window_size];
 
             do {
                 /* STEP 1: Generate random sea value */
@@ -102,7 +103,15 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 
                 /* Push the new random value to array */
                 p_sea_array[index] = rand_sea_height;
+                /* Assign time stamp */
+                clock_gettime(CLOCK_MONOTONIC, &p_timestamp[index]);;
                 index = (index + 1) % window_size; // update the index (circular)
+
+                struct timespec timestamp = p_timestamp[index - 1];
+                timespec_get(&timestamp, TIME_UTC);
+                char buff[100];
+                strftime(buff, sizeof(buff), "%D %T", gmtime(&timestamp.tv_sec));
+                printf("Cart rank %d has random sea height %.2f at time %s UTC.\n", my_rank, rand_sea_height, buff);
                 
                 // check if the array is filled up with values
                 if (p_sea_array[index] != 0.0) {
@@ -183,6 +192,8 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
 
                 sleep(CYCLE);
             } while (! l_terminate);
+            /* Free the heap array */
+            free(p_sea_array);
         }
         /* 
             1. Listen to neighbors and send its own SMA
@@ -218,9 +229,6 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             } while (! l_terminate);
         }
     }
-
-    /* Free the heap array */
-    free(p_sea_array);
 
     MPI_Comm_free(&cart_comm);
 }
