@@ -26,6 +26,16 @@ Abbreviations:
 #define SHIFT_COL 1
 #define DISP 1
 
+/* Type struct to store the alert report */
+struct reportstruct { 
+    double alert_time;
+    float tolerance;
+    float sma[5];
+    int node_matched;
+    int rank[5];
+    int coord[2];
+};
+
 /* Function prototype */
 float rand_float(unsigned int seed, float min, float max);
 
@@ -79,10 +89,37 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
          */
         #pragma omp section 
         {
+            /* Create report typestruct instance */
+            struct reportstruct report;
+            MPI_Datatype report_type;
+            MPI_Datatype type[6] = { MPI_DOUBLE, MPI_FLOAT, MPI_FLOAT, MPI_INT, MPI_INT, MPI_INT };
+            int blocklen[6] = { 1, 1, 5, 1, 5, 2 };
+            MPI_Aint disp[6];
+            // get the addresses
+            MPI_Get_address(&report.alert_time, &disp[0]);
+            MPI_Get_address(&report.tolerance, &disp[1]);
+            MPI_Get_address(&report.sma, &disp[2]);
+            MPI_Get_address(&report.node_matched, &disp[3]);
+            MPI_Get_address(&report.rank, &disp[4]);
+            MPI_Get_address(&report.coord, &disp[5]);
+            // calculate the displacements
+            disp[5] = disp[5] - disp[4];
+            disp[4] = disp[4] - disp[3];
+            disp[3] = disp[3] - disp[2];
+            disp[2] = disp[2] - disp[1];
+            disp[1] = disp[1] - disp[0];
+	        disp[0] = 0;
+            // Create MPI struct
+            MPI_Type_create_struct(6, blocklen, disp, type, &report_type);
+            MPI_Type_commit(&report_type);
+
             /* Create request and status array */
             MPI_Request p_req[num_nbrs * 2];
             MPI_Status p_status[num_nbrs * 2];
             MPI_Status probe_status;
+
+            char *buffer;
+            int buffer_size, position;
             int j, request = 1;
             int send_recv_flag = 0, flag = 0; // placeholder to indicate a message is received or not
             int base_station_msg;
@@ -163,9 +200,46 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                     count += 1;
                                 }
                             }
-                            // set notification to true when at least two neighbors have similar SMA
+                            // sends report to base station when at least two neighbors have similar SMA
                             if (count >= 2) {
+                                /* Fill in the report */
+                                struct timespec timestamp;
+                                clock_gettime(CLOCK_MONOTONIC, &timestamp);
+                                // get current time in seconds
+                                report.alert_time = (timestamp.tv_sec * 1e9 + timestamp.tv_nsec) * 1e-9;
+                                report.tolerance = RANGE;
+                                report.sma[0] = rand_sea_height;
+                                for (j = 0; j < num_nbrs; j++) {
+                                    report.sma[j + 1] = p_recv_vals[j];
+                                }
+                                report.node_matched = count;
+                                report.rank[0] = my_rank;
+                                for (j = 0; j < num_nbrs; j++) {
+                                    report.rank[j + 1] = p_nbrs[j];
+                                }                                
+                                report.coord[0] = p_coord[0];
+                                report.coord[1] = p_coord[1];
+
+                                /* Pack data into buffer */
+                                // get the upperbound for buffer size
+                                MPI_Pack_size(6, report_type, world_comm, &buffer_size);
+                                // allocate space for buffer
+                                buffer = (char *)malloc((unsigned) buffer_size);
+                                // reset position
+                                position = 0;
+                                // pack the data into a buffer
+                                MPI_Pack(&report.alert_time, 1, MPI_DOUBLE, buffer, buffer_size, &position, world_comm);
+                                MPI_Pack(&report.tolerance, 1, MPI_INT, buffer, buffer_size, &position, world_comm);
+                                MPI_Pack(&report.sma, 5, MPI_FLOAT, buffer, buffer_size, &position, world_comm);
+                                MPI_Pack(&report.node_matched, 1, MPI_INT, buffer, buffer_size, &position, world_comm);
+                                MPI_Pack(&report.rank, 5, MPI_INT, buffer, buffer_size, &position, world_comm);
+                                MPI_Pack(&report.coord, 2, MPI_INT, buffer, buffer_size, &position, world_comm);
+
+                                /* Non-blocking send the packed message to base station */
+                                MPI_Isend(buffer, buffer_size, MPI_PACKED, 0, BASE_STATION_MSG, world_comm, &p_req[0]);
+
                                 printf("Cart rank %d sends report to base station.\n", my_rank);
+                                printf("\tAlert time: %.2f, Number of matches: %d, Coord: (%d, %d)\n", report.alert_time, report.node_matched, report.coord[0], report.coord[1]);
                             }
                         }
                     }
