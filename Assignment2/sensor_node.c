@@ -178,7 +178,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 if (flag) {
                     flag = 0; // reset flag to false
                     /* Blocking receive from base station with tag BASE_STATION_MSG */
-                    MPI_Recv(&base_station_msg, 1, MPI_INT, probe_status.MPI_SOURCE, BASE_STATION_MSG, world_comm, &probe_status);
+                    MPI_Recv(&base_station_msg, 1, MPI_INT, probe_status.MPI_SOURCE, BASE_STATION_MSG, world_comm, MPI_STATUS_IGNORE);
                     printf("Cart rank %d received terminate from base station.\n", my_rank);
                     
                     /* Assign received terminate value to shared variable */
