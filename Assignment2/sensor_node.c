@@ -104,7 +104,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 /* Push the new random value to array */
                 p_sea_array[index] = rand_sea_height;
                 /* Assign time stamp */
-                clock_gettime(CLOCK_MONOTONIC, &p_timestamp[index]);;
+                clock_gettime(CLOCK_MONOTONIC, &p_timestamp[index]);
                 index = (index + 1) % window_size; // update the index (circular)
 
                 struct timespec timestamp = p_timestamp[index - 1];
