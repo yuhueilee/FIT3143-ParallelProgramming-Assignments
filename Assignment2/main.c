@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
     /* Variables declaration */
     int my_rank, size, num_rows, num_cols, provided;
-    float threashold;
+    float threshold;
     MPI_Comm nodes_comm;
 
     /* Initialize MPI */
@@ -29,11 +29,11 @@ int main(int argc, char *argv[]) {
     /* Split the communicator based on rank number */
     MPI_Comm_split(MPI_COMM_WORLD, my_rank > 0, 0, &nodes_comm);
 
-    /* Initialize number of rows, cols and height of threashold */
+    /* Initialize number of rows, cols and height of threshold */
     if (argc == 4) {
         num_rows = atoi(argv[1]);
         num_cols = atoi(argv[2]);
-        threashold = atof(argv[3]);
+        threshold = atof(argv[3]);
         // check if number of processes matches the value of rows * cols
         if (num_rows * num_cols != (size - 1)) {
             if(my_rank == 0) printf("ERROR: rows(%d) * cols(%d) != size - 1(%d)", num_rows, num_cols, size - 1);
@@ -49,13 +49,13 @@ int main(int argc, char *argv[]) {
     /* Switch case to call different function based on rank number */
     switch (my_rank) {
         case 0: {
-            printf("Root Rank: %d. Comm Size: %d. Grid Dimension = [%d x %d]. Threshold: %f.\n", my_rank, size, num_rows, num_cols, threashold);
+            printf("Root Rank: %d. Comm Size: %d. Grid Dimension = [%d x %d]. Threshold: %f.\n", my_rank, size, num_rows, num_cols, threshold);
             /* Base station */
             break;
         }
         default: {
             /* Wireless Sensor Node */
-            sensor_node(num_rows, num_cols, threashold, MPI_COMM_WORLD, nodes_comm);
+            sensor_node(num_rows, num_cols, threshold, MPI_COMM_WORLD, nodes_comm);
             break;
         }
     }
