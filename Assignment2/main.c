@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
         case 0: {
             printf("Root Rank: %d. Comm Size: %d. Grid Dimension = [%d x %d]. Threshold: %f.\n", my_rank, size, num_rows, num_cols, threshold);
             /* Base station */
-            base_station(threshold, 10, MPI_COMM_WORLD);
+            base_station(threshold, 25, MPI_COMM_WORLD);
             break;
         }
         default: {

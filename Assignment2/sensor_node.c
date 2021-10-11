@@ -209,7 +209,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                             if (count >= 2) {
                                 /* Fill in the report */
                                 struct timespec timestamp;
-                                clock_gettime(CLOCK_MONOTONIC, &timestamp);
+                                timespec_get(&timestamp, TIME_UTC);
                                 // get current time in seconds
                                 report.alert_time = (timestamp.tv_sec * 1e9 + timestamp.tv_nsec) * 1e-9;
                                 report.tolerance = NODE_TOLERANCE;

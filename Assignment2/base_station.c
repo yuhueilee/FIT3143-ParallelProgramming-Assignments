@@ -11,8 +11,8 @@ This file contains function for simulating the base station and the satellite al
 #include <omp.h>
 
 /* Constants */
-#define BASE_CYCLE 5
-#define ALTIMETER_CYCLE 10
+#define BASE_CYCLE 2
+#define ALTIMETER_CYCLE 5
 #define TSUNAMI_UPPERBOUND 6500
 #define ALTIMETER_TOLERANCE 100.00
 #define DATE_TIME "%a %F %T"
@@ -53,7 +53,7 @@ struct basesummary {
 void log_report(char *p_log_name, struct basereport report);
 void log_summary(char *p_log_name, struct basesummary summary);
 
-int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
+void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
     int size;
     MPI_Comm_size(world_comm, &size);
     int cart_size = size - 1;
@@ -82,14 +82,17 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
             struct timespec alt_time, end, comm_end;
             double comm_time, time_taken;
             char alt_time_str[50];
-            int i;
+            int i, l_terminate = 0;
 
             MPI_Request send_request[cart_size];
             MPI_Status send_status[cart_size];
 
-            // initialize values in report
+            // initialize values in report and summary
             report.filled = 0;
             report.iteration = 0;
+            summary.total_alert = 0;
+            summary.total_match = 0;
+            summary.total_mismatch = 0;
 
             do {
                 char *buffer;
@@ -105,7 +108,7 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
 
                     // end of communication time between node and base
                     timespec_get(&comm_end, TIME_UTC);
-                    comm_time = (comm_end.tv_sec + (comm_end.tv_nsec * 1e-9));
+                    comm_time = (comm_end.tv_sec * 1e9 + comm_end.tv_nsec) * 1e-9;
 
                     // unpack the data into a buffer
                     MPI_Unpack(buffer, buffer_size, &position, &alert.alert_time, 1, MPI_DOUBLE, world_comm);
@@ -130,10 +133,10 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
                     report.match = "Mismatch";
                         
                     // check altimeter array
-                    #pragma omp critical 
+                    #pragma omp critical
                     {
-                        alt_time = altimeter_heights[alert.rank[0] - 1].time;
-                        report.alt_sea_height = altimeter_heights[alert.rank[0] - 1].sea_height;
+                        alt_time = altimeter_heights[alert.rank[0]].time;
+                        report.alt_sea_height = altimeter_heights[alert.rank[0]].sea_height;                        
                     }
 
                     // change timespec to string of date and time
@@ -155,23 +158,22 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
                     // add report information to array
                     report.filled = 1;
                     reports[report.iteration] = report;
-                } else {
-                    printf("Base station does not receive message.\n");
                 }
-               
                 // sleep for a specified amount of time before going to the next iteration
                 sleep(BASE_CYCLE);
                 report.iteration++;
-            } while (report.iteration != max_iteration);
+            } while (report.iteration < max_iteration);
 
             // set terminate flag to true 
             #pragma omp critical
-            terminate = 1;
+            {
+                terminate = 1;
+                l_terminate = terminate;
+            }
 
-            printf("_________SENDING TERMINATE____________");
             // broadcast termination message to sensor nodes
             for (i = 0; i < cart_size; i++) {
-                MPI_Isend(&terminate, 1, MPI_INT, i + 1, 0, world_comm, &send_request[i]);
+                MPI_Isend(&l_terminate, 1, MPI_INT, i + 1, 0, world_comm, &send_request[i]);
             }
             // wait for the terminate message to send to all the sensor nodes
             MPI_Waitall(cart_size, send_request, send_status);
@@ -209,16 +211,16 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
                 unsigned int sea_height_seed = (unsigned int)time(NULL);
                 for (int i = 0; i < cart_size; i++) {
                     // randomly generate sea level
-                    rand_sea_height = (float)(rand_r(&sea_height_seed) % ((TSUNAMI_UPPERBOUND - threshold)*1000) + threshold * 1000) / 1000;
+                    rand_sea_height = (float)(rand_r(&sea_height_seed) % (int)((TSUNAMI_UPPERBOUND - threshold)*1000) + threshold * 1000) / 1000;
 
                     // get current time
                     timespec_get(&alt_time, TIME_UTC);
 
                     // update altimeter_heights
-                    #pragma omp critical                            
+                    #pragma omp critical                        
                     {
-                        altimeter_heights[i].time = alt_time;
-                        altimeter_heights[i].sea_height = rand_sea_height;    
+                        altimeter_heights[i].time = alt_time;  
+                        altimeter_heights[i].sea_height = rand_sea_height;   
                     }
                 }
                 
@@ -229,7 +231,6 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
     }
 
     fflush(stdout);
-    return 0;
 }
 
 void log_report(char *p_log_name, struct basereport report) {
@@ -246,7 +247,7 @@ void log_report(char *p_log_name, struct basereport report) {
     // Write the report into the log file
     // header information
     fprintf(pFile, "------------------------------------------------------------------------------------------------\n");
-    fprintf(pFile, "Iteration: %d\n", report.iteration);
+    fprintf(pFile, "Iteration: %d\n", report.iteration + 1);
     // change log time to date time string
     strftime(buff, sizeof buff, DATE_TIME, gmtime(&log_time.tv_sec));
     fprintf(pFile, "Logged time:\t\t\t\t%s\n", buff);
@@ -317,7 +318,8 @@ void log_summary(char *p_log_name, struct basesummary summary) {
     fprintf(pFile, "Total simulation time: \t%lf\n", summary.sim_time);
     fprintf(pFile, "Total number of alerts: %d\n", summary.total_alert);
     fprintf(pFile, "\tMatched alerts: \t%d\n", summary.total_match);
-    fprintf(pFile, "\tMismatched alerts: \t%d\n", summary.total_mismatch);
+    fprintf(pFile, "\tMismatched alerts: \t%d\n\n", summary.total_mismatch);
+    fprintf(pFile, "------------------------------------------------------------------------------------------------\n\n");
 
     // close the log file
     fclose(pFile);
