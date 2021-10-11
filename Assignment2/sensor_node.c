@@ -12,12 +12,11 @@ Abbreviations:
 #include <mpi.h>
 #include <time.h>
 #include <unistd.h>
-#include <stdbool.h>
 
 #define NODE_CYCLE 5 // cycle for sea water column height generation
-#define NODE_LOWERBOUND 6400.0 // lower bound for sea water column height
-#define NODE_UPPERBOUND 6500.0 // upper bound for sea water column height
-#define NODE_TOLERANCE 100.0 // tolerence range to compare SMA between nodes
+#define NODE_LOWERBOUND 6400 // lower bound for sea water column height
+#define NODE_UPPERBOUND 6500 // upper bound for sea water column height
+#define NODE_TOLERANCE 100 // tolerence range to compare SMA between nodes
 #define BASE_STATION_RANK 0
 #define BASE_STATION_MSG 0
 #define REQ_MSG 1
