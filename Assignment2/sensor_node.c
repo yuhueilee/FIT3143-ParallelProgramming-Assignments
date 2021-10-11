@@ -330,6 +330,8 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
 
 /* Random float value generator */
 float rand_float(unsigned int seed, float min, float max) {
+    float floating_val = ((float)rand()/(float)(RAND_MAX));
     float rand_float = (float)(rand_r(&seed) % (int)(max - min) + min);
+    rand_float += floating_val;
     return rand_float;
 }
