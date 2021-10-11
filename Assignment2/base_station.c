@@ -8,6 +8,7 @@ This file contains function for simulating the base station and the satellite al
 #include <mpi.h>
 #include <time.h>
 #include <unistd.h>
+#include <omp.h>
 
 /* Constants */
 #define BASE_CYCLE 5
@@ -17,27 +18,9 @@ This file contains function for simulating the base station and the satellite al
 #define DATE_TIME "%a %F %T"
 
 /* Struct types */
-static struct seaheightrecord{
+struct seaheightrecord {
     struct timespec time;
     float sea_height;
-};
-
-static struct basereport{       // maybe all these structs can be in utility
-    int filled;
-    int iteration;
-    char* match;
-    struct reportstruct alert;
-    char* alt_time;
-    float alt_sea_height;
-    float alt_tolerance;
-    double comm_time;
-};
-
-static struct basesummary{
-    double sim_time;
-    int total_alert;
-    int total_match;
-    int total_mismatch;
 };
 
 struct reportstruct { 
@@ -49,9 +32,26 @@ struct reportstruct {
     int coord[2];
 };
 
+struct basereport {       // maybe all these structs can be in utility
+    int filled;
+    int iteration;
+    char* match;
+    struct reportstruct alert;
+    char* alt_time;
+    float alt_sea_height;
+    float alt_tolerance;
+    double comm_time;
+};
+
+struct basesummary {
+    double sim_time;
+    int total_alert;
+    int total_match;
+    int total_mismatch;
+};
+
 /* Function declarations */
-float rand_float(unsigned int seed, float min, float max);
-void log_report(char *p_log_name, struct basereport report, struct reportstruct alert);
+void log_report(char *p_log_name, struct basereport report);
 void log_summary(char *p_log_name, struct basesummary summary);
 
 int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
@@ -64,7 +64,6 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
 
     char* p_log_name = "base_log.txt";
     int terminate = 0;
-    float sea_height;
     struct basesummary summary;
     struct timespec start;
 
@@ -129,11 +128,11 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
                     #pragma omp critical 
                     {
                         alt_time = altimeter_heights[alert.rank[0] - 1].time;
-                        report.alt_sea_height = altimeter_heights[alert.rank[0] - 1].seaLvl;
+                        report.alt_sea_height = altimeter_heights[alert.rank[0] - 1].sea_height;
                     }
 
                     // change timespec to string of date and time
-                    strftime(alt_time_str, sizeof(alt_time_str), DATETIME, gmtime(&alt_time.tv_sec));
+                    strftime(alt_time_str, sizeof(alt_time_str), DATE_TIME, gmtime(&alt_time.tv_sec));
                     report.alt_time = alt_time_str;
                     
                     // check whether there is a match or not depending on the difference 
@@ -163,7 +162,7 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
 
             // broadcast termination message to sensor nodes
             for (i = 1; i < cart_size; i++) {
-                MPI_Isend(&terminate, 1, MPI_INT, i, 0, world_comm);
+                MPI_Isend(&terminate, 1, MPI_INT, i, 0, world_comm, &send_request[i]);
             }
             // wait for the terminate message to send to all the sensor nodes
             MPI_Waitall(cart_size, send_request, send_status);
@@ -177,8 +176,8 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
 
             // end of simulation time
             timespec_get(&end, TIME_UTC);
-            double time_taken = time2.tv_sec - time1.tv_sec;
-            time_taken = (time_taken + (time2.tv_nsec - time1.tv_nsec) * 1e-9)
+            double time_taken = end.tv_sec - start.tv_sec;
+            time_taken = (time_taken + (end.tv_nsec - start.tv_nsec) * 1e-9);
             summary.sim_time = time_taken;
 
             // generate summary report
@@ -189,7 +188,6 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
         /* one thread for the satellite altimeter */ 
         #pragma omp section
         {
-            int rand_rank;
             float rand_sea_height;
             struct timespec alt_time;
             int l_terminate;
@@ -202,7 +200,7 @@ int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
                 for (int i = 0; i < cart_size; i++) {
                     // randomly generate sea level
                     unsigned int sea_height_seed = (unsigned int)time(NULL);
-                    rand_sea_height = rand_float(sea_height_seed, threshold, TSUNAMI_UPPERBOUND);
+                    rand_sea_height = (float)(rand_r(&sea_height_seed) % (int)(TSUNAMI_UPPERBOUND - threshold) + threshold);
 
                     // get current time
                     timespec_get(&alt_time, TIME_UTC);
@@ -280,7 +278,7 @@ void log_report(char *p_log_name, struct basereport report) {
     // infromation from the satellite altimeter
     fprintf(pFile, "Satellite altimeter reporting time: %s\n", report.alt_time);
     fprintf(pFile, "Satellite altimeter reporting height(m): %d\n", report.alt_sea_height);
-    fprintf(pFile, "Satellite altimeter reporting sensor node rank: %d\n\n", report.rank);
+    fprintf(pFile, "Satellite altimeter reporting sensor node rank: %d\n\n", alert.rank[0]);
 
     // extra information
     // fprintf(pFile, "Communication Time (seconds): %d\n", );
@@ -310,8 +308,4 @@ void log_summary(char *p_log_name, struct basesummary summary) {
     fclose(pFile);
 }
 
-float rand_float(unsigned int seed, float min, float max) {
-    float rand_float = (float)(rand_r(&seed) % (int)(max - min) + min);
-    return rand_float;
-}
 // press q to quit etc.
