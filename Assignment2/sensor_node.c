@@ -12,12 +12,11 @@ Abbreviations:
 #include <mpi.h>
 #include <time.h>
 #include <unistd.h>
-#include <stdbool.h>
 
-#define CYCLE 5 // cycle for sea water column height generation
-#define LOWER_BOUND 6400.0 // lower bound for sea water column height
-#define UPPER_BOUND 6500.0 // upper bound for sea water column height
-#define RANGE 100.0 // tolerence range to compare SMA between nodes
+#define NODE_CYCLE 5 // cycle for sea water column height generation
+#define NODE_LOWERBOUND 6400 // lower bound for sea water column height
+#define NODE_UPPERBOUND 6500 // upper bound for sea water column height
+#define NODE_TOLERANCE 100 // tolerence range to compare SMA between nodes
 #define BASE_STATION_RANK 0
 #define BASE_STATION_MSG 0
 #define REQ_MSG 1
@@ -136,7 +135,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             do {
                 /* STEP 1: Generate random sea value */
                 unsigned int seed = time(NULL); // seed value to generate different random value for each process
-                float rand_sea_height = rand_float(seed, LOWER_BOUND, UPPER_BOUND);
+                float rand_sea_height = rand_float(seed, NODE_LOWERBOUND, NODE_UPPERBOUND);
                 
                 /* Push the new random value to array */
                 p_sea_array[index] = rand_sea_height;
@@ -183,7 +182,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                             /* Test for all previously initiated requests */
                             MPI_Testall(num_nbrs * 2, p_req, &send_recv_flag, p_status);
                             time_taken = MPI_Wtime() - curr_time; // calculate the time taken
-                        } while ((! send_recv_flag) && time_taken < 2 * CYCLE);
+                        } while ((! send_recv_flag) && time_taken < 2 * NODE_CYCLE);
 
                         if (! send_recv_flag) {
                             MPI_Cancel(p_req); // cancel all requests
@@ -196,7 +195,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                             count = 0;
                             for (j = 0; j < num_nbrs; j++) {    
                                 float range = fabs(p_recv_vals[j] - l_sea_moving_avg);
-                                if (p_recv_vals[j] != -1.0 && p_nbrs[j] != -2 && range <= RANGE) {
+                                if (p_recv_vals[j] != -1.0 && p_nbrs[j] != -2 && range <= NODE_TOLERANCE) {
                                     count += 1;
                                 }
                             }
@@ -207,7 +206,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 clock_gettime(CLOCK_MONOTONIC, &timestamp);
                                 // get current time in seconds
                                 report.alert_time = (timestamp.tv_sec * 1e9 + timestamp.tv_nsec) * 1e-9;
-                                report.tolerance = RANGE;
+                                report.tolerance = NODE_TOLERANCE;
                                 report.sma[0] = rand_sea_height;
                                 for (j = 0; j < num_nbrs; j++) {
                                     report.sma[j + 1] = p_recv_vals[j];
@@ -235,8 +234,8 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 MPI_Pack(&report.rank, 5, MPI_INT, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.coord, 2, MPI_INT, buffer, buffer_size, &position, world_comm);
 
-                                /* Non-blocking send the packed message to base station */
-                                MPI_Isend(buffer, buffer_size, MPI_PACKED, 0, BASE_STATION_MSG, world_comm, &p_req[0]);
+                                /* Blocking send the packed message to base station */
+                                MPI_Send(buffer, buffer_size, MPI_PACKED, BASE_STATION_RANK, BASE_STATION_MSG, world_comm);
 
                                 printf("Cart rank %d sends report to base station.\n", my_rank);
                                 printf("\tAlert time: %.2f, Number of matches: %d, Coord: (%d, %d)\n", report.alert_time, report.node_matched, report.coord[0], report.coord[1]);
@@ -264,7 +263,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 #pragma omp critical
                 l_terminate = g_terminate;
 
-                sleep(CYCLE);
+                sleep(NODE_CYCLE);
             } while (! l_terminate);
             /* Free the heap array */
             free(p_sea_array);
