@@ -8,14 +8,11 @@ This file contains function for simulating the base station and the satellite al
 #include <mpi.h>
 #include <time.h>
 #include <unistd.h>
-#include <stdbool.h>
 
 /* Constants */
-#define NUM_OF_ITR 5
 #define BASE_CYCLE 5
 #define ALTIMETER_CYCLE 10
-#define TSUNAMI_LOWERBOUND 6000
-#define TSUNAMI_UPPERBOUND 9000
+#define TSUNAMI_UPPERBOUND 9000.00
 #define ALTIMETER_TOLERANCE 100.00
 #define DATE_TIME "%a %F %T"
 
@@ -23,24 +20,25 @@ This file contains function for simulating the base station and the satellite al
 static struct seaheightrecord{
     struct timespec time;
     float sea_height;
-}
+};
 
 static struct basereport{       // maybe all these structs can be in utility
+    int filled;
     int iteration;
     char* match;
-    int rank;
+    struct reportstruct alert;
     char* alt_time;
     float alt_sea_height;
     float alt_tolerance;
     double comm_time;
-}
+};
 
 static struct basesummary{
     double sim_time;
     int total_alert;
     int total_match;
     int total_mismatch;
-}
+};
 
 struct reportstruct { 
     double alert_time;
@@ -52,43 +50,26 @@ struct reportstruct {
 };
 
 /* Function declarations */
+float rand_float(unsigned int seed, float min, float max);
 void log_report(char *p_log_name, struct basereport report, struct reportstruct alert);
 void log_summary(char *p_log_name, struct basesummary summary);
 
-int base_station(int threshold, MPI_Comm world_comm) {
-    int cart_size;
-    MPI_Comm_size(world_comm, &cart_size);
-
-    // create an array that holds incoming reports for each node
-    struct seaheightrecord reports[cart_size];
+int base_station(int threshold, int max_iteration, MPI_Comm world_comm) {
+    int size;
+    MPI_Comm_size(world_comm, &size);
+    int cart_size = size - 1;
 
     // array where altimeter stores its generated sea levels
     struct seaheightrecord altimeter_heights[cart_size];   
 
     char* p_log_name = "base_log.txt";
-    bool terminate = false;
-    int ndims = 2;
+    int terminate = 0;
     float sea_height;
     struct basesummary summary;
-    struct timespec ts, start, end;
-    time_t time;
+    struct timespec start;
 
     // get start time of simulation                                         // or should start from main?
     timespec_get(&start, TIME_UTC);
-
-    // initialize values for all nodes in altimeter_heights array
-    for (int i = 1; i < cart_size; i++) {
-        // generate random sea height
-        unsigned int seed = (unsigned int)time(NULL);
-        sea_height = rand_float(seed, TSUNAMI_LOWERBOUND, TSUNAMI_UPPERBOUND);
-        
-        // get current time
-        timespec_get(&ts, TIME_UTC);
-
-        // update altimeter_heights for the node with rank i
-        altimeter_heights[i].time = ts;
-        altimeter_heights[i].sea_height = sea_height;
-    }
 
     omp_set_num_threads(2);
 
@@ -97,81 +78,102 @@ int base_station(int threshold, MPI_Comm world_comm) {
         /* one thread for receiving and sending messages from sensor nodes */ 
         #pragma omp section
         {
+            struct basereport reports[max_iteration];   
             struct basereport report;
-            struct reportstruct sensor_alert;
-            struct timespec alt_time;
+            struct reportstruct alert;
+            struct timespec alt_time, end;
             char alt_time_str[50];
-            int recv_count;
-            int recv_ranks[];
+            int i;
 
-            MPI_Request receive_request[cart_size];
+            MPI_Request send_request[cart_size];
+            MPI_Status send_status[cart_size];
 
             // initialize values in report
+            report.filled = 0;
             report.iteration = 0;
             report.alt_tolerance = ALTIMETER_TOLERANCE;
 
-            while (report.iteration != NUM_OF_ITR) {
-                // receive from each node
-                for (int i = 1; i < cart_size; i++) {
-                    // have to unpack ---------------------------------------------------------
-                    MPI_Irecv(&reports[i], 1, MPI_INT, i, 0, world_comm, &receive_request[i]);
-                }
+            do {
+                char *buffer;
+                int flag = 0, buffer_size, position = 0;
+                MPI_Status probe_status;
+                MPI_Iprobe(MPI_ANY_SOURCE, 0, world_comm, &flag, &probe_status);
 
-                // Check which sensor nodes have sent an alert
-                MPI_Testsome(cart_size, receive_request[], &recv_count, &recv_ranks, MPI_STATUSES_IGNORE);
+                if (flag) {
+                    flag = 0;
+                    MPI_Get_count(&probe_status, MPI_PACKED, &buffer_size);
+                    buffer = (char *)malloc((unsigned) buffer_size);
+                    MPI_Recv(&buffer, buffer_size, MPI_PACKED, probe_status.MPI_SOURCE, 0, world_comm, MPI_STATUS_IGNORE);
 
-                // calculate end of comm time
+                    // TODO: calculate end of comm time
 
-                // update total number of alerts received
-                summary.total_alert += recv_count;
+                    // unpack the data into a buffer
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.alert_time, 1, MPI_DOUBLE, world_comm);
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.tolerance, 1, MPI_INT, world_comm);
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.sma, 5, MPI_FLOAT, world_comm);
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.node_matched, 1, MPI_INT, world_comm);
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.rank, 5, MPI_INT, world_comm);
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.coord, 2, MPI_INT, world_comm);
 
-                // handle reports received from sensor nodes
-                for (int i = 0; i < recv_count; i++) {
+                    printf("BASE STATION received %d report:\n", alert.rank[0]);
+                    printf("\tAlert time: %.2f, Number of matches: %d, Rank: %d, Coord: (%d, %d)\n", alert.alert_time, alert.node_matched, alert.rank[0], alert.coord[0], alert.coord[1]);
+
+                    // update total number of alerts received
+                    summary.total_alert += 1;
+
+                    // handle reports received from sensor nodes
                     // set match value to Mismatch by default
                     report.match = "Mismatch";
-
-                    // get rank of node that sent alert
-                    report.rank = recv_ranks[i];
                         
                     // check altimeter array
                     #pragma omp critical 
                     {
-                        alt_time = altimeter_heights[report.rank].time;
-                        report.alt_sea_height = altimeter_heights[report.rank].seaLvl;
+                        alt_time = altimeter_heights[alert.rank[0] - 1].time;
+                        report.alt_sea_height = altimeter_heights[alert.rank[0] - 1].seaLvl;
                     }
 
                     // change timespec to string of date and time
-                    strftime(alt_time_str, sizeof alt_time_str, DATETIME, gmtime(&alt_time.tv_sec));
+                    strftime(alt_time_str, sizeof(alt_time_str), DATETIME, gmtime(&alt_time.tv_sec));
                     report.alt_time = alt_time_str;
-
-                    // get alert information
-                    #pragma omp critical
-                    sensor_alert = reports[report.rank];
                     
                     // check whether there is a match or not depending on the difference 
                     // between sea height recorded by altimeter and reported by sensor node
-                    if (abs(alt_height - sensor_alert.sma[0]) <= ALTIMETER_TOLERANCE) { 
+                    if (fabs(report.alt_sea_height - alert.sma[0]) <= ALTIMETER_TOLERANCE) { 
                         report.match = "Match";
                         summary.total_match += 1;
                     } else {
                         summary.total_mismatch += 1;
                     }
 
-                    // add report to log file
-                    log_report(p_log_name, report, sensor_alert);
-                }
+                    // add alert to report
+                    report.alert = alert;
 
+                    // add report information to array
+                    report.filled = 1;
+                    reports[report.iteration] = report;
+                }
                 // sleep for a specified amount of time before going to the next iteration
                 sleep(BASE_CYCLE);
                 report.iteration++;
-            }
+            } while (report.iteration != max_iteration);
 
             // set terminate flag to true 
             #pragma omp critical
-            terminate = true;
+            terminate = 1;
 
             // broadcast termination message to sensor nodes
-            MPI_Bcast(&terminate, 1, MPI_INT, 0, world_comm);
+            for (i = 1; i < cart_size; i++) {
+                MPI_Isend(&terminate, 1, MPI_INT, i, 0, world_comm);
+            }
+            // wait for the terminate message to send to all the sensor nodes
+            MPI_Waitall(cart_size, send_request, send_status);
+
+            // add reports to log file
+            for (i = 0; i < max_iteration; i++) {
+                if (reports[i].filled == 1) {
+                    log_report(p_log_name, reports[i]);
+                }
+            }
 
             // end of simulation time
             timespec_get(&end, TIME_UTC);
@@ -180,7 +182,7 @@ int base_station(int threshold, MPI_Comm world_comm) {
             summary.sim_time = time_taken;
 
             // generate summary report
-            log_summary(p_log_name, summary);
+            // log_summary(p_log_name, summary);
         }
 
 
@@ -190,34 +192,32 @@ int base_station(int threshold, MPI_Comm world_comm) {
             int rand_rank;
             float rand_sea_height;
             struct timespec alt_time;
-            bool l_terminate;
+            int l_terminate;
 
             do {
                 // read global terminate flag and store it in local terminate flag
                 #pragma omp critical 
-                l_terminate = terminate;
+                l_terminate = terminate;   
 
-                // randomly generate rank (an integer between 1 and cart_size)
-                unsigned int rank_seed = (unsigned int)time(NULL);
-                rand_rank = rand_r(&rank_seed) % cart_size + 1;       
-        
-                // randomly generate sea level
-                unsigned int sea_height_seed = (unsigned int)time(NULL);
-                rand_sea_height = rand_float(sea_height_seed, TSUNAMI_LOWERBOUND, TSUNAMI_UPPERBOUND);
+                for (int i = 0; i < cart_size; i++) {
+                    // randomly generate sea level
+                    unsigned int sea_height_seed = (unsigned int)time(NULL);
+                    rand_sea_height = rand_float(sea_height_seed, threshold, TSUNAMI_UPPERBOUND);
 
-                // get current time
-                timespec_get(&alt_time, TIME_UTC);
+                    // get current time
+                    timespec_get(&alt_time, TIME_UTC);
 
-                // update altimeter_heights
-                #pragma omp critical                            
-                {
-                    altimeter_heights[rand_rank].time = alt_time;
-                    altimeter_heights[rand_rank].sea_height = rand_sea_height;    
+                    // update altimeter_heights
+                    #pragma omp critical                            
+                    {
+                        altimeter_heights[i].time = alt_time;
+                        altimeter_heights[i].sea_height = rand_sea_height;    
+                    }
                 }
                 
                 // sleep for a specified amount of time before going to the next iteration
-                sleep(ALTIMETER_CYCLE)
-            } while (!l_terminate)
+                sleep(ALTIMETER_CYCLE);
+            } while (l_terminate != 1);
         }
     }
 
@@ -225,7 +225,8 @@ int base_station(int threshold, MPI_Comm world_comm) {
     return 0;
 }
 
-void log_report(char *p_log_name, struct basereport report, struct reportstruct alert) {
+void log_report(char *p_log_name, struct basereport report) {
+    struct reportstruct alert = report.alert;
     // get log time
     struct timespec log_time;
     timespec_get(&log_time, TIME_UTC);
@@ -234,7 +235,7 @@ void log_report(char *p_log_name, struct basereport report, struct reportstruct 
     // open log file to append new information
     FILE *pFile = fopen(p_log_name, "a");
 
-    /*write the report into the log file*/
+    /* Write the report into the log file */
     // header information
     fprintf(pFile, "--------------------------------------------------------\n");
     fprintf(pFile, , "Iteration: %d\n", report.iteration);
