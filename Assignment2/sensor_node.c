@@ -235,8 +235,8 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 MPI_Pack(&report.rank, 5, MPI_INT, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.coord, 2, MPI_INT, buffer, buffer_size, &position, world_comm);
 
-                                /* Non-blocking send the packed message to base station */
-                                MPI_Isend(buffer, buffer_size, MPI_PACKED, 0, BASE_STATION_MSG, world_comm, &p_req[0]);
+                                /* Blocking send the packed message to base station */
+                                MPI_Send(buffer, buffer_size, MPI_PACKED, BASE_STATION_RANK, BASE_STATION_MSG, world_comm);
 
                                 printf("Cart rank %d sends report to base station.\n", my_rank);
                                 printf("\tAlert time: %.2f, Number of matches: %d, Coord: (%d, %d)\n", report.alert_time, report.node_matched, report.coord[0], report.coord[1]);
