@@ -14,9 +14,9 @@ Abbreviations:
 #include <unistd.h>
 
 #define NODE_CYCLE 5 // cycle for sea water column height generation
-#define NODE_LOWERBOUND 6400 // lower bound for sea water column height
-#define NODE_UPPERBOUND 6500 // upper bound for sea water column height
-#define NODE_TOLERANCE 100 // tolerence range to compare SMA between nodes
+#define NODE_LOWERBOUND 6400.0 // lower bound for sea water column height
+#define NODE_UPPERBOUND 6500.0 // upper bound for sea water column height
+#define NODE_TOLERANCE 100.0 // tolerence range to compare SMA between nodes
 #define BASE_STATION_RANK 0
 #define BASE_STATION_MSG 0
 #define REQ_MSG 1
@@ -112,24 +112,30 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             MPI_Type_create_struct(6, blocklen, disp, type, &report_type);
             MPI_Type_commit(&report_type);
 
-            /* Create request and status array */
+            /* Create request and status array for send/recv operations between nodes */
             MPI_Request p_req[num_nbrs * 2];
             MPI_Status p_status[num_nbrs * 2];
+            /* Create request and status for send operation between node and base station */
+            MPI_Request req;
+            MPI_Status status;
+            /* Create status for probing terminate message from base station */
             MPI_Status probe_status;
 
             char *buffer;
             int buffer_size, position;
             int j, request = 1;
-            int send_recv_flag = 0, flag = 0; // placeholder to indicate a message is received or not
+            int send_recv_flag = 0, alter_flag = 0, flag = 0; // placeholder to indicate a message is received or not
             int base_station_msg;
             int l_terminate = 0; // local terminiate variable
             int count; // count the number of matched SMA
             int index = 0; // pointer to the array storing sea values
-            int window_size = 10; // size of the array storing sea values
+            int window_size = 2; // size of the array storing sea values
             float sum;
             float l_sea_moving_avg = 0.0; // local SMA variable
             float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
             float p_recv_vals[4] = { -1.0, -1.0, -1.0, -1.0 };
+            double curr_time;
+            double time_taken;
             struct timespec p_timestamp[window_size];
 
             do {
@@ -147,7 +153,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 timespec_get(&timestamp, TIME_UTC);
                 char buff[100];
                 strftime(buff, sizeof(buff), "%D %T", gmtime(&timestamp.tv_sec));
-                printf("Cart rank %d has random sea height %.2f at time %s UTC.\n", my_rank, rand_sea_height, buff);
+                printf("Cart rank %d has random sea height %lf at time %s UTC.\n", my_rank, rand_sea_height, buff);
                 
                 // check if the array is filled up with values
                 if (p_sea_array[index] != 0.0) {
@@ -174,8 +180,8 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                             MPI_Irecv(&p_recv_vals[j], 1, MPI_FLOAT, p_nbrs[j], SMA_MSG, cart_comm, &p_req[num_nbrs + j]);
                         }
 
-                        double curr_time = MPI_Wtime();
-                        double time_taken = MPI_Wtime() - curr_time;
+                        curr_time = MPI_Wtime();
+                        time_taken = MPI_Wtime() - curr_time;
                         /* Loop until all requests have completed and time taken less than 2 times the cycle */
                         do {
                             send_recv_flag = 0; // reset flag to false
@@ -189,7 +195,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                             printf("Cart rank %d time taken %.2f hence cancel all requests.\n", my_rank, time_taken);
                         } else {
                             send_recv_flag = 0; // reset flag to false
-                            printf("Cart rank %d has SMA %.2f. Received top: %.2f, bottom: %.2f, left: %.2f, right: %.2f.\n", my_rank, l_sea_moving_avg, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
+                            printf("Cart rank %d has SMA %.3f. Received top: %.2f, bottom: %.2f, left: %.2f, right: %.2f.\n", my_rank, l_sea_moving_avg, p_recv_vals[0], p_recv_vals[1], p_recv_vals[2], p_recv_vals[3]);
                         
                             /* STEP 2: Compare SMA between neighbors */
                             count = 0;
@@ -234,11 +240,27 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 MPI_Pack(&report.rank, 5, MPI_INT, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.coord, 2, MPI_INT, buffer, buffer_size, &position, world_comm);
 
-                                /* Blocking send the packed message to base station */
-                                MPI_Send(buffer, buffer_size, MPI_PACKED, BASE_STATION_RANK, BASE_STATION_MSG, world_comm);
+                                /* Non-blocking send the packed message to base station */
+                                MPI_Isend(buffer, buffer_size, MPI_PACKED, BASE_STATION_RANK, BASE_STATION_MSG, world_comm, &req);
 
-                                printf("Cart rank %d sends report to base station.\n", my_rank);
-                                printf("\tAlert time: %.2f, Number of matches: %d, Coord: (%d, %d)\n", report.alert_time, report.node_matched, report.coord[0], report.coord[1]);
+                                curr_time = MPI_Wtime();
+                                time_taken = MPI_Wtime() - curr_time;
+                                /* Loop until all requests have completed and time taken less than 2 times the cycle */
+                                do {
+                                    alter_flag = 0; // reset flag to false
+                                    MPI_Test(&req, &alter_flag, &status);
+                                    time_taken = MPI_Wtime() - curr_time; // calculate the time taken
+                                } while ((! alter_flag) && time_taken < 2 * NODE_CYCLE);
+
+                                if (alter_flag) {
+                                    alter_flag = 0; // reset flag to false
+                                    printf("Cart rank %d sends report to base station.\n", my_rank);
+                                    printf("\tAlert time: %.2f, Number of matches: %d, Coord: (%d, %d)\n", report.alert_time, report.node_matched, report.coord[0], report.coord[1]);
+                                } else {
+                                    MPI_Cancel(&req); // cancel all requests
+                                    printf("Cart rank %d time taken %.2f hence cancel all requests for sending report.\n", my_rank, time_taken);
+                                }
+                                
                             }
                         }
                     }
