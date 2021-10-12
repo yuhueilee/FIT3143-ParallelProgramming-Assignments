@@ -224,7 +224,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 report.alert_time = (timestamp.tv_sec * 1e9 + timestamp.tv_nsec) * 1e-9;
                                 report.nbr_comm_time = time_taken;
                                 report.tolerance = NODE_TOLERANCE;
-                                report.sma[0] = rand_sea_height;
+                                report.sma[0] = l_sea_moving_avg;
                                 for (j = 0; j < num_nbrs; j++) {
                                     report.sma[j + 1] = p_recv_vals[j];
                                 }
