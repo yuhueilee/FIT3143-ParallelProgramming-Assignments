@@ -57,7 +57,7 @@ struct basesummary {
 void log_report(char *p_log_name, struct basereport report);
 void log_summary(char *p_log_name, struct basesummary summary);
 
-void base_station(char *p_sentinel_name, float threshold, int max_iteration, MPI_Comm world_comm) {
+void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
     int size;
     MPI_Comm_size(world_comm, &size);
     int cart_size = size - 1;
@@ -66,6 +66,7 @@ void base_station(char *p_sentinel_name, float threshold, int max_iteration, MPI
     struct seaheightrecord altimeter_heights[cart_size];   
 
     char *p_log_name = "base_log.txt";
+    char *p_sentinel_name = "sentinel.txt";
     int tsunami_upperbound = threshold + ALTIMETER_RANGE;
     int terminate = 0, quit;
     struct basesummary summary;

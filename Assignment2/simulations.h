@@ -3,6 +3,6 @@
 
 /* prototypes */
 void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_comm, MPI_Comm cart_comm);  // function declaration for sensor node simulation
-void base_station(char *p_sentinel_name, float threshold, int max_iteration, MPI_Comm world_comm); // function declaration for base station simulation
+void base_station(float threshold, int max_iteration, MPI_Comm world_comm); // function declaration for base station simulation
 
 #endif // simulations_h
