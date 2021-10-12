@@ -43,7 +43,7 @@ int get_valid_neighbors(int *p_nbrs);
 /* Wireless sensor node simulation */
 void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_comm, MPI_Comm nodes_comm) {
     int g_terminate = 0; // set terminate to false initially
-    int node_lowerbound = threshold - NODE_RANGE, node_upperbound = threshold + NODE_RANGE;
+    float node_lowerbound = threshold - NODE_RANGE, node_upperbound = threshold + NODE_RANGE;
     int i, my_rank, my_cart_rank;
     int num_nbrs = 4, valid_nbrs = 0;
     int ndims = 2, reorder = 1, ierr = 0;
