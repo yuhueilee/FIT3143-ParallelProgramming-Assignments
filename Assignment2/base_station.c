@@ -11,9 +11,9 @@ This file contains function for simulating the base station and the satellite al
 #include <omp.h>
 
 /* Constants */
-#define BASE_CYCLE 2
+#define BASE_CYCLE 1
+#define ALTIMETER_RANGE 250.0
 #define ALTIMETER_CYCLE 5
-#define TSUNAMI_UPPERBOUND 6500
 #define ALTIMETER_TOLERANCE 100.00
 #define DATE_TIME "%a %F %T"
 
@@ -25,11 +25,13 @@ struct seaheightrecord {
 
 struct reportstruct { 
     double alert_time;
+    double nbr_comm_time;
     float tolerance;
     float sma[5];
     int node_matched;
     int rank[5];
     int coord[2];
+    int num_messages;
 };
 
 struct basereport { 
@@ -47,6 +49,8 @@ struct basesummary {
     int total_alert;
     int total_match;
     int total_mismatch;
+    double avg_base_comm;
+    double avg_nbr_comm;
 };
 
 /* Function declarations */
@@ -62,6 +66,7 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
     struct seaheightrecord altimeter_heights[cart_size];   
 
     char* p_log_name = "base_log.txt";
+    int tsunami_upperbound = threshold + ALTIMETER_RANGE;
     int terminate = 0;
     struct basesummary summary;
     struct timespec start;
@@ -93,6 +98,8 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
             summary.total_alert = 0;
             summary.total_match = 0;
             summary.total_mismatch = 0;
+            summary.avg_base_comm = 0;
+            summary.avg_nbr_comm = 0;
 
             do {
                 char *buffer;
@@ -112,11 +119,15 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
 
                     // unpack the data into a buffer
                     MPI_Unpack(buffer, buffer_size, &position, &alert.alert_time, 1, MPI_DOUBLE, world_comm);
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.nbr_comm_time, 1, MPI_DOUBLE, world_comm);
                     MPI_Unpack(buffer, buffer_size, &position, &alert.tolerance, 1, MPI_INT, world_comm);
                     MPI_Unpack(buffer, buffer_size, &position, &alert.sma, 5, MPI_FLOAT, world_comm);
                     MPI_Unpack(buffer, buffer_size, &position, &alert.node_matched, 1, MPI_INT, world_comm);
                     MPI_Unpack(buffer, buffer_size, &position, &alert.rank, 5, MPI_INT, world_comm);
                     MPI_Unpack(buffer, buffer_size, &position, &alert.coord, 2, MPI_INT, world_comm);
+                    MPI_Unpack(buffer, buffer_size, &position, &alert.num_messages, 1, MPI_INT, world_comm);
+
+                    /* Handle reports received from sensor nodes */
 
                     // update report comm_time
                     comm_time = comm_time - alert.alert_time;
@@ -128,7 +139,10 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
                     // update total number of alerts received
                     summary.total_alert += 1;
 
-                    // handle reports received from sensor nodes
+                    // update average communication times in summary
+                    summary.avg_base_comm += (comm_time / summary.total_alert);
+                    summary.avg_nbr_comm += (alert.nbr_comm_time / summary.total_alert);
+
                     // set match value to Mismatch by default
                     report.match = "Mismatch";
                         
@@ -209,9 +223,11 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
                 l_terminate = terminate;   
 
                 unsigned int sea_height_seed = (unsigned int)time(NULL);
+                srand(sea_height_seed);
                 for (int i = 0; i < cart_size; i++) {
                     // randomly generate sea level
-                    rand_sea_height = (float)(rand_r(&sea_height_seed) % (int)((TSUNAMI_UPPERBOUND - threshold)*1000) + threshold * 1000) / 1000;
+                    float scale = ((float)rand()/(float)(RAND_MAX)); /* [0, 1.0] */
+                    rand_sea_height = threshold + scale * (tsunami_upperbound - threshold);
 
                     // get current time
                     timespec_get(&alt_time, TIME_UTC);
@@ -294,11 +310,14 @@ void log_report(char *p_log_name, struct basereport report) {
     // infromation from the satellite altimeter
     fprintf(pFile, "Satellite altimeter reporting time: %s\n", report.alt_time);
     fprintf(pFile, "Satellite altimeter reporting height(m): %.3lf\n", report.alt_sea_height);
-    fprintf(pFile, "Satellite altimeter reporting sensor node rank: %d\n\n", alert.rank[0]);
+    fprintf(pFile, "Satellite altimeter reporting sensor node coordinates: (%d, %d)\n\n", alert.coord[0], alert.coord[1]);
 
     // extra information
-    fprintf(pFile, "Communication Time (seconds): %lf\n", report.comm_time);
-    // fprintf(pFile, "Total messages sent between reporting node and base station: %d\n", );
+    int msg = 1;
+    fprintf(pFile, "Communication time between reporting node and base station (seconds): %lf\n", report.comm_time);
+    fprintf(pFile, "Communication time between reporting node and its neighbours (seconds): %lf\n", alert.nbr_comm_time);
+    fprintf(pFile, "Total messages between reporting node and base station: %d\n", msg);    
+    fprintf(pFile, "Total messages between reporting node and neighbours: %d\n", alert.num_messages);    
     fprintf(pFile, "Number of adjacent matches to reporting node: %d\n", alert.node_matched);
     fprintf(pFile, "Max. tolerance range between nodes readings(m): %.3f\n", alert.tolerance);
     fprintf(pFile, "Max. tolerance range between satellite altimeter and reporting nodes readings(m): %.3f\n", ALTIMETER_TOLERANCE);
@@ -315,11 +334,13 @@ void log_summary(char *p_log_name, struct basesummary summary) {
     // write summary
     fprintf(pFile, "------------------------------------------------------------------------------------------------\n\n");
     fprintf(pFile, "SUMMARY\n\n");
-    fprintf(pFile, "Total simulation time: \t%lf\n", summary.sim_time);
+    fprintf(pFile, "Total simulation time: %lf\n", summary.sim_time);
     fprintf(pFile, "Total number of alerts: %d\n", summary.total_alert);
     fprintf(pFile, "\tMatched alerts: \t%d\n", summary.total_match);
     fprintf(pFile, "\tMismatched alerts: \t%d\n\n", summary.total_mismatch);
-    fprintf(pFile, "------------------------------------------------------------------------------------------------\n\n");
+    fprintf(pFile, "Average communication time between reporting node and base: %lf\n", summary.avg_base_comm);
+    fprintf(pFile, "Average communication time between neighbours: %lf\n", summary.avg_nbr_comm);
+    fprintf(pFile, "\n------------------------------------------------------------------------------------------------\n\n");
 
     // close the log file
     fclose(pFile);
