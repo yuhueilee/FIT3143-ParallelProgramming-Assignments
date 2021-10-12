@@ -28,21 +28,24 @@ Abbreviations:
 /* Type struct to store the alert report */
 struct reportstruct { 
     double alert_time;
+    double nbr_comm_time;
     float tolerance;
     float sma[5];
     int node_matched;
     int rank[5];
     int coord[2];
+    int num_messages;
 };
 
 /* Function prototype */
 float rand_float(unsigned int seed, float min, float max);
+int get_valid_neighbors(int *p_nbrs);
 
 /* Wireless sensor node simulation */
 void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_comm, MPI_Comm nodes_comm) {
     int g_terminate = 0; // set terminate to false initially
     int i, my_rank, my_cart_rank;
-    int num_nbrs = 4;
+    int num_nbrs = 4, valid_nbrs = 0;
     int ndims = 2, reorder = 1, ierr = 0;
     int p_dims[ndims], p_coord[ndims], p_wrap_around[ndims], p_nbrs[num_nbrs];
     float g_sea_moving_avg = 0.0;
@@ -73,6 +76,9 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
 	MPI_Cart_shift(cart_comm, SHIFT_COL, DISP, &p_nbrs[2], &p_nbrs[3]);
 
     printf("Cart rank: %d. Cart Coord: (%d, %d).\n", my_cart_rank, p_coord[0], p_coord[1]);
+
+    // Get the number of valid neighborhood nodes
+    valid_nbrs = get_valid_neighbors(p_nbrs);
     
     sleep(my_rank); // this is to have different seed value for random float generator
 
@@ -91,17 +97,21 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             /* Create report typestruct instance */
             struct reportstruct report;
             MPI_Datatype report_type;
-            MPI_Datatype type[6] = { MPI_DOUBLE, MPI_FLOAT, MPI_FLOAT, MPI_INT, MPI_INT, MPI_INT };
-            int blocklen[6] = { 1, 1, 5, 1, 5, 2 };
-            MPI_Aint disp[6];
+            MPI_Datatype type[8] = { MPI_DOUBLE, MPI_DOUBLE, MPI_FLOAT, MPI_FLOAT, MPI_INT, MPI_INT, MPI_INT, MPI_INT };
+            int blocklen[8] = { 1, 1, 1, 5, 1, 5, 2, 1 };
+            MPI_Aint disp[8];
             // get the addresses
             MPI_Get_address(&report.alert_time, &disp[0]);
-            MPI_Get_address(&report.tolerance, &disp[1]);
-            MPI_Get_address(&report.sma, &disp[2]);
-            MPI_Get_address(&report.node_matched, &disp[3]);
-            MPI_Get_address(&report.rank, &disp[4]);
-            MPI_Get_address(&report.coord, &disp[5]);
+            MPI_Get_address(&report.nbr_comm_time, &disp[1]);
+            MPI_Get_address(&report.tolerance, &disp[2]);
+            MPI_Get_address(&report.sma, &disp[3]);
+            MPI_Get_address(&report.node_matched, &disp[4]);
+            MPI_Get_address(&report.rank, &disp[5]);
+            MPI_Get_address(&report.coord, &disp[6]);
+            MPI_Get_address(&report.num_messages, &disp[7]);
             // calculate the displacements
+            disp[7] = disp[7] - disp[6];
+            disp[6] = disp[6] - disp[5];
             disp[5] = disp[5] - disp[4];
             disp[4] = disp[4] - disp[3];
             disp[3] = disp[3] - disp[2];
@@ -109,7 +119,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             disp[1] = disp[1] - disp[0];
 	        disp[0] = 0;
             // Create MPI struct
-            MPI_Type_create_struct(6, blocklen, disp, type, &report_type);
+            MPI_Type_create_struct(8, blocklen, disp, type, &report_type);
             MPI_Type_commit(&report_type);
 
             /* Create request and status array for send/recv operations between nodes */
@@ -212,6 +222,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 timespec_get(&timestamp, TIME_UTC);
                                 // get current time in seconds
                                 report.alert_time = (timestamp.tv_sec * 1e9 + timestamp.tv_nsec) * 1e-9;
+                                report.nbr_comm_time = time_taken;
                                 report.tolerance = NODE_TOLERANCE;
                                 report.sma[0] = rand_sea_height;
                                 for (j = 0; j < num_nbrs; j++) {
@@ -224,21 +235,24 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 }                                
                                 report.coord[0] = p_coord[0];
                                 report.coord[1] = p_coord[1];
+                                report.num_messages = valid_nbrs * 2;
 
                                 /* Pack data into buffer */
                                 // get the upperbound for buffer size
-                                MPI_Pack_size(6, report_type, world_comm, &buffer_size);
+                                MPI_Pack_size(8, report_type, world_comm, &buffer_size);
                                 // allocate space for buffer
                                 buffer = (char *)malloc((unsigned) buffer_size);
                                 // reset position
                                 position = 0;
                                 // pack the data into a buffer
                                 MPI_Pack(&report.alert_time, 1, MPI_DOUBLE, buffer, buffer_size, &position, world_comm);
+                                MPI_Pack(&report.nbr_comm_time, 1, MPI_DOUBLE, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.tolerance, 1, MPI_INT, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.sma, 5, MPI_FLOAT, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.node_matched, 1, MPI_INT, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.rank, 5, MPI_INT, buffer, buffer_size, &position, world_comm);
                                 MPI_Pack(&report.coord, 2, MPI_INT, buffer, buffer_size, &position, world_comm);
+                                MPI_Pack(&report.num_messages, 1, MPI_INT, buffer, buffer_size, &position, world_comm);
 
                                 /* Non-blocking send the packed message to base station */
                                 MPI_Isend(buffer, buffer_size, MPI_PACKED, BASE_STATION_RANK, BASE_STATION_MSG, world_comm, &req);
@@ -334,4 +348,14 @@ float rand_float(unsigned int seed, float min, float max) {
     float rand_float = (float)(rand_r(&seed) % (int)(max - min) + min);
     rand_float += floating_val;
     return rand_float;
+}
+
+int get_valid_neighbors(int *p_nbrs) {
+    int i, count = 0;
+    for (i = 0; i < 4; i++) {
+        if (p_nbrs[i] != -2) {
+            count++;
+        }
+    }
+    return count;
 }
