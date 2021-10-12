@@ -57,7 +57,7 @@ struct basesummary {
 void log_report(char *p_log_name, struct basereport report);
 void log_summary(char *p_log_name, struct basesummary summary);
 
-void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
+void base_station(char *p_sentinel_name, float threshold, int max_iteration, MPI_Comm world_comm) {
     int size;
     MPI_Comm_size(world_comm, &size);
     int cart_size = size - 1;
@@ -65,13 +65,13 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
     // array where altimeter stores its generated sea levels
     struct seaheightrecord altimeter_heights[cart_size];   
 
-    char* p_log_name = "base_log.txt";
+    char *p_log_name = "base_log.txt";
     int tsunami_upperbound = threshold + ALTIMETER_RANGE;
-    int terminate = 0;
+    int terminate = 0, quit;
     struct basesummary summary;
     struct timespec start;
 
-    // get start time of simulation              
+    // get start time of base simulation              
     timespec_get(&start, TIME_UTC);
 
     omp_set_num_threads(2);
@@ -173,6 +173,17 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
                     report.filled = 1;
                     reports[report.iteration] = report;
                 }
+
+                /* read from text file to get the sentinel value */
+                // open log file to append new information
+                FILE *pSentinelFile = fopen(p_sentinel_name, "r");
+                fscanf(pSentinelFile, "%d", &quit);
+                fclose(pSentinelFile);
+                // if quit has been changed to 1 then break loop and stop simulation
+                if (quit == 1) {
+                    break;
+                }
+
                 // sleep for a specified amount of time before going to the next iteration
                 sleep(BASE_CYCLE);
                 report.iteration++;
@@ -345,5 +356,3 @@ void log_summary(char *p_log_name, struct basesummary summary) {
     // close the log file
     fclose(pFile);
 }
-
-// press q to quit etc.
