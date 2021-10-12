@@ -8,3 +8,4 @@ run:
 
 clean :
 	/bin/rm -f mainOut *.o
+	/bin/rm -f base_log *.txt
