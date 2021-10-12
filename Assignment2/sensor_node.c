@@ -211,7 +211,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                             count = 0;
                             for (j = 0; j < num_nbrs; j++) {    
                                 float range = fabs(p_recv_vals[j] - l_sea_moving_avg);
-                                if (p_recv_vals[j] != -1.0 && p_nbrs[j] != -2 && range <= NODE_TOLERANCE) {
+                                if (p_recv_vals[j] != -1.0 && p_nbrs[j] != -2 && range <= NODE_TOLERANCE && p_recv_vals[j] > threshold) {
                                     count += 1;
                                 }
                             }
