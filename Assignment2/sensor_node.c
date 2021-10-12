@@ -141,7 +141,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             int index = 0; // pointer to the array storing sea values
             int window_size = 7; // size of the array storing sea values
             float sum;
-            float l_sea_moving_avg = 0.0; // local SMA variable
+            float l_sea_moving_avg = node_lowerbound; // local SMA variable  (default to lowerbound)
             float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
             float p_recv_vals[4] = { -1.0, -1.0, -1.0, -1.0 };
             double curr_time;
@@ -313,7 +313,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             int req_msg;
             int flag = 0; // placeholder to indicate a message is received or not
             int l_terminate = 0; // local terminiate variable
-            float l_sea_moving_avg = 0.0; // local SMA variable
+            float l_sea_moving_avg = node_lowerbound; // local SMA variable (default to lowerbound)
 
             do {
                 #pragma omp critical 
