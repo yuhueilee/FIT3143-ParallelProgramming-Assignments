@@ -14,8 +14,7 @@ Abbreviations:
 #include <unistd.h>
 
 #define NODE_CYCLE 5 // cycle for sea water column height generation
-#define NODE_LOWERBOUND 6400.0 // lower bound for sea water column height
-#define NODE_UPPERBOUND 6500.0 // upper bound for sea water column height
+#define NODE_RANGE 500.0
 #define NODE_TOLERANCE 100.0 // tolerence range to compare SMA between nodes
 #define BASE_STATION_RANK 0
 #define BASE_STATION_MSG 0
@@ -44,6 +43,7 @@ int get_valid_neighbors(int *p_nbrs);
 /* Wireless sensor node simulation */
 void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_comm, MPI_Comm nodes_comm) {
     int g_terminate = 0; // set terminate to false initially
+    int node_lowerbound = threshold - NODE_RANGE, node_upperbound = threshold + NODE_RANGE;
     int i, my_rank, my_cart_rank;
     int num_nbrs = 4, valid_nbrs = 0;
     int ndims = 2, reorder = 1, ierr = 0;
@@ -139,7 +139,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             int l_terminate = 0; // local terminiate variable
             int count; // count the number of matched SMA
             int index = 0; // pointer to the array storing sea values
-            int window_size = 2; // size of the array storing sea values
+            int window_size = 7; // size of the array storing sea values
             float sum;
             float l_sea_moving_avg = 0.0; // local SMA variable
             float *p_sea_array = calloc(window_size, sizeof(float)); // initialize the array
@@ -151,7 +151,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             do {
                 /* STEP 1: Generate random sea value */
                 unsigned int seed = time(NULL); // seed value to generate different random value for each process
-                float rand_sea_height = rand_float(seed, NODE_LOWERBOUND, NODE_UPPERBOUND);
+                float rand_sea_height = rand_float(seed, node_lowerbound, node_upperbound);
                 
                 /* Push the new random value to array */
                 p_sea_array[index] = rand_sea_height;
