@@ -51,14 +51,16 @@ struct basesummary {
     int total_mismatch;
     double avg_base_comm;
     double avg_nbr_comm;
+    int **coord;
+    int *total_alert_per_node;
 };
 
 /* Function declarations */
 void log_report(char *p_log_name, struct basereport report);
-void log_summary(char *p_log_name, struct basesummary summary);
+void log_summary(char *p_log_name, int cart_size, struct basesummary summary);
 
-void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
-    int size;
+void base_station(int num_rows, int num_cols, float threshold, int max_iteration, MPI_Comm world_comm) {
+    int i, size;
     MPI_Comm_size(world_comm, &size);
     int cart_size = size - 1;
 
@@ -71,6 +73,19 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
     int terminate = 0, quit;
     struct basesummary summary;
     struct timespec start;
+
+    // initialize the array to store the coordinate of reporting node
+    summary.coord = (int**)malloc(cart_size * sizeof(int*));
+    for (i = 0; i < cart_size; i++) {
+        summary.coord[i] = (int*)malloc(2 * sizeof(int));
+    }
+    for (i = 0; i < cart_size; i++) {
+        summary.coord[i][0] = (int)round(i / num_cols);
+        summary.coord[i][1] = (int)round(i % num_cols);
+    }
+
+    // initialize the array to store the total alerts per node
+    summary.total_alert_per_node = calloc(cart_size, sizeof(int));
 
     // get start time of base simulation              
     timespec_get(&start, TIME_UTC);
@@ -139,6 +154,9 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
 
                     // update total number of alerts received
                     summary.total_alert += 1;
+
+                    // update total number of alerts received from reporting node
+                    summary.total_alert_per_node[alert.rank[0]] += 1;
 
                     // update average communication times in summary
                     summary.avg_base_comm += (comm_time / summary.total_alert);
@@ -218,7 +236,7 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
             summary.sim_time = time_taken;
 
             // generate summary report
-            log_summary(p_log_name, summary);
+            log_summary(p_log_name, cart_size, summary);
         }
 
 
@@ -227,7 +245,7 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
         {
             float rand_sea_height;
             struct timespec alt_time;
-            int l_terminate;
+            int i, l_terminate;
 
             do {
                 // read global terminate flag and store it in local terminate flag
@@ -236,7 +254,7 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
 
                 unsigned int sea_height_seed = (unsigned int)time(NULL);
                 srand(sea_height_seed);
-                for (int i = 0; i < cart_size; i++) {
+                for (i = 0; i < cart_size; i++) {
                     // randomly generate sea level
                     float scale = ((float)rand()/(float)(RAND_MAX)); /* [0, 1.0] */
                     rand_sea_height = threshold + scale * (tsunami_upperbound - threshold);
@@ -258,6 +276,8 @@ void base_station(float threshold, int max_iteration, MPI_Comm world_comm) {
         }
     }
 
+    free(summary.coord);
+    free(summary.total_alert_per_node);
     fflush(stdout);
 }
 
@@ -341,7 +361,8 @@ void log_report(char *p_log_name, struct basereport report) {
     fclose(pFile);
 }
 
-void log_summary(char *p_log_name, struct basesummary summary) {
+void log_summary(char *p_log_name, int cart_size, struct basesummary summary) {
+    int i;
     // open log file to append summary
     FILE *pFile = fopen(p_log_name, "a");
 
@@ -351,7 +372,12 @@ void log_summary(char *p_log_name, struct basesummary summary) {
     fprintf(pFile, "Total simulation time: %lf\n", summary.sim_time);
     fprintf(pFile, "Total number of alerts: %d\n", summary.total_alert);
     fprintf(pFile, "\tMatched alerts: \t%d\n", summary.total_match);
-    fprintf(pFile, "\tMismatched alerts: \t%d\n\n", summary.total_mismatch);
+    fprintf(pFile, "\tMismatched alerts: \t%d\n", summary.total_mismatch);
+    fprintf(pFile, "Total number of alerts per node:\n");
+    fprintf(pFile, "\tRank\tNumber of alerts\n");
+    for (i = 0; i < cart_size; i++) {
+        fprintf(pFile, "\t(%d, %d)\t%d\n", summary.coord[i][0], summary.coord[i][1], summary.total_alert_per_node[i]);
+    }
     fprintf(pFile, "Average communication time between reporting node and base: %lf\n", summary.avg_base_comm);
     fprintf(pFile, "Average communication time between neighbours: %lf\n", summary.avg_nbr_comm);
     fprintf(pFile, "\n------------------------------------------------------------------------------------------------\n\n");
