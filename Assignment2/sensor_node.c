@@ -47,7 +47,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     int num_nbrs = 4, valid_nbrs = 0;
     int ndims = 2, reorder = 1, ierr = 0;
     int p_dims[ndims], p_coord[ndims], p_wrap_around[ndims], p_nbrs[num_nbrs];
-    float g_sea_moving_avg = 0.0;
+    float g_sea_moving_avg = node_lowerbound;
     MPI_Comm cart_comm;
 
     // assign rows and cols to dims array
