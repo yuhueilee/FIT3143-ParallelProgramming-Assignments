@@ -217,7 +217,7 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
 
             // broadcast termination message to sensor nodes
             for (i = 0; i < cart_size; i++) {
-                MPI_Isend(&l_terminate, 1, MPI_INT, i + 1, 0, world_comm, &send_request[i]);
+                MPI_Isend(&l_terminate, 1, MPI_INT, i, 0, world_comm, &send_request[i]);
             }
             // wait for the terminate message to send to all the sensor nodes
             MPI_Waitall(cart_size, send_request, send_status);
@@ -374,9 +374,9 @@ void log_summary(char *p_log_name, int cart_size, struct basesummary summary) {
     fprintf(pFile, "\tMatched alerts: \t%d\n", summary.total_match);
     fprintf(pFile, "\tMismatched alerts: \t%d\n", summary.total_mismatch);
     fprintf(pFile, "Total number of alerts per node:\n");
-    fprintf(pFile, "\tRank\tNumber of alerts\n");
+    fprintf(pFile, "\tCoordinate\tNumber of alerts\n");
     for (i = 0; i < cart_size; i++) {
-        fprintf(pFile, "\t(%d, %d)\t%d\n", summary.coord[i][0], summary.coord[i][1], summary.total_alert_per_node[i]);
+        fprintf(pFile, "\t(%d, %d)\t\t%d\n", summary.coord[i][0], summary.coord[i][1], summary.total_alert_per_node[i]);
     }
     fprintf(pFile, "Average communication time between reporting node and base: %lf\n", summary.avg_base_comm);
     fprintf(pFile, "Average communication time between neighbours: %lf\n", summary.avg_nbr_comm);

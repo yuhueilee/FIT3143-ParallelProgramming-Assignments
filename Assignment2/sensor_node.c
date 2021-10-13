@@ -16,7 +16,6 @@ Abbreviations:
 #define NODE_CYCLE 5 // cycle for sea water column height generation
 #define NODE_RANGE 500.0
 #define NODE_TOLERANCE 100.0 // tolerence range to compare SMA between nodes
-#define BASE_STATION_RANK 0
 #define BASE_STATION_MSG 0
 #define REQ_MSG 1
 #define SMA_MSG 2
@@ -44,7 +43,7 @@ int get_valid_neighbors(int *p_nbrs);
 void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_comm, MPI_Comm nodes_comm) {
     int g_terminate = 0; // set terminate to false initially
     float node_lowerbound = threshold - NODE_RANGE, node_upperbound = threshold + NODE_RANGE;
-    int i, my_rank, my_cart_rank;
+    int i, my_rank, my_cart_rank, base_station_rank, size;
     int num_nbrs = 4, valid_nbrs = 0;
     int ndims = 2, reorder = 1, ierr = 0;
     int p_dims[ndims], p_coord[ndims], p_wrap_around[ndims], p_nbrs[num_nbrs];
@@ -54,6 +53,10 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
     // assign rows and cols to dims array
     p_dims[0] = num_rows;
     p_dims[1] = num_cols;
+
+    /* Get the base station rank number */
+    MPI_Comm_size(world_comm, &size);
+    base_station_rank = size - 1;
 
     /* Store the rank number from nodes_comm */
     MPI_Comm_rank(nodes_comm, &my_rank);
@@ -255,7 +258,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 MPI_Pack(&report.num_messages, 1, MPI_INT, buffer, buffer_size, &position, world_comm);
 
                                 /* Non-blocking send the packed message to base station */
-                                MPI_Isend(buffer, buffer_size, MPI_PACKED, BASE_STATION_RANK, BASE_STATION_MSG, world_comm, &req);
+                                MPI_Isend(buffer, buffer_size, MPI_PACKED, base_station_rank, BASE_STATION_MSG, world_comm, &req);
 
                                 curr_time = MPI_Wtime();
                                 time_taken = MPI_Wtime() - curr_time;
@@ -281,7 +284,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                 }
                 
                 /* STEP 3: Listen to base station */
-                MPI_Iprobe(BASE_STATION_RANK, BASE_STATION_MSG, world_comm, &flag, &probe_status);
+                MPI_Iprobe(base_station_rank, BASE_STATION_MSG, world_comm, &flag, &probe_status);
                 
                 // receive message from base station if flag is true
                 if (flag) {
