@@ -49,8 +49,7 @@ struct basesummary {
     int total_alert;
     int total_match;
     int total_mismatch;
-    double avg_base_comm;
-    double avg_nbr_comm;
+    double avg_comm_time;
     int **coord;
     int *total_alert_per_node;
 };
@@ -114,8 +113,7 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
             summary.total_alert = 0;
             summary.total_match = 0;
             summary.total_mismatch = 0;
-            summary.avg_base_comm = 0;
-            summary.avg_nbr_comm = 0;
+            summary.avg_comm_time = 0;
 
             do {
                 char *buffer;
@@ -158,9 +156,8 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
                     // update total number of alerts received from reporting node
                     summary.total_alert_per_node[alert.rank[0]] += 1;
 
-                    // update average communication times in summary
-                    summary.avg_base_comm += (comm_time / summary.total_alert);
-                    summary.avg_nbr_comm += (alert.nbr_comm_time / summary.total_alert);
+                    // update average communication time in summary
+                    summary.avg_comm_time += (comm_time / summary.total_alert);
 
                     // set match value to Mismatch by default
                     report.match = "Mismatch";
@@ -346,9 +343,8 @@ void log_report(char *p_log_name, struct basereport report) {
 
     // extra information
     int msg = 1;
-    fprintf(pFile, "Total Communication time for reporting node (seconds): %lf\n", report.comm_time + alert.nbr_comm_time);
-    fprintf(pFile, "\tCommunication time between base station: %lf\n", report.comm_time);
-    fprintf(pFile, "\tCommunication time between its neighbours: %lf\n", alert.nbr_comm_time);
+    fprintf(pFile, "Total Communication time for reporting node (seconds): %lf\n", report.comm_time);
+    fprintf(pFile, "\tIncluding communication time between its neighbours: %lf\n", alert.nbr_comm_time);
     fprintf(pFile, "Total messages sent by reporting node for this alert: %d\n", msg + alert.num_messages);    
     fprintf(pFile, "\tMessages to base station: %d\n", msg);    
     fprintf(pFile, "\tMessages to neighbours: %d\n", alert.num_messages);    
@@ -378,8 +374,7 @@ void log_summary(char *p_log_name, int cart_size, struct basesummary summary) {
     for (i = 0; i < cart_size; i++) {
         fprintf(pFile, "\t(%d, %d)\t\t%d\n", summary.coord[i][0], summary.coord[i][1], summary.total_alert_per_node[i]);
     }
-    fprintf(pFile, "Average communication time between reporting node and base: %lf\n", summary.avg_base_comm);
-    fprintf(pFile, "Average communication time between neighbours: %lf\n", summary.avg_nbr_comm);
+    fprintf(pFile, "Average communication time: %lf\n", summary.avg_comm_time);
     fprintf(pFile, "\n------------------------------------------------------------------------------------------------\n\n");
 
     // close the log file
