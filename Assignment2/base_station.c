@@ -310,8 +310,8 @@ void log_report(char *p_log_name, struct basereport report) {
 
     // information from the nodes adjacent to reporting node
     fprintf(pFile, "Adjacent Nodes\t\tCoord\t\tHeight(m)\n");   
-    int row_disp, col_disp;
-    for (int i = 1; i < 5; i++) {
+    int i, row_disp, col_disp;
+    for (i = 1; i < 5; i++) {
         // reset row and column displacement
         row_disp = 0;
         col_disp = 0;
