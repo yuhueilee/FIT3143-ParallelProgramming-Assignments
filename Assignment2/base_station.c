@@ -185,10 +185,15 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
                     // add alert to report
                     report.alert = alert;
 
-                    // add report information to array
+                    // set filled as 1
                     report.filled = 1;
-                    reports[report.iteration] = report;
+                } else {
+                    // set filled as 0
+                    report.filled = 0;
                 }
+
+                // add report information to array
+                reports[report.iteration] = report;
 
                 /* read from text file to get the sentinel value */
                 // open log file to append new information
