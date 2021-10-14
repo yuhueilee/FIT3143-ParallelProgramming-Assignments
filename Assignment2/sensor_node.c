@@ -137,7 +137,7 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
             char *buffer;
             int buffer_size, position;
             int j, request = 1;
-            int send_recv_flag = 0, alter_flag = 0, flag = 0; // placeholder to indicate a message is received or not
+            int send_recv_flag = 0, alert_flag = 0, flag = 0; // placeholder to indicate a message is received or not
             int base_station_msg;
             int l_terminate = 0; // local terminiate variable
             int count; // count the number of matched SMA
@@ -260,13 +260,13 @@ void sensor_node(int num_rows, int num_cols, float threshold, MPI_Comm world_com
                                 time_taken = MPI_Wtime() - curr_time;
                                 /* Loop until all requests have completed and time taken less than 2 times the cycle */
                                 do {
-                                    alter_flag = 0; // reset flag to false
-                                    MPI_Test(&req, &alter_flag, &status);
+                                    alert_flag = 0; // reset flag to false
+                                    MPI_Test(&req, &alert_flag, &status);
                                     time_taken = MPI_Wtime() - curr_time; // calculate the time taken
-                                } while ((! alter_flag) && time_taken < 2 * NODE_CYCLE);
+                                } while ((! alert_flag) && time_taken < 2 * NODE_CYCLE);
 
-                                if (alter_flag) {
-                                    alter_flag = 0; // reset flag to false
+                                if (alert_flag) {
+                                    alert_flag = 0; // reset flag to false
                                     printf("Cart rank %d sends report to base station.\n", my_rank);
                                     printf("\tAlert time: %.2f, Number of matches: %d, Coord: (%d, %d)\n", report.alert_time, report.node_matched, report.coord[0], report.coord[1]);
                                 } else {
