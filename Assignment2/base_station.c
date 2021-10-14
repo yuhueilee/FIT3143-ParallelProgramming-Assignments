@@ -157,9 +157,6 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
 
                     // update average communication time in summary
                     summary.avg_comm_time += (comm_time / summary.total_alert);
-
-                    // set match value to Mismatch by default
-                    report.match = "Mismatch";
                         
                     // check altimeter array
                     #pragma omp critical
@@ -178,6 +175,7 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
                         report.match = "Match";
                         summary.total_match += 1;
                     } else {
+                        report.match = "Mismatch";
                         summary.total_mismatch += 1;
                     }
 
