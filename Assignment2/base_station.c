@@ -108,7 +108,6 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
             MPI_Status send_status[cart_size];
 
             // initialize values in report and summary
-            report.filled = 0;
             report.iteration = 0;
             summary.total_alert = 0;
             summary.total_match = 0;
