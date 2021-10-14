@@ -216,7 +216,7 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
                 l_terminate = terminate;
             }
 
-            // broadcast termination message to sensor nodes
+            // send termination message to all sensor nodes
             for (i = 0; i < cart_size; i++) {
                 MPI_Isend(&l_terminate, 1, MPI_INT, i, 0, world_comm, &send_request[i]);
             }
