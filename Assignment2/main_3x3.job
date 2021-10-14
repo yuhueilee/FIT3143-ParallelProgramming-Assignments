@@ -1,0 +1,17 @@
+#!/bin/bash 
+#SBATCH --job-name=main_3x3  ### name your job 
+#SBATCH --time=00:30:00		 ### hh:mm:ss or dd-hh:mm:ss
+#SBATCH --mem=40G			 ### memory setting is max @ 4 GB per core
+#SBATCH --ntasks=10			 ### launch 10 process
+#SBATCH --cpus-per-task=1	 ### single-threaded processes
+#SBATCH --ntasks-per-node=10 ### 10 per node
+
+#SBATCH --partition=short,comp,gpu
+
+#SBATCH --output=main_3x3.%j.out
+
+module load openmpi/3.1.4-mlx
+
+make ALL
+
+mpirun mainOut 3 3 6000 100
