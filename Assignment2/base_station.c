@@ -73,6 +73,9 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
     struct basesummary summary;
     struct timespec start;
 
+    // get start time of base simulation              
+    timespec_get(&start, TIME_UTC);
+
     // initialize the array to store the coordinate of reporting node
     summary.coord = (int**)malloc(cart_size * sizeof(int*));
     for (i = 0; i < cart_size; i++) {
@@ -85,9 +88,6 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
 
     // initialize the array to store the total alerts per node
     summary.total_alert_per_node = calloc(cart_size, sizeof(int));
-
-    // get start time of base simulation              
-    timespec_get(&start, TIME_UTC);
 
     omp_set_num_threads(2);
 
