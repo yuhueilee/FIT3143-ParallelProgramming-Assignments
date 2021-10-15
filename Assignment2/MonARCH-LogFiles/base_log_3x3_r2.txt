@@ -1,0 +1,510 @@
+------------------------------------------------------------------------------------------------
+Iteration: 74
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:20
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+3					(1, 0)		6082.685
+
+Adjacent Nodes		Coord		Height(m)
+0					(0, 0)		6006.755
+6					(2, 0)		6007.106
+4					(1, 1)		5934.250
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6166.040
+Satellite altimeter reporting sensor node coordinates: (1, 0)
+
+Total Communication time for reporting node (seconds): 0.031348
+	Including communication time between its neighbours: 0.000015
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 76
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:21
+Alert type: Mismatch
+
+Reporting Node		Coord		Height(m)
+4					(1, 1)		6011.167
+
+Adjacent Nodes		Coord		Height(m)
+1					(0, 1)		6007.106
+7					(2, 1)		5938.021
+3					(1, 0)		6082.685
+5					(1, 2)		6006.755
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6160.053
+Satellite altimeter reporting sensor node coordinates: (1, 1)
+
+Total Communication time for reporting node (seconds): 1.062754
+	Including communication time between its neighbours: 0.000005
+Total messages sent by reporting node for this alert: 9
+	Messages to base station: 1
+	Messages to neighbours: 8
+Number of adjacent matches to reporting node: 3
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 77
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:22
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+5					(1, 2)		6083.461
+
+Adjacent Nodes		Coord		Height(m)
+2					(0, 2)		5938.021
+8					(2, 2)		6082.685
+4					(1, 1)		6011.167
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6177.567
+Satellite altimeter reporting sensor node coordinates: (1, 2)
+
+Total Communication time for reporting node (seconds): 1.035455
+	Including communication time between its neighbours: 0.000018
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 78
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:22
+Alert type: Mismatch
+
+Reporting Node		Coord		Height(m)
+0					(0, 0)		6083.461
+
+Adjacent Nodes		Coord		Height(m)
+3					(1, 0)		6082.685
+1					(0, 1)		6007.106
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6185.092
+Satellite altimeter reporting sensor node coordinates: (0, 0)
+
+Total Communication time for reporting node (seconds): 2.022131
+	Including communication time between its neighbours: 0.000015
+Total messages sent by reporting node for this alert: 5
+	Messages to base station: 1
+	Messages to neighbours: 4
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 79
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:23
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+1					(0, 1)		6014.107
+
+Adjacent Nodes		Coord		Height(m)
+4					(1, 1)		6011.167
+0					(0, 0)		6083.461
+2					(0, 2)		5938.021
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6063.929
+Satellite altimeter reporting sensor node coordinates: (0, 1)
+
+Total Communication time for reporting node (seconds): 2.040596
+	Including communication time between its neighbours: 0.000003
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 80
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:25
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+3					(1, 0)		6087.794
+
+Adjacent Nodes		Coord		Height(m)
+0					(0, 0)		6083.461
+6					(2, 0)		6014.108
+4					(1, 1)		6011.167
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6063.899
+Satellite altimeter reporting sensor node coordinates: (1, 0)
+
+Total Communication time for reporting node (seconds): 1.039510
+	Including communication time between its neighbours: 0.000019
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 3
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 81
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:26
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+4					(1, 1)		6017.743
+
+Adjacent Nodes		Coord		Height(m)
+1					(0, 1)		6014.107
+7					(2, 1)		5872.496
+3					(1, 0)		6087.794
+5					(1, 2)		6083.461
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6081.210
+Satellite altimeter reporting sensor node coordinates: (1, 1)
+
+Total Communication time for reporting node (seconds): 1.003476
+	Including communication time between its neighbours: 0.000007
+Total messages sent by reporting node for this alert: 9
+	Messages to base station: 1
+	Messages to neighbours: 8
+Number of adjacent matches to reporting node: 3
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 82
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:27
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+5					(1, 2)		6018.935
+
+Adjacent Nodes		Coord		Height(m)
+2					(0, 2)		5872.496
+8					(2, 2)		6087.794
+4					(1, 1)		6017.743
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6082.208
+Satellite altimeter reporting sensor node coordinates: (1, 2)
+
+Total Communication time for reporting node (seconds): 1.038374
+	Including communication time between its neighbours: 0.000020
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 83
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:27
+Alert type: Mismatch
+
+Reporting Node		Coord		Height(m)
+0					(0, 0)		6018.935
+
+Adjacent Nodes		Coord		Height(m)
+3					(1, 0)		6087.794
+1					(0, 1)		6014.107
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6135.771
+Satellite altimeter reporting sensor node coordinates: (0, 0)
+
+Total Communication time for reporting node (seconds): 2.023196
+	Including communication time between its neighbours: 0.000002
+Total messages sent by reporting node for this alert: 5
+	Messages to base station: 1
+	Messages to neighbours: 4
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 84
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:28
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+1					(0, 1)		6020.172
+
+Adjacent Nodes		Coord		Height(m)
+4					(1, 1)		6017.743
+0					(0, 0)		6018.935
+2					(0, 2)		5872.496
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6083.311
+Satellite altimeter reporting sensor node coordinates: (0, 1)
+
+Total Communication time for reporting node (seconds): 2.043456
+	Including communication time between its neighbours: 0.000009
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 85
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:30
+Alert type: Mismatch
+
+Reporting Node		Coord		Height(m)
+3					(1, 0)		6023.047
+
+Adjacent Nodes		Coord		Height(m)
+0					(0, 0)		6018.935
+6					(2, 0)		6020.173
+4					(1, 1)		6017.743
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6217.243
+Satellite altimeter reporting sensor node coordinates: (1, 0)
+
+Total Communication time for reporting node (seconds): 1.042408
+	Including communication time between its neighbours: 0.000001
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 3
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 86
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:31
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+4					(1, 1)		6095.139
+
+Adjacent Nodes		Coord		Height(m)
+1					(0, 1)		6020.172
+7					(2, 1)		5877.863
+3					(1, 0)		6023.047
+5					(1, 2)		6018.935
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6121.940
+Satellite altimeter reporting sensor node coordinates: (1, 1)
+
+Total Communication time for reporting node (seconds): 1.006456
+	Including communication time between its neighbours: 0.000001
+Total messages sent by reporting node for this alert: 9
+	Messages to base station: 1
+	Messages to neighbours: 8
+Number of adjacent matches to reporting node: 3
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 87
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:32
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+5					(1, 2)		6024.987
+
+Adjacent Nodes		Coord		Height(m)
+2					(0, 2)		5877.862
+8					(2, 2)		6023.047
+4					(1, 1)		6095.139
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6106.904
+Satellite altimeter reporting sensor node coordinates: (1, 2)
+
+Total Communication time for reporting node (seconds): 1.041306
+	Including communication time between its neighbours: 0.000001
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 88
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:32
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+0					(0, 0)		6024.987
+
+Adjacent Nodes		Coord		Height(m)
+3					(1, 0)		6023.047
+1					(0, 1)		6020.172
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6082.155
+Satellite altimeter reporting sensor node coordinates: (0, 0)
+
+Total Communication time for reporting node (seconds): 2.020583
+	Including communication time between its neighbours: 0.000001
+Total messages sent by reporting node for this alert: 5
+	Messages to base station: 1
+	Messages to neighbours: 4
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 89
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:33
+Alert type: Mismatch
+
+Reporting Node		Coord		Height(m)
+1					(0, 1)		6026.792
+
+Adjacent Nodes		Coord		Height(m)
+4					(1, 1)		6095.139
+0					(0, 0)		6024.987
+2					(0, 2)		5877.862
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6223.188
+Satellite altimeter reporting sensor node coordinates: (0, 1)
+
+Total Communication time for reporting node (seconds): 2.046741
+	Including communication time between its neighbours: 0.000001
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 92
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:38
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+1					(0, 1)		6105.142
+
+Adjacent Nodes		Coord		Height(m)
+4					(1, 1)		6172.843
+0					(0, 0)		6030.550
+2					(0, 2)		5955.968
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6113.581
+Satellite altimeter reporting sensor node coordinates: (0, 1)
+
+Total Communication time for reporting node (seconds): 0.048424
+	Including communication time between its neighbours: 0.000001
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 95
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:41
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+4					(1, 1)		6107.809
+
+Adjacent Nodes		Coord		Height(m)
+1					(0, 1)		6105.142
+7					(2, 1)		5962.702
+3					(1, 0)		5892.595
+5					(1, 2)		6030.550
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6038.405
+Satellite altimeter reporting sensor node coordinates: (1, 1)
+
+Total Communication time for reporting node (seconds): 0.011916
+	Including communication time between its neighbours: 0.000001
+Total messages sent by reporting node for this alert: 9
+	Messages to base station: 1
+	Messages to neighbours: 8
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Iteration: 97
+Logged time:				Fri 2021-10-15 08:53:47
+Alert reported time:		Fri 2021-10-15 08:53:43
+Alert type: Match
+
+Reporting Node		Coord		Height(m)
+1					(0, 1)		6111.259
+
+Adjacent Nodes		Coord		Height(m)
+4					(1, 1)		6107.809
+0					(0, 0)		6037.171
+2					(0, 2)		5962.701
+
+Satellite altimeter reporting time: Fri 2021-10-15 08:53:42
+Satellite altimeter reporting height(m): 6130.954
+Satellite altimeter reporting sensor node coordinates: (0, 1)
+
+Total Communication time for reporting node (seconds): 0.051252
+	Including communication time between its neighbours: 0.000003
+Total messages sent by reporting node for this alert: 7
+	Messages to base station: 1
+	Messages to neighbours: 6
+Number of adjacent matches to reporting node: 2
+Max. tolerance range between nodes readings(m): 100.000
+Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+
+SUMMARY
+
+Total simulation time: 100.109475
+Total number of alerts: 18
+	Matched alerts: 	13
+	Mismatched alerts: 	5
+Total number of alerts per node:
+	Coordinate	Number of alerts
+	(0, 0)		3
+	(0, 1)		5
+	(0, 2)		0
+	(1, 0)		3
+	(1, 1)		4
+	(1, 2)		3
+	(2, 0)		0
+	(2, 1)		0
+	(2, 2)		0
+Average communication time: 3.243163
+
+------------------------------------------------------------------------------------------------
+
