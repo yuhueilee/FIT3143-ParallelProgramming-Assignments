@@ -17,7 +17,7 @@ Satellite altimeter reporting height(m): 6081.485
 Satellite altimeter reporting sensor node coordinates: (2, 0)
 
 Total Communication time for reporting node (seconds): 0.050044
-	Including communication time between its neighbours: 0.000006
+	Communication time between its neighbours: 0.000006
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -44,7 +44,7 @@ Satellite altimeter reporting height(m): 6219.038
 Satellite altimeter reporting sensor node coordinates: (3, 1)
 
 Total Communication time for reporting node (seconds): 1.073164
-	Including communication time between its neighbours: 0.000009
+	Communication time between its neighbours: 0.000009
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -72,7 +72,7 @@ Satellite altimeter reporting height(m): 6215.498
 Satellite altimeter reporting sensor node coordinates: (2, 1)
 
 Total Communication time for reporting node (seconds): 0.943915
-	Including communication time between its neighbours: 0.000029
+	Communication time between its neighbours: 0.000029
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -98,7 +98,7 @@ Satellite altimeter reporting height(m): 6118.748
 Satellite altimeter reporting sensor node coordinates: (3, 3)
 
 Total Communication time for reporting node (seconds): 1.093233
-	Including communication time between its neighbours: 0.000009
+	Communication time between its neighbours: 0.000009
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -124,7 +124,7 @@ Satellite altimeter reporting height(m): 6141.399
 Satellite altimeter reporting sensor node coordinates: (0, 0)
 
 Total Communication time for reporting node (seconds): 2.093677
-	Including communication time between its neighbours: 0.000007
+	Communication time between its neighbours: 0.000007
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -152,7 +152,7 @@ Satellite altimeter reporting height(m): 6164.086
 Satellite altimeter reporting sensor node coordinates: (2, 2)
 
 Total Communication time for reporting node (seconds): 3.094402
-	Including communication time between its neighbours: 0.000005
+	Communication time between its neighbours: 0.000005
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -180,7 +180,7 @@ Satellite altimeter reporting height(m): 6077.380
 Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 4.089075
-	Including communication time between its neighbours: 0.000005
+	Communication time between its neighbours: 0.000005
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -207,7 +207,7 @@ Satellite altimeter reporting height(m): 6196.447
 Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 4.078939
-	Including communication time between its neighbours: 0.000001
+	Communication time between its neighbours: 0.000001
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -234,7 +234,7 @@ Satellite altimeter reporting height(m): 6027.843
 Satellite altimeter reporting sensor node coordinates: (2, 3)
 
 Total Communication time for reporting node (seconds): 5.098392
-	Including communication time between its neighbours: 0.000038
+	Communication time between its neighbours: 0.000038
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -261,7 +261,7 @@ Satellite altimeter reporting height(m): 6027.843
 Satellite altimeter reporting sensor node coordinates: (2, 3)
 
 Total Communication time for reporting node (seconds): 1.078321
-	Including communication time between its neighbours: 0.000008
+	Communication time between its neighbours: 0.000008
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -289,7 +289,7 @@ Satellite altimeter reporting height(m): 6135.260
 Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 7.099187
-	Including communication time between its neighbours: 0.000002
+	Communication time between its neighbours: 0.000002
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -317,7 +317,7 @@ Satellite altimeter reporting height(m): 6135.260
 Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 3.007545
-	Including communication time between its neighbours: 0.000002
+	Communication time between its neighbours: 0.000002
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -344,7 +344,7 @@ Satellite altimeter reporting height(m): 6100.862
 Satellite altimeter reporting sensor node coordinates: (2, 0)
 
 Total Communication time for reporting node (seconds): 7.100454
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -371,7 +371,7 @@ Satellite altimeter reporting height(m): 6162.103
 Satellite altimeter reporting sensor node coordinates: (3, 1)
 
 Total Communication time for reporting node (seconds): 7.974334
-	Including communication time between its neighbours: 0.000031
+	Communication time between its neighbours: 0.000031
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -398,7 +398,7 @@ Satellite altimeter reporting height(m): 6195.957
 Satellite altimeter reporting sensor node coordinates: (3, 2)
 
 Total Communication time for reporting node (seconds): 8.102809
-	Including communication time between its neighbours: 0.000015
+	Communication time between its neighbours: 0.000015
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -425,7 +425,7 @@ Satellite altimeter reporting height(m): 6195.957
 Satellite altimeter reporting sensor node coordinates: (3, 2)
 
 Total Communication time for reporting node (seconds): 4.103320
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -452,7 +452,7 @@ Satellite altimeter reporting height(m): 6195.957
 Satellite altimeter reporting sensor node coordinates: (3, 2)
 
 Total Communication time for reporting node (seconds): 0.103871
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -479,7 +479,7 @@ Satellite altimeter reporting height(m): 6013.942
 Satellite altimeter reporting sensor node coordinates: (1, 0)
 
 Total Communication time for reporting node (seconds): 11.104696
-	Including communication time between its neighbours: 0.000002
+	Communication time between its neighbours: 0.000002
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -506,7 +506,7 @@ Satellite altimeter reporting height(m): 6013.942
 Satellite altimeter reporting sensor node coordinates: (1, 0)
 
 Total Communication time for reporting node (seconds): 7.008743
-	Including communication time between its neighbours: 0.000002
+	Communication time between its neighbours: 0.000002
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -533,7 +533,7 @@ Satellite altimeter reporting height(m): 6013.942
 Satellite altimeter reporting sensor node coordinates: (1, 0)
 
 Total Communication time for reporting node (seconds): 3.009478
-	Including communication time between its neighbours: 0.000018
+	Communication time between its neighbours: 0.000018
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -561,7 +561,7 @@ Satellite altimeter reporting height(m): 6033.547
 Satellite altimeter reporting sensor node coordinates: (2, 1)
 
 Total Communication time for reporting node (seconds): 13.836800
-	Including communication time between its neighbours: 0.000008
+	Communication time between its neighbours: 0.000008
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -589,7 +589,7 @@ Satellite altimeter reporting height(m): 6033.547
 Satellite altimeter reporting sensor node coordinates: (2, 1)
 
 Total Communication time for reporting node (seconds): 9.837378
-	Including communication time between its neighbours: 0.000004
+	Communication time between its neighbours: 0.000004
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -617,7 +617,7 @@ Satellite altimeter reporting height(m): 6139.604
 Satellite altimeter reporting sensor node coordinates: (2, 1)
 
 Total Communication time for reporting node (seconds): 5.776272
-	Including communication time between its neighbours: 0.000010
+	Communication time between its neighbours: 0.000010
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -643,7 +643,7 @@ Satellite altimeter reporting height(m): 6168.047
 Satellite altimeter reporting sensor node coordinates: (3, 3)
 
 Total Communication time for reporting node (seconds): 16.109871
-	Including communication time between its neighbours: 0.000004
+	Communication time between its neighbours: 0.000004
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -669,7 +669,7 @@ Satellite altimeter reporting height(m): 6168.047
 Satellite altimeter reporting sensor node coordinates: (3, 3)
 
 Total Communication time for reporting node (seconds): 12.110301
-	Including communication time between its neighbours: 0.000026
+	Communication time between its neighbours: 0.000026
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -695,7 +695,7 @@ Satellite altimeter reporting height(m): 6168.047
 Satellite altimeter reporting sensor node coordinates: (3, 3)
 
 Total Communication time for reporting node (seconds): 3.111293
-	Including communication time between its neighbours: 0.000014
+	Communication time between its neighbours: 0.000014
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -721,7 +721,7 @@ Satellite altimeter reporting height(m): 6183.725
 Satellite altimeter reporting sensor node coordinates: (0, 0)
 
 Total Communication time for reporting node (seconds): 19.112381
-	Including communication time between its neighbours: 0.000017
+	Communication time between its neighbours: 0.000017
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -747,7 +747,7 @@ Satellite altimeter reporting height(m): 6006.070
 Satellite altimeter reporting sensor node coordinates: (0, 0)
 
 Total Communication time for reporting node (seconds): 15.112977
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -773,7 +773,7 @@ Satellite altimeter reporting height(m): 6006.070
 Satellite altimeter reporting sensor node coordinates: (0, 0)
 
 Total Communication time for reporting node (seconds): 6.113508
-	Including communication time between its neighbours: 0.000004
+	Communication time between its neighbours: 0.000004
 Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
 	Messages between neighbours: 4
@@ -801,7 +801,7 @@ Satellite altimeter reporting height(m): 6223.673
 Satellite altimeter reporting sensor node coordinates: (2, 2)
 
 Total Communication time for reporting node (seconds): 21.915924
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -829,7 +829,7 @@ Satellite altimeter reporting height(m): 6223.673
 Satellite altimeter reporting sensor node coordinates: (2, 2)
 
 Total Communication time for reporting node (seconds): 17.916646
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -857,7 +857,7 @@ Satellite altimeter reporting height(m): 6223.673
 Satellite altimeter reporting sensor node coordinates: (2, 2)
 
 Total Communication time for reporting node (seconds): 8.917193
-	Including communication time between its neighbours: 0.000016
+	Communication time between its neighbours: 0.000016
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -885,7 +885,7 @@ Satellite altimeter reporting height(m): 6108.794
 Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 24.817544
-	Including communication time between its neighbours: 0.000001
+	Communication time between its neighbours: 0.000001
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -913,7 +913,7 @@ Satellite altimeter reporting height(m): 6108.794
 Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 20.817311
-	Including communication time between its neighbours: 0.000001
+	Communication time between its neighbours: 0.000001
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -941,7 +941,7 @@ Satellite altimeter reporting height(m): 6108.794
 Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 11.816134
-	Including communication time between its neighbours: 0.000012
+	Communication time between its neighbours: 0.000012
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -968,7 +968,7 @@ Satellite altimeter reporting height(m): 6029.165
 Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 27.096015
-	Including communication time between its neighbours: 0.000002
+	Communication time between its neighbours: 0.000002
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -995,7 +995,7 @@ Satellite altimeter reporting height(m): 6029.165
 Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 23.089167
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -1022,7 +1022,7 @@ Satellite altimeter reporting height(m): 6170.170
 Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 14.084933
-	Including communication time between its neighbours: 0.000021
+	Communication time between its neighbours: 0.000021
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -1049,7 +1049,7 @@ Satellite altimeter reporting height(m): 6242.792
 Satellite altimeter reporting sensor node coordinates: (2, 3)
 
 Total Communication time for reporting node (seconds): 25.106420
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -1076,7 +1076,7 @@ Satellite altimeter reporting height(m): 6242.792
 Satellite altimeter reporting sensor node coordinates: (2, 3)
 
 Total Communication time for reporting node (seconds): 16.106822
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -1104,7 +1104,7 @@ Satellite altimeter reporting height(m): 6093.543
 Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 27.035743
-	Including communication time between its neighbours: 0.000002
+	Communication time between its neighbours: 0.000002
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -1132,7 +1132,7 @@ Satellite altimeter reporting height(m): 6093.543
 Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 18.036013
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -1160,7 +1160,7 @@ Satellite altimeter reporting height(m): 6170.345
 Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 9.036421
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
 	Messages between neighbours: 8
@@ -1187,7 +1187,7 @@ Satellite altimeter reporting height(m): 6142.855
 Satellite altimeter reporting sensor node coordinates: (2, 0)
 
 Total Communication time for reporting node (seconds): 28.130013
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -1214,7 +1214,7 @@ Satellite altimeter reporting height(m): 6142.855
 Satellite altimeter reporting sensor node coordinates: (2, 0)
 
 Total Communication time for reporting node (seconds): 19.130504
-	Including communication time between its neighbours: 0.000004
+	Communication time between its neighbours: 0.000004
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -1241,7 +1241,7 @@ Satellite altimeter reporting height(m): 6142.855
 Satellite altimeter reporting sensor node coordinates: (2, 0)
 
 Total Communication time for reporting node (seconds): 15.131097
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
@@ -1268,7 +1268,7 @@ Satellite altimeter reporting height(m): 6142.855
 Satellite altimeter reporting sensor node coordinates: (2, 0)
 
 Total Communication time for reporting node (seconds): 11.131643
-	Including communication time between its neighbours: 0.000003
+	Communication time between its neighbours: 0.000003
 Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
 	Messages between neighbours: 6
