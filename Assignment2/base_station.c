@@ -228,15 +228,15 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
                     log_report(p_log_name, reports[i]);
                 }
             }
+            
+            // calculate average communication time among alerts
+            summary.avg_comm_time = summary.total_comm_time / summary.total_alert;
 
             // end of simulation time
             timespec_get(&end, TIME_UTC);
             time_taken = end.tv_sec - start.tv_sec;
             time_taken = (time_taken + (end.tv_nsec - start.tv_nsec) * 1e-9);
             summary.sim_time = time_taken;
-
-            // calculate average communication time among alerts
-            summary.avg_comm_time = summary.total_comm_time / summary.total_alert;
 
             // generate summary report
             log_summary(p_log_name, cart_size, summary);
