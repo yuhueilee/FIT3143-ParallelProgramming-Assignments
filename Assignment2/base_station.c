@@ -113,7 +113,7 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
             summary.total_alert = 0;
             summary.total_match = 0;
             summary.total_mismatch = 0;
-            summary.avg_comm_time = 0;
+            summary.total_comm_time = 0;
 
             do {
                 char *buffer;
