@@ -49,6 +49,7 @@ struct basesummary {
     int total_alert;
     int total_match;
     int total_mismatch;
+    double total_comm_time;
     double avg_comm_time;
     int **coord;
     int *total_alert_per_node;
@@ -155,8 +156,8 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
                     // update total number of alerts received from reporting node
                     summary.total_alert_per_node[alert.rank[0]] += 1;
 
-                    // update average communication time in summary
-                    summary.avg_comm_time += (comm_time / summary.total_alert);
+                    // update total communication time in summary
+                    summary.total_comm_time += comm_time;
                         
                     // check altimeter array
                     #pragma omp critical
@@ -233,6 +234,9 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
             time_taken = end.tv_sec - start.tv_sec;
             time_taken = (time_taken + (end.tv_nsec - start.tv_nsec) * 1e-9);
             summary.sim_time = time_taken;
+
+            // calculate average communication time among alerts
+            summary.avg_comm_time = summary.total_comm_time / summary.total_alert;
 
             // generate summary report
             log_summary(p_log_name, cart_size, summary);
