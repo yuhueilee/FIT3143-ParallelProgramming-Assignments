@@ -49,6 +49,7 @@ struct basesummary {
     int total_alert;
     int total_match;
     int total_mismatch;
+    double total_comm_time;
     double avg_comm_time;
     int **coord;
     int *total_alert_per_node;
@@ -155,8 +156,8 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
                     // update total number of alerts received from reporting node
                     summary.total_alert_per_node[alert.rank[0]] += 1;
 
-                    // update average communication time in summary
-                    summary.avg_comm_time += (comm_time / summary.total_alert);
+                    // update total communication time in summary
+                    summary.total_comm_time += comm_time;
                         
                     // check altimeter array
                     #pragma omp critical
@@ -233,6 +234,9 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
             time_taken = end.tv_sec - start.tv_sec;
             time_taken = (time_taken + (end.tv_nsec - start.tv_nsec) * 1e-9);
             summary.sim_time = time_taken;
+
+            // calculate average communication time among alerts
+            summary.avg_comm_time = summary.total_comm_time / summary.total_alert;
 
             // generate summary report
             log_summary(p_log_name, cart_size, summary);
@@ -347,9 +351,9 @@ void log_report(char *p_log_name, struct basereport report) {
     int msg = 1;
     fprintf(pFile, "Total Communication time for reporting node (seconds): %lf\n", report.comm_time);
     fprintf(pFile, "\tIncluding communication time between its neighbours: %lf\n", alert.nbr_comm_time);
-    fprintf(pFile, "Total messages sent by reporting node for this alert: %d\n", msg + alert.num_messages);    
+    fprintf(pFile, "Total messages sent and received by reporting node for this alert: %d\n", msg + alert.num_messages);    
     fprintf(pFile, "\tMessages to base station: %d\n", msg);    
-    fprintf(pFile, "\tMessages to neighbours: %d\n", alert.num_messages);    
+    fprintf(pFile, "\tMessages between neighbours: %d\n", alert.num_messages);    
     fprintf(pFile, "Number of adjacent matches to reporting node: %d\n", alert.node_matched);
     fprintf(pFile, "Max. tolerance range between nodes readings(m): %.3f\n", alert.tolerance);
     fprintf(pFile, "Max. tolerance range between satellite altimeter and reporting nodes readings(m): %.3f\n", ALTIMETER_TOLERANCE);
