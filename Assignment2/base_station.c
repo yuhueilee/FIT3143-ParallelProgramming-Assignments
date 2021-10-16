@@ -350,7 +350,7 @@ void log_report(char *p_log_name, struct basereport report) {
     // extra information
     int msg = 1;
     fprintf(pFile, "Total Communication time for reporting node (seconds): %lf\n", report.comm_time);
-    fprintf(pFile, "\tIncluding communication time between its neighbours: %lf\n", alert.nbr_comm_time);
+    fprintf(pFile, "\tCommunication time between its neighbours: %lf\n", alert.nbr_comm_time);
     fprintf(pFile, "Total messages sent and received by reporting node for this alert: %d\n", msg + alert.num_messages);    
     fprintf(pFile, "\tMessages to base station: %d\n", msg);    
     fprintf(pFile, "\tMessages between neighbours: %d\n", alert.num_messages);    
