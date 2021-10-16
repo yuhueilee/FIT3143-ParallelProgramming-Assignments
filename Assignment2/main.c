@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     /* Split the communicator based on rank number */
     MPI_Comm_split(MPI_COMM_WORLD, my_rank < size - 1, 0, &nodes_comm);
 
-    /* Initialize number of rows, cols and height of threshold */
+    /* Initialize number of rows, cols, threshold and iterations */
     if (argc == 5) {
         num_rows = atoi(argv[1]);
         num_cols = atoi(argv[2]);
