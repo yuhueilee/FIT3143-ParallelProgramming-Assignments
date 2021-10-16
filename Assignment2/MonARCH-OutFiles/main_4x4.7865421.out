@@ -1,0 +1,597 @@
+mpicc -Wall main.c sensor_node.c base_station.c -o mainOut -lm -fopenmp
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           gp05
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+Cart rank: 11. Cart Coord: (2, 3).
+Cart rank: 12. Cart Coord: (3, 0).
+Cart rank: 13. Cart Coord: (3, 1).
+Cart rank: 14. Cart Coord: (3, 2).
+Cart rank: 15. Cart Coord: (3, 3).
+Cart rank: 0. Cart Coord: (0, 0).
+Cart rank 0 has random sea height 5544.077148 at time 10/16/21 04:08:32 UTC.
+Cart rank: 1. Cart Coord: (0, 1).
+Cart rank: 2. Cart Coord: (0, 2).
+Cart rank: 3. Cart Coord: (0, 3).
+Cart rank: 4. Cart Coord: (1, 0).
+Cart rank: 5. Cart Coord: (1, 1).
+Cart rank: 6. Cart Coord: (1, 2).
+Cart rank: 7. Cart Coord: (1, 3).
+Cart rank: 8. Cart Coord: (2, 0).
+Cart rank: 9. Cart Coord: (2, 1).
+Cart rank: 10. Cart Coord: (2, 2).
+To terminate the program, change the value to 1 in sentinel.txt file.
+Root Rank: 16. Comm Size: 17. Grid Dimension = [4 x 4]. Threshold: 6000.000000.
+Cart rank 1 has random sea height 5902.492676 at time 10/16/21 04:08:33 UTC.
+Cart rank 2 has random sea height 6261.518066 at time 10/16/21 04:08:34 UTC.
+Cart rank 3 has random sea height 5617.045898 at time 10/16/21 04:08:35 UTC.
+Cart rank 4 has random sea height 5978.003418 at time 10/16/21 04:08:36 UTC.
+[gp05:20327] 16 more processes have sent help message help-mpi-btl-openib-cpc-base.txt / no cpcs for port
+[gp05:20327] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+Cart rank 5 has random sea height 6338.168457 at time 10/16/21 04:08:37 UTC.
+Cart rank 0 has random sea height 6338.168457 at time 10/16/21 04:08:37 UTC.
+Cart rank 6 has random sea height 5691.325684 at time 10/16/21 04:08:38 UTC.
+Cart rank 1 has random sea height 5691.325684 at time 10/16/21 04:08:38 UTC.
+Cart rank 7 has random sea height 5549.774414 at time 10/16/21 04:08:39 UTC.
+Cart rank 2 has random sea height 5549.774414 at time 10/16/21 04:08:39 UTC.
+Cart rank 3 has random sea height 6409.079590 at time 10/16/21 04:08:40 UTC.
+Cart rank 8 has random sea height 6409.079590 at time 10/16/21 04:08:40 UTC.
+Cart rank 4 has random sea height 6268.791504 at time 10/16/21 04:08:41 UTC.
+Cart rank 9 has random sea height 6268.791504 at time 10/16/21 04:08:41 UTC.
+Cart rank 10 has random sea height 5627.444336 at time 10/16/21 04:08:42 UTC.
+Cart rank 0 has random sea height 5627.444336 at time 10/16/21 04:08:42 UTC.
+Cart rank 5 has random sea height 5627.444336 at time 10/16/21 04:08:42 UTC.
+Cart rank 6 has random sea height 5985.833008 at time 10/16/21 04:08:43 UTC.
+Cart rank 1 has random sea height 5985.833008 at time 10/16/21 04:08:43 UTC.
+Cart rank 11 has random sea height 5985.833008 at time 10/16/21 04:08:43 UTC.
+Cart rank 7 has random sea height 6348.392090 at time 10/16/21 04:08:44 UTC.
+Cart rank 2 has random sea height 6348.392090 at time 10/16/21 04:08:44 UTC.
+Cart rank 12 has random sea height 6348.392090 at time 10/16/21 04:08:44 UTC.
+Cart rank 8 has random sea height 6207.595215 at time 10/16/21 04:08:45 UTC.
+Cart rank 3 has random sea height 6207.595215 at time 10/16/21 04:08:45 UTC.
+Cart rank 13 has random sea height 6207.595215 at time 10/16/21 04:08:45 UTC.
+Cart rank 4 has random sea height 5561.892578 at time 10/16/21 04:08:46 UTC.
+Cart rank 14 has random sea height 5561.892578 at time 10/16/21 04:08:46 UTC.
+Cart rank 9 has random sea height 5561.892578 at time 10/16/21 04:08:46 UTC.
+Cart rank 15 has random sea height 5922.341797 at time 10/16/21 04:08:47 UTC.
+Cart rank 0 has random sea height 5922.341797 at time 10/16/21 04:08:47 UTC.
+Cart rank 5 has random sea height 5922.341797 at time 10/16/21 04:08:47 UTC.
+Cart rank 10 has random sea height 5922.341797 at time 10/16/21 04:08:47 UTC.
+Cart rank 1 has random sea height 6278.044434 at time 10/16/21 04:08:48 UTC.
+Cart rank 11 has random sea height 6278.044434 at time 10/16/21 04:08:48 UTC.
+Cart rank 6 has random sea height 6278.044434 at time 10/16/21 04:08:48 UTC.
+Cart rank 12 has random sea height 6140.401367 at time 10/16/21 04:08:49 UTC.
+Cart rank 2 has random sea height 6140.401367 at time 10/16/21 04:08:49 UTC.
+Cart rank 7 has random sea height 6140.401367 at time 10/16/21 04:08:49 UTC.
+Cart rank 8 has random sea height 6000.430664 at time 10/16/21 04:08:50 UTC.
+Cart rank 13 has random sea height 6000.430664 at time 10/16/21 04:08:50 UTC.
+Cart rank 3 has random sea height 6000.430664 at time 10/16/21 04:08:50 UTC.
+Cart rank 4 has random sea height 6354.833008 at time 10/16/21 04:08:51 UTC.
+Cart rank 14 has random sea height 6354.833008 at time 10/16/21 04:08:51 UTC.
+Cart rank 9 has random sea height 6354.833008 at time 10/16/21 04:08:51 UTC.
+Cart rank 15 has random sea height 6213.401367 at time 10/16/21 04:08:52 UTC.
+Cart rank 0 has random sea height 6213.401367 at time 10/16/21 04:08:52 UTC.
+Cart rank 10 has random sea height 6213.401367 at time 10/16/21 04:08:52 UTC.
+Cart rank 5 has random sea height 6213.401367 at time 10/16/21 04:08:52 UTC.
+Cart rank 6 has random sea height 6073.505859 at time 10/16/21 04:08:53 UTC.
+Cart rank 11 has random sea height 6073.505859 at time 10/16/21 04:08:53 UTC.
+Cart rank 1 has random sea height 6073.505859 at time 10/16/21 04:08:53 UTC.
+Cart rank 2 has random sea height 6426.116211 at time 10/16/21 04:08:54 UTC.
+Cart rank 12 has random sea height 6426.116211 at time 10/16/21 04:08:54 UTC.
+Cart rank 7 has random sea height 6426.116211 at time 10/16/21 04:08:54 UTC.
+Cart rank 13 has random sea height 5788.173340 at time 10/16/21 04:08:55 UTC.
+Cart rank 8 has random sea height 5788.173340 at time 10/16/21 04:08:55 UTC.
+Cart rank 3 has random sea height 5788.173340 at time 10/16/21 04:08:55 UTC.
+Cart rank 4 has random sea height 6146.856934 at time 10/16/21 04:08:56 UTC.
+Cart rank 14 has random sea height 6146.856934 at time 10/16/21 04:08:56 UTC.
+Cart rank 9 has random sea height 6146.856934 at time 10/16/21 04:08:56 UTC.
+Cart rank 0 has random sea height 6005.326172 at time 10/16/21 04:08:57 UTC.
+Cart rank 15 has random sea height 6005.326172 at time 10/16/21 04:08:57 UTC.
+Cart rank 5 has random sea height 6005.326172 at time 10/16/21 04:08:57 UTC.
+Cart rank 10 has random sea height 6005.326172 at time 10/16/21 04:08:57 UTC.
+Cart rank 6 has random sea height 6359.931641 at time 10/16/21 04:08:58 UTC.
+Cart rank 11 has random sea height 6359.931641 at time 10/16/21 04:08:58 UTC.
+Cart rank 1 has random sea height 6359.931641 at time 10/16/21 04:08:58 UTC.
+Cart rank 2 has random sea height 5722.284668 at time 10/16/21 04:08:59 UTC.
+Cart rank 12 has random sea height 5722.284668 at time 10/16/21 04:08:59 UTC.
+Cart rank 7 has random sea height 5722.284668 at time 10/16/21 04:08:59 UTC.
+Cart rank 13 has random sea height 6078.144531 at time 10/16/21 04:09:00 UTC.
+Cart rank 8 has random sea height 6078.144531 at time 10/16/21 04:09:00 UTC.
+Cart rank 3 has random sea height 6078.144531 at time 10/16/21 04:09:00 UTC.
+Cart rank 4 has random sea height 5938.825684 at time 10/16/21 04:09:01 UTC.
+Cart rank 14 has random sea height 5938.825684 at time 10/16/21 04:09:01 UTC.
+Cart rank 9 has random sea height 5938.825684 at time 10/16/21 04:09:01 UTC.
+Cart rank 15 has random sea height 5795.061523 at time 10/16/21 04:09:02 UTC.
+Cart rank 10 has random sea height 5795.061523 at time 10/16/21 04:09:02 UTC.
+Cart rank 5 has random sea height 5795.061523 at time 10/16/21 04:09:02 UTC.
+Cart rank 0 has random sea height 5795.061523 at time 10/16/21 04:09:02 UTC.
+Cart rank 6 has random sea height 5646.290039 at time 10/16/21 04:09:03 UTC.
+Cart rank 11 has random sea height 5646.290039 at time 10/16/21 04:09:03 UTC.
+Cart rank 1 has random sea height 5646.290039 at time 10/16/21 04:09:03 UTC.
+Cart rank 2 has random sea height 5515.904785 at time 10/16/21 04:09:04 UTC.
+Cart rank 12 has random sea height 5515.904785 at time 10/16/21 04:09:04 UTC.
+Cart rank 7 has random sea height 5515.904785 at time 10/16/21 04:09:04 UTC.
+Cart rank 13 has random sea height 5870.259277 at time 10/16/21 04:09:05 UTC.
+Cart rank 8 has random sea height 5870.259277 at time 10/16/21 04:09:05 UTC.
+Cart rank 3 has random sea height 5870.259277 at time 10/16/21 04:09:05 UTC.
+Cart rank 4 has random sea height 5730.502930 at time 10/16/21 04:09:06 UTC.
+Cart rank 14 has random sea height 5730.502930 at time 10/16/21 04:09:06 UTC.
+Cart rank 9 has random sea height 5730.502930 at time 10/16/21 04:09:06 UTC.
+Cart rank 10 has random sea height 6083.975586 at time 10/16/21 04:09:07 UTC.
+Cart rank 15 has random sea height 6083.975586 at time 10/16/21 04:09:07 UTC.
+Cart rank 5 has random sea height 6083.975586 at time 10/16/21 04:09:07 UTC.
+Cart rank 0 has random sea height 6083.975586 at time 10/16/21 04:09:07 UTC.
+Cart rank 11 has random sea height 6452.691406 at time 10/16/21 04:09:08 UTC.
+Cart rank 6 has random sea height 6452.691406 at time 10/16/21 04:09:08 UTC.
+Cart rank 6 has SMA 6069.660. Received top: 5994.91, bottom: 5500.00, left: 5997.96, right: 5500.00.
+Cart rank 1 has random sea height 6452.691406 at time 10/16/21 04:09:08 UTC.
+Cart rank 1 has SMA 6069.661. Received top: -1.00, bottom: 5997.96, left: 5997.96, right: 5994.91.
+Cart rank 12 has random sea height 5805.438477 at time 10/16/21 04:09:09 UTC.
+Cart rank 2 has random sea height 5805.438477 at time 10/16/21 04:09:09 UTC.
+Cart rank 7 has random sea height 5805.438477 at time 10/16/21 04:09:09 UTC.
+Cart rank 13 has random sea height 6166.049316 at time 10/16/21 04:09:10 UTC.
+Cart rank 8 has random sea height 6166.049316 at time 10/16/21 04:09:10 UTC.
+Cart rank 8 has SMA 6074.248. Received top: 5997.10, bottom: 5500.00, left: -1.00, right: 5500.00.
+Cart rank 3 has random sea height 6166.049316 at time 10/16/21 04:09:10 UTC.
+Cart rank 3 has SMA 6074.248. Received top: -1.00, bottom: 5929.76, left: 5929.76, right: -1.00.
+Cart rank 14 has random sea height 5517.052734 at time 10/16/21 04:09:11 UTC.
+Cart rank 4 has random sea height 5517.052734 at time 10/16/21 04:09:11 UTC.
+Cart rank 9 has random sea height 5517.052734 at time 10/16/21 04:09:11 UTC.
+Cart rank 15 has random sea height 6383.211426 at time 10/16/21 04:09:12 UTC.
+Cart rank 10 has random sea height 6383.211426 at time 10/16/21 04:09:12 UTC.
+Cart rank 10 has SMA 6004.395. Received top: 6069.66, bottom: 5500.00, left: 5931.25, right: 5500.00.
+Cart rank 5 has random sea height 6383.211426 at time 10/16/21 04:09:12 UTC.
+Cart rank 5 has SMA 6004.395. Received top: 6069.66, bottom: 5931.25, left: 5931.25, right: 6069.66.
+Cart rank 0 has random sea height 6383.211426 at time 10/16/21 04:09:12 UTC.
+Cart rank 0 has SMA 6004.395. Received top: -1.00, bottom: 5931.25, left: -1.00, right: 6069.66.
+Cart rank 5 sends report to base station.
+	Alert time: 1634357352.59, Number of matches: 2, Coord: (1, 1)
+Cart rank 11 has random sea height 5739.814941 at time 10/16/21 04:09:13 UTC.
+Cart rank 11 has SMA 6076.587. Received top: 5929.76, bottom: 5500.00, left: 6004.39, right: -1.00.
+Cart rank 6 has random sea height 5739.814941 at time 10/16/21 04:09:13 UTC.
+Cart rank 6 has SMA 6076.587. Received top: 5929.76, bottom: 6004.39, left: 6004.39, right: 5929.76.
+Cart rank 6 sends report to base station.
+	Alert time: 1634357353.59, Number of matches: 2, Coord: (1, 2)
+Cart rank 1 has random sea height 5739.814941 at time 10/16/21 04:09:13 UTC.
+Cart rank 1 has SMA 6076.587. Received top: -1.00, bottom: 6004.39, left: 6004.40, right: 5929.76.
+Cart rank 1 sends report to base station.
+	Alert time: 1634357353.60, Number of matches: 2, Coord: (0, 1)
+BASE STATION received 5 report:
+	Alert time: 1634357352.59, Number of matches: 2, Rank: 5, Coord: (1, 1)
+Cart rank 12 has random sea height 6101.247559 at time 10/16/21 04:09:14 UTC.
+Cart rank 12 has SMA 6008.541. Received top: 6074.25, bottom: -1.00, left: -1.00, right: 5500.00.
+Cart rank 2 has random sea height 6101.247559 at time 10/16/21 04:09:14 UTC.
+Cart rank 2 has SMA 6008.542. Received top: -1.00, bottom: 6076.59, left: 6076.59, right: 6074.25.
+BASE STATION received 6 report:
+	Alert time: 1634357353.59, Number of matches: 2, Rank: 6, Coord: (1, 2)
+Cart rank 2 sends report to base station.
+	Alert time: 1634357354.58, Number of matches: 3, Coord: (0, 2)
+Cart rank 7 has random sea height 6101.247559 at time 10/16/21 04:09:14 UTC.
+Cart rank 7 has SMA 6008.541. Received top: 6074.25, bottom: 6076.59, left: 6076.59, right: -1.00.
+Cart rank 7 sends report to base station.
+	Alert time: 1634357354.62, Number of matches: 3, Coord: (1, 3)
+Cart rank 13 has random sea height 6455.278809 at time 10/16/21 04:09:15 UTC.
+Cart rank 13 has SMA 6080.847. Received top: 5931.25, bottom: -1.00, left: 6008.54, right: 5500.00.
+Cart rank 8 has random sea height 6455.278809 at time 10/16/21 04:09:15 UTC.
+Cart rank 8 has SMA 6080.848. Received top: 5931.25, bottom: 6008.54, left: -1.00, right: 5931.25.
+BASE STATION received 1 report:
+	Alert time: 1634357353.60, Number of matches: 2, Rank: 1, Coord: (0, 1)
+Cart rank 3 has random sea height 6455.278809 at time 10/16/21 04:09:15 UTC.
+Cart rank 3 has SMA 6080.847. Received top: -1.00, bottom: 6008.54, left: 6008.54, right: -1.00.
+Cart rank 3 sends report to base station.
+	Alert time: 1634357355.62, Number of matches: 2, Coord: (0, 3)
+Cart rank 14 has random sea height 6309.921387 at time 10/16/21 04:09:16 UTC.
+Cart rank 4 has random sea height 6309.921387 at time 10/16/21 04:09:16 UTC.
+BASE STATION received 2 report:
+	Alert time: 1634357354.58, Number of matches: 3, Rank: 2, Coord: (0, 2)
+Cart rank 9 has random sea height 6309.921387 at time 10/16/21 04:09:16 UTC.
+Cart rank 0 has random sea height 5674.025879 at time 10/16/21 04:09:17 UTC.
+Cart rank 0 has SMA 6011.049. Received top: -1.00, bottom: 5937.13, left: -1.00, right: 6076.59.
+Cart rank 10 has random sea height 5674.025879 at time 10/16/21 04:09:17 UTC.
+Cart rank 10 has SMA 6011.049. Received top: 6076.59, bottom: 5937.13, left: 5937.13, right: 6076.59.
+Cart rank 15 has random sea height 5674.025879 at time 10/16/21 04:09:17 UTC.
+Cart rank 15 has SMA 6011.050. Received top: 6076.59, bottom: -1.00, left: 5937.13, right: -1.00.
+Cart rank 5 has random sea height 5674.025879 at time 10/16/21 04:09:17 UTC.
+Cart rank 5 has SMA 6011.049. Received top: 6076.59, bottom: 5937.13, left: 5937.13, right: 6076.59.
+Cart rank 5 sends report to base station.
+	Alert time: 1634357357.62, Number of matches: 2, Coord: (1, 1)
+BASE STATION received 7 report:
+	Alert time: 1634357354.62, Number of matches: 3, Rank: 7, Coord: (1, 3)
+Cart rank 10 sends report to base station.
+	Alert time: 1634357357.58, Number of matches: 2, Coord: (2, 2)
+Cart rank 11 has random sea height 5529.458008 at time 10/16/21 04:09:18 UTC.
+Cart rank 11 has SMA 6011.391. Received top: 6008.54, bottom: 6011.05, left: 6011.05, right: -1.00.
+Cart rank 6 has random sea height 5529.458008 at time 10/16/21 04:09:18 UTC.
+Cart rank 6 has SMA 6011.391. Received top: 6008.54, bottom: 6011.05, left: 6011.05, right: 6008.54.
+Cart rank 6 sends report to base station.
+	Alert time: 1634357358.60, Number of matches: 4, Coord: (1, 2)
+Cart rank 1 has random sea height 5529.458008 at time 10/16/21 04:09:18 UTC.
+Cart rank 1 has SMA 6011.391. Received top: -1.00, bottom: 6011.05, left: 6011.05, right: 6008.54.
+Cart rank 1 sends report to base station.
+	Alert time: 1634357358.61, Number of matches: 3, Coord: (0, 1)
+BASE STATION received 3 report:
+	Alert time: 1634357355.62, Number of matches: 2, Rank: 3, Coord: (0, 3)
+Cart rank 11 sends report to base station.
+	Alert time: 1634357358.58, Number of matches: 3, Coord: (2, 3)
+Cart rank 12 has random sea height 6389.120117 at time 10/16/21 04:09:19 UTC.
+Cart rank 12 has SMA 6014.359. Received top: 6080.85, bottom: -1.00, left: -1.00, right: 6080.85.
+Cart rank 12 sends report to base station.
+	Alert time: 1634357359.58, Number of matches: 2, Coord: (3, 0)
+Cart rank 2 has random sea height 6389.120117 at time 10/16/21 04:09:19 UTC.
+Cart rank 2 has SMA 6014.359. Received top: -1.00, bottom: 6011.39, left: 6011.39, right: 6080.85.
+Cart rank 2 sends report to base station.
+	Alert time: 1634357359.62, Number of matches: 3, Coord: (0, 2)
+Cart rank 7 has random sea height 6389.120117 at time 10/16/21 04:09:19 UTC.
+Cart rank 7 has SMA 6014.359. Received top: 6080.85, bottom: 6011.39, left: 6011.39, right: -1.00.
+Cart rank 7 sends report to base station.
+	Alert time: 1634357359.62, Number of matches: 3, Coord: (1, 3)
+BASE STATION received 5 report:
+	Alert time: 1634357357.62, Number of matches: 2, Rank: 5, Coord: (1, 1)
+Cart rank 13 has random sea height 6244.908203 at time 10/16/21 04:09:20 UTC.
+Cart rank 13 has SMA 6086.177. Received top: 5937.13, bottom: -1.00, left: 6014.36, right: 5937.13.
+Cart rank 8 has random sea height 6244.908203 at time 10/16/21 04:09:20 UTC.
+Cart rank 8 has SMA 6086.178. Received top: 5937.13, bottom: 6014.36, left: -1.00, right: 5937.13.
+BASE STATION received 10 report:
+	Alert time: 1634357357.58, Number of matches: 2, Rank: 10, Coord: (2, 2)
+Cart rank 3 has random sea height 6244.908203 at time 10/16/21 04:09:20 UTC.
+Cart rank 3 has SMA 6086.177. Received top: -1.00, bottom: 6014.36, left: 6014.36, right: -1.00.
+Cart rank 3 sends report to base station.
+	Alert time: 1634357360.62, Number of matches: 2, Coord: (0, 3)
+Cart rank 4 has random sea height 5609.370605 at time 10/16/21 04:09:21 UTC.
+Cart rank 14 has random sea height 5609.370605 at time 10/16/21 04:09:21 UTC.
+BASE STATION received 6 report:
+	Alert time: 1634357358.60, Number of matches: 4, Rank: 6, Coord: (1, 2)
+Cart rank 9 has random sea height 5609.370605 at time 10/16/21 04:09:21 UTC.
+Cart rank 0 has random sea height 5960.708008 at time 10/16/21 04:09:22 UTC.
+Cart rank 0 has SMA 6016.530. Received top: -1.00, bottom: 5943.91, left: -1.00, right: 6011.39.
+Cart rank 15 has random sea height 5960.708008 at time 10/16/21 04:09:22 UTC.
+Cart rank 15 has SMA 6016.530. Received top: 6011.39, bottom: -1.00, left: 5943.91, right: -1.00.
+Cart rank 10 has random sea height 5960.708008 at time 10/16/21 04:09:22 UTC.
+Cart rank 10 has SMA 6016.530. Received top: 6011.39, bottom: 5943.91, left: 5943.91, right: 6011.39.
+Cart rank 10 sends report to base station.
+	Alert time: 1634357362.62, Number of matches: 2, Coord: (2, 2)
+Cart rank 5 has random sea height 5960.708008 at time 10/16/21 04:09:22 UTC.
+Cart rank 5 has SMA 6016.530. Received top: 6011.39, bottom: 5943.91, left: 5943.91, right: 6011.39.
+Cart rank 5 sends report to base station.
+	Alert time: 1634357362.62, Number of matches: 2, Coord: (1, 1)
+BASE STATION received 1 report:
+	Alert time: 1634357358.61, Number of matches: 3, Rank: 1, Coord: (0, 1)
+Cart rank 6 has random sea height 5821.074707 at time 10/16/21 04:09:23 UTC.
+Cart rank 1 has random sea height 5821.074707 at time 10/16/21 04:09:23 UTC.
+Cart rank 11 has random sea height 5821.074707 at time 10/16/21 04:09:23 UTC.
+BASE STATION received 11 report:
+	Alert time: 1634357358.58, Number of matches: 3, Rank: 11, Coord: (2, 3)
+Cart rank 12 has random sea height 6177.223145 at time 10/16/21 04:09:24 UTC.
+Cart rank 12 has SMA 6019.620. Received top: 6086.18, bottom: -1.00, left: -1.00, right: 6086.18.
+Cart rank 12 sends report to base station.
+	Alert time: 1634357364.58, Number of matches: 2, Coord: (3, 0)
+Cart rank 2 has random sea height 6177.223145 at time 10/16/21 04:09:24 UTC.
+Cart rank 2 has SMA 6019.620. Received top: -1.00, bottom: 5946.11, left: 5946.11, right: 6086.18.
+Cart rank 7 has random sea height 6177.223145 at time 10/16/21 04:09:24 UTC.
+Cart rank 7 has SMA 6019.620. Received top: 6086.18, bottom: 5946.11, left: 5946.11, right: -1.00.
+BASE STATION received 12 report:
+	Alert time: 1634357359.58, Number of matches: 2, Rank: 12, Coord: (3, 0)
+Cart rank 8 has random sea height 6037.250000 at time 10/16/21 04:09:25 UTC.
+Cart rank 8 has SMA 6091.438. Received top: 5943.91, bottom: 6019.62, left: -1.00, right: 5943.91.
+Cart rank 13 has random sea height 6037.250000 at time 10/16/21 04:09:25 UTC.
+Cart rank 13 has SMA 6091.438. Received top: 5943.91, bottom: -1.00, left: 6019.62, right: 5943.91.
+BASE STATION received 12 report:
+	Alert time: 1634357364.58, Number of matches: 2, Rank: 12, Coord: (3, 0)
+Cart rank 3 has random sea height 6037.250000 at time 10/16/21 04:09:25 UTC.
+Cart rank 3 has SMA 6091.438. Received top: -1.00, bottom: 6019.62, left: 6019.62, right: -1.00.
+Cart rank 3 sends report to base station.
+	Alert time: 1634357365.63, Number of matches: 2, Coord: (0, 3)
+Cart rank 14 has random sea height 5900.855957 at time 10/16/21 04:09:26 UTC.
+Cart rank 4 has random sea height 5900.855957 at time 10/16/21 04:09:26 UTC.
+BASE STATION received 2 report:
+	Alert time: 1634357359.62, Number of matches: 3, Rank: 2, Coord: (0, 2)
+Cart rank 9 has random sea height 5900.855957 at time 10/16/21 04:09:26 UTC.
+Cart rank 0 has random sea height 6258.506836 at time 10/16/21 04:09:27 UTC.
+Cart rank 0 has SMA 6022.974. Received top: -1.00, bottom: 5879.06, left: -1.00, right: 5946.11.
+Cart rank 15 has random sea height 6258.506836 at time 10/16/21 04:09:27 UTC.
+Cart rank 15 has SMA 6022.974. Received top: 5946.11, bottom: -1.00, left: 5879.06, right: -1.00.
+Cart rank 5 has random sea height 6258.506836 at time 10/16/21 04:09:27 UTC.
+Cart rank 5 has SMA 6022.974. Received top: 5946.11, bottom: 5879.06, left: 5879.06, right: 5946.11.
+Cart rank 10 has random sea height 6258.506836 at time 10/16/21 04:09:27 UTC.
+Cart rank 10 has SMA 6022.974. Received top: 5946.11, bottom: 5879.06, left: 5879.06, right: 5946.11.
+BASE STATION received 7 report:
+	Alert time: 1634357359.62, Number of matches: 3, Rank: 7, Coord: (1, 3)
+Cart rank 6 has random sea height 6111.552734 at time 10/16/21 04:09:28 UTC.
+Cart rank 1 has random sea height 6111.552734 at time 10/16/21 04:09:28 UTC.
+Cart rank 11 has random sea height 6111.552734 at time 10/16/21 04:09:28 UTC.
+BASE STATION received 3 report:
+	Alert time: 1634357360.62, Number of matches: 2, Rank: 3, Coord: (0, 3)
+Cart rank 12 has random sea height 5972.937500 at time 10/16/21 04:09:29 UTC.
+Cart rank 2 has random sea height 5972.937500 at time 10/16/21 04:09:29 UTC.
+Cart rank 7 has random sea height 5972.937500 at time 10/16/21 04:09:29 UTC.
+BASE STATION received 3 report:
+	Alert time: 1634357365.63, Number of matches: 2, Rank: 3, Coord: (0, 3)
+Cart rank 13 has random sea height 6330.893555 at time 10/16/21 04:09:30 UTC.
+Cart rank 13 has SMA 6168.969. Received top: 5879.06, bottom: -1.00, left: 5954.88, right: 5879.06.
+Cart rank 8 has random sea height 6330.893555 at time 10/16/21 04:09:30 UTC.
+Cart rank 8 has SMA 6168.969. Received top: 5879.06, bottom: 5954.88, left: -1.00, right: 5879.06.
+BASE STATION received 5 report:
+	Alert time: 1634357362.62, Number of matches: 2, Rank: 5, Coord: (1, 1)
+Cart rank 3 has random sea height 6330.893555 at time 10/16/21 04:09:30 UTC.
+Cart rank 3 has SMA 6168.969. Received top: -1.00, bottom: 5954.88, left: 5954.88, right: -1.00.
+Cart rank 14 has random sea height 5687.976562 at time 10/16/21 04:09:31 UTC.
+Cart rank 4 has random sea height 5687.976562 at time 10/16/21 04:09:31 UTC.
+BASE STATION received 10 report:
+	Alert time: 1634357362.62, Number of matches: 2, Rank: 10, Coord: (2, 2)
+Cart rank 9 has random sea height 5687.976562 at time 10/16/21 04:09:31 UTC.
+Cart rank 0 has random sea height 5549.524902 at time 10/16/21 04:09:32 UTC.
+Cart rank 15 has random sea height 5549.524902 at time 10/16/21 04:09:32 UTC.
+Cart rank 5 has random sea height 5549.524902 at time 10/16/21 04:09:32 UTC.
+Cart rank 10 has random sea height 5549.524902 at time 10/16/21 04:09:32 UTC.
+Cart rank 6 has random sea height 6405.695801 at time 10/16/21 04:09:33 UTC.
+Cart rank 11 has random sea height 6405.695801 at time 10/16/21 04:09:33 UTC.
+Cart rank 1 has random sea height 6405.695801 at time 10/16/21 04:09:33 UTC.
+Cart rank 12 has random sea height 5765.370117 at time 10/16/21 04:09:34 UTC.
+Cart rank 2 has random sea height 5765.370117 at time 10/16/21 04:09:34 UTC.
+Cart rank 7 has random sea height 5765.370117 at time 10/16/21 04:09:34 UTC.
+Cart rank 13 has random sea height 6117.507324 at time 10/16/21 04:09:35 UTC.
+Cart rank 13 has SMA 6174.592. Received top: 5813.50, bottom: -1.00, left: 5961.03, right: 5813.50.
+Cart rank 8 has random sea height 6117.507324 at time 10/16/21 04:09:35 UTC.
+Cart rank 8 has SMA 6174.593. Received top: 5813.50, bottom: 5961.03, left: -1.00, right: 5813.50.
+Cart rank 3 has random sea height 6117.507324 at time 10/16/21 04:09:35 UTC.
+Cart rank 3 has SMA 6174.592. Received top: -1.00, bottom: 5961.03, left: 5961.03, right: -1.00.
+Cart rank 14 has random sea height 5983.213379 at time 10/16/21 04:09:36 UTC.
+Cart rank 4 has random sea height 5983.213379 at time 10/16/21 04:09:36 UTC.
+Cart rank 9 has random sea height 5983.213379 at time 10/16/21 04:09:36 UTC.
+Cart rank 0 has random sea height 6337.485352 at time 10/16/21 04:09:37 UTC.
+Cart rank 0 has SMA 6035.348. Received top: -1.00, bottom: 5819.84, left: -1.00, right: 5958.08.
+Cart rank 15 has random sea height 6337.485352 at time 10/16/21 04:09:37 UTC.
+Cart rank 15 has SMA 6035.349. Received top: 5958.08, bottom: -1.00, left: 5819.84, right: -1.00.
+Cart rank 10 has random sea height 6337.485352 at time 10/16/21 04:09:37 UTC.
+Cart rank 10 has SMA 6035.349. Received top: 5958.08, bottom: 5819.84, left: 5819.84, right: 5958.08.
+Cart rank 5 has random sea height 6337.485352 at time 10/16/21 04:09:37 UTC.
+Cart rank 5 has SMA 6035.349. Received top: 5958.08, bottom: 5819.84, left: 5819.84, right: 5958.08.
+Cart rank 6 has random sea height 5697.537598 at time 10/16/21 04:09:38 UTC.
+Cart rank 11 has random sea height 5697.537598 at time 10/16/21 04:09:38 UTC.
+Cart rank 1 has random sea height 5697.537598 at time 10/16/21 04:09:38 UTC.
+Cart rank 12 has random sea height 5554.015625 at time 10/16/21 04:09:39 UTC.
+Cart rank 2 has random sea height 5554.015625 at time 10/16/21 04:09:39 UTC.
+Cart rank 7 has random sea height 5554.015625 at time 10/16/21 04:09:39 UTC.
+Cart rank 13 has random sea height 6411.260742 at time 10/16/21 04:09:40 UTC.
+Cart rank 13 has SMA 6251.878. Received top: 5819.84, bottom: -1.00, left: 5966.48, right: 5819.84.
+Cart rank 8 has random sea height 6411.260742 at time 10/16/21 04:09:40 UTC.
+Cart rank 8 has SMA 6251.879. Received top: 5819.84, bottom: 5966.48, left: -1.00, right: 5819.84.
+Cart rank 3 has random sea height 6411.260742 at time 10/16/21 04:09:40 UTC.
+Cart rank 3 has SMA 6251.878. Received top: -1.00, bottom: 5966.48, left: 5966.48, right: -1.00.
+Cart rank 14 has random sea height 6269.549805 at time 10/16/21 04:09:41 UTC.
+Cart rank 4 has random sea height 6269.549805 at time 10/16/21 04:09:41 UTC.
+Cart rank 9 has random sea height 6269.549805 at time 10/16/21 04:09:41 UTC.
+Cart rank 0 has random sea height 6134.640625 at time 10/16/21 04:09:42 UTC.
+Cart rank 0 has SMA 6042.586. Received top: -1.00, bottom: 5896.85, left: -1.00, right: 5965.40.
+Cart rank 15 has random sea height 6134.640625 at time 10/16/21 04:09:42 UTC.
+Cart rank 15 has SMA 6042.586. Received top: 5965.40, bottom: -1.00, left: 5896.85, right: -1.00.
+Cart rank 10 has random sea height 6134.640625 at time 10/16/21 04:09:42 UTC.
+Cart rank 10 has SMA 6042.586. Received top: 5965.40, bottom: 5896.85, left: 5896.85, right: 5965.40.
+Cart rank 5 has random sea height 6134.640625 at time 10/16/21 04:09:42 UTC.
+Cart rank 5 has SMA 6042.586. Received top: 5965.40, bottom: 5896.85, left: 5896.85, right: 5965.40.
+Cart rank 6 has random sea height 6486.414062 at time 10/16/21 04:09:43 UTC.
+Cart rank 11 has random sea height 6486.414062 at time 10/16/21 04:09:43 UTC.
+Cart rank 1 has random sea height 6486.414062 at time 10/16/21 04:09:43 UTC.
+Cart rank 12 has random sea height 6345.781738 at time 10/16/21 04:09:44 UTC.
+Cart rank 12 has SMA 6043.671. Received top: 6251.88, bottom: -1.00, left: -1.00, right: 6251.88.
+Cart rank 2 has random sea height 6345.781738 at time 10/16/21 04:09:44 UTC.
+Cart rank 2 has SMA 6043.671. Received top: -1.00, bottom: 5970.22, left: 5970.22, right: 6251.88.
+Cart rank 7 has random sea height 6345.781738 at time 10/16/21 04:09:44 UTC.
+Cart rank 7 has SMA 6043.671. Received top: 6251.88, bottom: 5970.22, left: 5970.22, right: -1.00.
+Cart rank 8 has random sea height 5709.387207 at time 10/16/21 04:09:45 UTC.
+Cart rank 8 has SMA 6186.641. Received top: 5896.85, bottom: 6043.67, left: -1.00, right: 5896.85.
+Cart rank 13 has random sea height 5709.387207 at time 10/16/21 04:09:45 UTC.
+Cart rank 13 has SMA 6186.641. Received top: 5896.85, bottom: -1.00, left: 6043.67, right: 5896.85.
+Cart rank 3 has random sea height 5709.387207 at time 10/16/21 04:09:45 UTC.
+Cart rank 3 has SMA 6186.641. Received top: -1.00, bottom: 6043.67, left: 6043.67, right: -1.00.
+Cart rank 14 has random sea height 5565.416504 at time 10/16/21 04:09:46 UTC.
+Cart rank 4 has random sea height 5565.416504 at time 10/16/21 04:09:46 UTC.
+Cart rank 9 has random sea height 5565.416504 at time 10/16/21 04:09:46 UTC.
+Cart rank 0 has random sea height 5924.063477 at time 10/16/21 04:09:47 UTC.
+Cart rank 15 has random sea height 5924.063477 at time 10/16/21 04:09:47 UTC.
+Cart rank 10 has random sea height 5924.063477 at time 10/16/21 04:09:47 UTC.
+Cart rank 5 has random sea height 5924.063477 at time 10/16/21 04:09:47 UTC.
+Cart rank 6 has random sea height 5779.784668 at time 10/16/21 04:09:48 UTC.
+Cart rank 11 has random sea height 5779.784668 at time 10/16/21 04:09:48 UTC.
+Cart rank 1 has random sea height 5779.784668 at time 10/16/21 04:09:48 UTC.
+Cart rank 12 has random sea height 6142.977051 at time 10/16/21 04:09:49 UTC.
+Cart rank 12 has SMA 6049.632. Received top: 6186.64, bottom: -1.00, left: -1.00, right: 6186.64.
+Cart rank 2 has random sea height 6142.977051 at time 10/16/21 04:09:49 UTC.
+Cart rank 2 has SMA 6049.632. Received top: -1.00, bottom: 5975.93, left: 5975.93, right: 6186.64.
+Cart rank 7 has random sea height 6142.977051 at time 10/16/21 04:09:49 UTC.
+Cart rank 7 has SMA 6049.632. Received top: 6186.64, bottom: 5975.93, left: 5975.93, right: -1.00.
+Cart rank 8 has random sea height 5999.795898 at time 10/16/21 04:09:50 UTC.
+Cart rank 8 has SMA 6121.572. Received top: 5903.76, bottom: 6049.63, left: -1.00, right: 5903.76.
+Cart rank 13 has random sea height 5999.795898 at time 10/16/21 04:09:50 UTC.
+Cart rank 13 has SMA 6121.572. Received top: 5903.76, bottom: -1.00, left: 6049.63, right: 5903.76.
+Cart rank 3 has random sea height 5999.795898 at time 10/16/21 04:09:50 UTC.
+Cart rank 3 has SMA 6121.572. Received top: -1.00, bottom: 6049.63, left: 6049.63, right: -1.00.
+Cart rank 3 sends report to base station.
+	Alert time: 1634357390.65, Number of matches: 2, Coord: (0, 3)
+Cart rank 4 has random sea height 6357.446289 at time 10/16/21 04:09:51 UTC.
+Cart rank 14 has random sea height 6357.446289 at time 10/16/21 04:09:51 UTC.
+BASE STATION received 3 report:
+	Alert time: 1634357390.65, Number of matches: 2, Rank: 3, Coord: (0, 3)
+Cart rank 9 has random sea height 6357.446289 at time 10/16/21 04:09:51 UTC.
+Cart rank 0 has random sea height 5715.647949 at time 10/16/21 04:09:52 UTC.
+Cart rank 15 has random sea height 5715.647949 at time 10/16/21 04:09:52 UTC.
+Cart rank 10 has random sea height 5715.647949 at time 10/16/21 04:09:52 UTC.
+Cart rank 5 has random sea height 5715.647949 at time 10/16/21 04:09:52 UTC.
+Cart rank 6 has random sea height 5570.111816 at time 10/16/21 04:09:53 UTC.
+Cart rank 11 has random sea height 5570.111816 at time 10/16/21 04:09:53 UTC.
+Cart rank 1 has random sea height 5570.111816 at time 10/16/21 04:09:53 UTC.
+Cart rank 12 has random sea height 5933.349609 at time 10/16/21 04:09:54 UTC.
+Cart rank 2 has random sea height 5933.349609 at time 10/16/21 04:09:54 UTC.
+Cart rank 7 has random sea height 5933.349609 at time 10/16/21 04:09:54 UTC.
+Cart rank 13 has random sea height 6292.953613 at time 10/16/21 04:09:55 UTC.
+Cart rank 13 has SMA 6128.436. Received top: 5910.55, bottom: -1.00, left: 5984.52, right: 5910.55.
+Cart rank 8 has random sea height 6292.953613 at time 10/16/21 04:09:55 UTC.
+Cart rank 8 has SMA 6128.436. Received top: 5910.55, bottom: 5984.52, left: -1.00, right: 5910.55.
+Cart rank 3 has random sea height 6292.953613 at time 10/16/21 04:09:55 UTC.
+Cart rank 3 has SMA 6128.436. Received top: -1.00, bottom: 5984.52, left: 5984.52, right: -1.00.
+Cart rank 14 has random sea height 5645.274902 at time 10/16/21 04:09:56 UTC.
+Cart rank 4 has random sea height 5645.274902 at time 10/16/21 04:09:56 UTC.
+Cart rank 9 has random sea height 5645.274902 at time 10/16/21 04:09:56 UTC.
+Cart rank 0 has random sea height 6006.839844 at time 10/16/21 04:09:57 UTC.
+Cart rank 15 has random sea height 6006.839844 at time 10/16/21 04:09:57 UTC.
+Cart rank 10 has random sea height 6006.839844 at time 10/16/21 04:09:57 UTC.
+Cart rank 5 has random sea height 6006.839844 at time 10/16/21 04:09:57 UTC.
+Cart rank 6 has random sea height 5867.984375 at time 10/16/21 04:09:58 UTC.
+Cart rank 11 has random sea height 5867.984375 at time 10/16/21 04:09:58 UTC.
+Cart rank 1 has random sea height 5867.984375 at time 10/16/21 04:09:58 UTC.
+Cart rank 12 has random sea height 6222.710449 at time 10/16/21 04:09:59 UTC.
+Cart rank 2 has random sea height 6222.710449 at time 10/16/21 04:09:59 UTC.
+Cart rank 7 has random sea height 6222.710449 at time 10/16/21 04:09:59 UTC.
+Cart rank 13 has random sea height 5581.130859 at time 10/16/21 04:10:00 UTC.
+Cart rank 13 has SMA 6063.276. Received top: 5915.68, bottom: -1.00, left: 5991.02, right: 5915.68.
+Cart rank 8 has random sea height 5581.130859 at time 10/16/21 04:10:00 UTC.
+Cart rank 8 has SMA 6063.276. Received top: 5915.68, bottom: 5991.02, left: -1.00, right: 5915.68.
+Cart rank 3 has random sea height 5581.130859 at time 10/16/21 04:10:00 UTC.
+Cart rank 3 has SMA 6063.276. Received top: -1.00, bottom: 5991.02, left: 5991.02, right: -1.00.
+Cart rank 14 has random sea height 6439.436035 at time 10/16/21 04:10:01 UTC.
+Cart rank 4 has random sea height 6439.436035 at time 10/16/21 04:10:01 UTC.
+Cart rank 9 has random sea height 6439.436035 at time 10/16/21 04:10:01 UTC.
+Cart rank 0 has random sea height 5798.632812 at time 10/16/21 04:10:02 UTC.
+Cart rank 15 has random sea height 5798.632812 at time 10/16/21 04:10:02 UTC.
+Cart rank 10 has random sea height 5798.632812 at time 10/16/21 04:10:02 UTC.
+Cart rank 5 has random sea height 5798.632812 at time 10/16/21 04:10:02 UTC.
+Cart rank 6 has random sea height 5659.427246 at time 10/16/21 04:10:03 UTC.
+Cart rank 11 has random sea height 5659.427246 at time 10/16/21 04:10:03 UTC.
+Cart rank 1 has random sea height 5659.427246 at time 10/16/21 04:10:03 UTC.
+Cart rank 12 has random sea height 5512.099121 at time 10/16/21 04:10:04 UTC.
+Cart rank 2 has random sea height 5512.099121 at time 10/16/21 04:10:04 UTC.
+Cart rank 7 has random sea height 5512.099121 at time 10/16/21 04:10:04 UTC.
+Cart rank 13 has random sea height 6373.949219 at time 10/16/21 04:10:05 UTC.
+Cart rank 13 has SMA 6069.426. Received top: 5992.62, bottom: -1.00, left: 5925.19, right: 5992.62.
+Cart rank 8 has random sea height 6373.949219 at time 10/16/21 04:10:05 UTC.
+Cart rank 8 has SMA 6069.426. Received top: 5992.62, bottom: 5925.19, left: -1.00, right: 5992.62.
+Cart rank 3 has random sea height 6373.949219 at time 10/16/21 04:10:05 UTC.
+Cart rank 3 has SMA 6069.426. Received top: -1.00, bottom: 5925.19, left: 5925.19, right: -1.00.
+Cart rank 4 has random sea height 5729.292969 at time 10/16/21 04:10:06 UTC.
+Cart rank 14 has random sea height 5729.292969 at time 10/16/21 04:10:06 UTC.
+Cart rank 9 has random sea height 5729.292969 at time 10/16/21 04:10:06 UTC.
+Cart rank 0 has random sea height 6092.472656 at time 10/16/21 04:10:07 UTC.
+Cart rank 0 has SMA 6001.397. Received top: -1.00, bottom: 5998.52, left: -1.00, right: 5923.85.
+Cart rank 15 has random sea height 6092.472656 at time 10/16/21 04:10:07 UTC.
+Cart rank 15 has SMA 6001.397. Received top: 5923.85, bottom: -1.00, left: 5998.52, right: -1.00.
+Cart rank 10 has random sea height 6092.472656 at time 10/16/21 04:10:07 UTC.
+Cart rank 10 has SMA 6001.397. Received top: 5923.85, bottom: 5998.52, left: 5998.52, right: 5923.85.
+Cart rank 5 has random sea height 6092.472656 at time 10/16/21 04:10:07 UTC.
+Cart rank 5 has SMA 6001.397. Received top: 5923.85, bottom: 5998.52, left: 5998.52, right: 5923.85.
+Cart rank 6 has random sea height 6451.436035 at time 10/16/21 04:10:08 UTC.
+Cart rank 11 has random sea height 6451.436035 at time 10/16/21 04:10:08 UTC.
+Cart rank 1 has random sea height 6451.436035 at time 10/16/21 04:10:08 UTC.
+Cart rank 12 has random sea height 6307.267090 at time 10/16/21 04:10:09 UTC.
+Cart rank 12 has SMA 6002.601. Received top: 6069.43, bottom: -1.00, left: -1.00, right: 6069.43.
+Cart rank 12 sends report to base station.
+	Alert time: 1634357409.58, Number of matches: 2, Coord: (3, 0)
+Cart rank 2 has random sea height 6307.267090 at time 10/16/21 04:10:09 UTC.
+Cart rank 2 has SMA 6002.601. Received top: -1.00, bottom: 5930.39, left: 5930.39, right: 6069.43.
+Cart rank 7 has random sea height 6307.267090 at time 10/16/21 04:10:09 UTC.
+Cart rank 7 has SMA 6002.601. Received top: 6069.43, bottom: 5930.39, left: 5930.39, right: -1.00.
+BASE STATION received 12 report:
+	Alert time: 1634357409.58, Number of matches: 2, Rank: 12, Coord: (3, 0)
+Cart rank 8 has random sea height 6166.257324 at time 10/16/21 04:10:10 UTC.
+Cart rank 8 has SMA 6076.391. Received top: 5998.52, bottom: 6002.60, left: -1.00, right: 5998.52.
+Cart rank 13 has random sea height 6166.257324 at time 10/16/21 04:10:10 UTC.
+Cart rank 13 has SMA 6076.391. Received top: 5998.52, bottom: -1.00, left: 6002.60, right: 5998.52.
+Cart rank 3 has random sea height 6166.257324 at time 10/16/21 04:10:10 UTC.
+Cart rank 3 has SMA 6076.391. Received top: -1.00, bottom: 6002.60, left: 6002.60, right: -1.00.
+Cart rank 3 sends report to base station.
+	Alert time: 1634357410.66, Number of matches: 2, Coord: (0, 3)
+Cart rank 14 has random sea height 6027.398438 at time 10/16/21 04:10:11 UTC.
+Cart rank 14 has SMA 6004.831. Received top: 6001.40, bottom: -1.00, left: 6076.39, right: 6001.40.
+Cart rank 14 sends report to base station.
+	Alert time: 1634357411.58, Number of matches: 3, Coord: (3, 2)
+Cart rank 4 has random sea height 6027.398438 at time 10/16/21 04:10:11 UTC.
+Cart rank 4 has SMA 6004.831. Received top: 6001.40, bottom: 6076.39, left: -1.00, right: 6001.40.
+BASE STATION received 3 report:
+	Alert time: 1634357410.66, Number of matches: 2, Rank: 3, Coord: (0, 3)
+Cart rank 4 sends report to base station.
+	Alert time: 1634357411.58, Number of matches: 3, Coord: (1, 0)
+Cart rank 9 has random sea height 6382.517090 at time 10/16/21 04:10:12 UTC.
+Cart rank 9 has SMA 6055.562. Received top: 6001.40, bottom: 6076.39, left: 6076.39, right: 6001.40.
+Cart rank 9 sends report to base station.
+	Alert time: 1634357412.03, Number of matches: 4, Coord: (2, 1)
+Cart rank 0 has random sea height 6382.517090 at time 10/16/21 04:10:12 UTC.
+Cart rank 0 has SMA 6007.831. Received top: -1.00, bottom: 6004.83, left: -1.00, right: 5930.39.
+Cart rank 15 has random sea height 6382.517090 at time 10/16/21 04:10:12 UTC.
+Cart rank 15 has SMA 6007.831. Received top: 5930.39, bottom: -1.00, left: 6004.83, right: -1.00.
+Cart rank 10 has random sea height 6382.517090 at time 10/16/21 04:10:12 UTC.
+Cart rank 10 has SMA 6007.831. Received top: 5930.39, bottom: 6004.83, left: 6055.56, right: 5930.39.
+Cart rank 10 sends report to base station.
+	Alert time: 1634357412.62, Number of matches: 2, Coord: (2, 2)
+Cart rank 5 has random sea height 6382.517090 at time 10/16/21 04:10:12 UTC.
+Cart rank 5 has SMA 6007.831. Received top: 5930.39, bottom: 6055.56, left: 6004.83, right: 5930.39.
+Cart rank 5 sends report to base station.
+	Alert time: 1634357412.64, Number of matches: 2, Coord: (1, 1)
+Cart rank 6 has random sea height 6245.080566 at time 10/16/21 04:10:13 UTC.
+Cart rank 6 has SMA 6008.605. Received top: 6002.60, bottom: 6007.83, left: 6007.83, right: 6002.60.
+Cart rank 6 sends report to base station.
+	Alert time: 1634357413.60, Number of matches: 4, Coord: (1, 2)
+Cart rank 6 received terminate from base station.
+Cart rank 11 has random sea height 6245.080566 at time 10/16/21 04:10:13 UTC.
+Cart rank 11 has SMA 6008.605. Received top: 6002.60, bottom: 6007.83, left: 6007.83, right: -1.00.
+Cart rank 11 sends report to base station.
+	Alert time: 1634357413.62, Number of matches: 3, Coord: (2, 3)
+Cart rank 11 received terminate from base station.
+Cart rank 1 has random sea height 6245.080566 at time 10/16/21 04:10:13 UTC.
+Cart rank 1 has SMA 6008.606. Received top: -1.00, bottom: 6007.83, left: 6007.83, right: 6002.60.
+Cart rank 1 sends report to base station.
+	Alert time: 1634357413.66, Number of matches: 3, Coord: (0, 1)
+Cart rank 1 received terminate from base station.
+Cart rank 12 has random sea height 5602.915039 at time 10/16/21 04:10:14 UTC.
+Cart rank 12 has SMA 6009.586. Received top: 6076.39, bottom: -1.00, left: -1.00, right: 6076.39.
+Cart rank 12 sends report to base station.
+	Alert time: 1634357414.59, Number of matches: 2, Coord: (3, 0)
+Cart rank 12 received terminate from base station.
+Cart rank 2 has random sea height 5602.915039 at time 10/16/21 04:10:14 UTC.
+Cart rank 7 has random sea height 5602.915039 at time 10/16/21 04:10:14 UTC.
+Cart rank 8 has random sea height 6456.913086 at time 10/16/21 04:10:15 UTC.
+Cart rank 13 has random sea height 6456.913086 at time 10/16/21 04:10:15 UTC.
+Cart rank 3 has random sea height 6456.913086 at time 10/16/21 04:10:15 UTC.
+Cart rank 3 has SMA 6082.913. Received top: -1.00, bottom: 6009.59, left: 6009.59, right: -1.00.
+Cart rank 3 sends report to base station.
+	Alert time: 1634357415.66, Number of matches: 2, Coord: (0, 3)
+Cart rank 3 received terminate from base station.
+Cart rank 14 has random sea height 6315.002441 at time 10/16/21 04:10:16 UTC.
+Cart rank 14 has SMA 6011.324. Received top: 6007.83, bottom: -1.00, left: 6082.91, right: 6007.83.
+Cart rank 14 sends report to base station.
+	Alert time: 1634357416.58, Number of matches: 3, Coord: (3, 2)
+Cart rank 14 received terminate from base station.
+Cart rank 4 has random sea height 6315.002441 at time 10/16/21 04:10:16 UTC.
+Cart rank 4 has SMA 6011.324. Received top: 6007.83, bottom: 6082.91, left: -1.00, right: 6007.83.
+Cart rank 4 sends report to base station.
+	Alert time: 1634357416.69, Number of matches: 3, Coord: (1, 0)
+Cart rank 4 received terminate from base station.
+Cart rank 9 has random sea height 6173.434082 at time 10/16/21 04:10:17 UTC.
+Cart rank 9 has SMA 6041.832. Received top: 6007.83, bottom: 6082.91, left: 6082.91, right: 6007.83.
+Cart rank 9 sends report to base station.
+	Alert time: 1634357417.18, Number of matches: 4, Coord: (2, 1)
+Cart rank 9 received terminate from base station.
+Cart rank 0 has random sea height 6173.434082 at time 10/16/21 04:10:17 UTC.
+Cart rank 15 has random sea height 6173.434082 at time 10/16/21 04:10:17 UTC.
+Cart rank 10 has random sea height 6173.434082 at time 10/16/21 04:10:17 UTC.
+Cart rank 5 has random sea height 6173.434082 at time 10/16/21 04:10:17 UTC.
+Cart rank 2 time taken 10.00 hence cancel all requests.
+Cart rank 2 received terminate from base station.
+Cart rank 7 time taken 10.00 hence cancel all requests.
+Cart rank 7 received terminate from base station.
+Cart rank 8 time taken 10.00 hence cancel all requests.
+Cart rank 8 received terminate from base station.
+Cart rank 13 time taken 10.00 hence cancel all requests.
+Cart rank 13 received terminate from base station.
+Cart rank 0 time taken 10.00 hence cancel all requests.
+Cart rank 0 received terminate from base station.
+Cart rank 15 time taken 10.00 hence cancel all requests.
+Cart rank 15 received terminate from base station.
+Cart rank 10 time taken 10.00 hence cancel all requests.
+Cart rank 10 received terminate from base station.
+Cart rank 5 time taken 10.00 hence cancel all requests.
+Cart rank 5 received terminate from base station.
