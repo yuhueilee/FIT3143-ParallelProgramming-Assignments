@@ -18,9 +18,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 0)
 
 Total Communication time for reporting node (seconds): 0.031348
 	Including communication time between its neighbours: 0.000015
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -46,9 +46,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 1.062754
 	Including communication time between its neighbours: 0.000005
-Total messages sent by reporting node for this alert: 9
+Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
-	Messages to neighbours: 8
+	Messages between neighbours: 8
 Number of adjacent matches to reporting node: 3
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -73,9 +73,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 1.035455
 	Including communication time between its neighbours: 0.000018
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -99,9 +99,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 0)
 
 Total Communication time for reporting node (seconds): 2.022131
 	Including communication time between its neighbours: 0.000015
-Total messages sent by reporting node for this alert: 5
+Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
-	Messages to neighbours: 4
+	Messages between neighbours: 4
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -126,9 +126,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 2.040596
 	Including communication time between its neighbours: 0.000003
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -153,9 +153,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 0)
 
 Total Communication time for reporting node (seconds): 1.039510
 	Including communication time between its neighbours: 0.000019
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 3
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -181,9 +181,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 1.003476
 	Including communication time between its neighbours: 0.000007
-Total messages sent by reporting node for this alert: 9
+Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
-	Messages to neighbours: 8
+	Messages between neighbours: 8
 Number of adjacent matches to reporting node: 3
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -208,9 +208,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 1.038374
 	Including communication time between its neighbours: 0.000020
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -234,9 +234,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 0)
 
 Total Communication time for reporting node (seconds): 2.023196
 	Including communication time between its neighbours: 0.000002
-Total messages sent by reporting node for this alert: 5
+Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
-	Messages to neighbours: 4
+	Messages between neighbours: 4
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -261,9 +261,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 2.043456
 	Including communication time between its neighbours: 0.000009
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -288,9 +288,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 0)
 
 Total Communication time for reporting node (seconds): 1.042408
 	Including communication time between its neighbours: 0.000001
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 3
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -316,9 +316,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 1.006456
 	Including communication time between its neighbours: 0.000001
-Total messages sent by reporting node for this alert: 9
+Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
-	Messages to neighbours: 8
+	Messages between neighbours: 8
 Number of adjacent matches to reporting node: 3
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -343,9 +343,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 2)
 
 Total Communication time for reporting node (seconds): 1.041306
 	Including communication time between its neighbours: 0.000001
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -369,9 +369,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 0)
 
 Total Communication time for reporting node (seconds): 2.020583
 	Including communication time between its neighbours: 0.000001
-Total messages sent by reporting node for this alert: 5
+Total messages sent and received by reporting node for this alert: 5
 	Messages to base station: 1
-	Messages to neighbours: 4
+	Messages between neighbours: 4
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -396,9 +396,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 2.046741
 	Including communication time between its neighbours: 0.000001
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -423,9 +423,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 0.048424
 	Including communication time between its neighbours: 0.000001
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -451,9 +451,9 @@ Satellite altimeter reporting sensor node coordinates: (1, 1)
 
 Total Communication time for reporting node (seconds): 0.011916
 	Including communication time between its neighbours: 0.000001
-Total messages sent by reporting node for this alert: 9
+Total messages sent and received by reporting node for this alert: 9
 	Messages to base station: 1
-	Messages to neighbours: 8
+	Messages between neighbours: 8
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -478,9 +478,9 @@ Satellite altimeter reporting sensor node coordinates: (0, 1)
 
 Total Communication time for reporting node (seconds): 0.051252
 	Including communication time between its neighbours: 0.000003
-Total messages sent by reporting node for this alert: 7
+Total messages sent and received by reporting node for this alert: 7
 	Messages to base station: 1
-	Messages to neighbours: 6
+	Messages between neighbours: 6
 Number of adjacent matches to reporting node: 2
 Max. tolerance range between nodes readings(m): 100.000
 Max. tolerance range between satellite altimeter and reporting nodes readings(m): 100.000
@@ -504,7 +504,7 @@ Total number of alerts per node:
 	(2, 0)		0
 	(2, 1)		0
 	(2, 2)		0
-Average communication time: 3.243163
+Average communication time: 1.144966
 
 ------------------------------------------------------------------------------------------------
 
