@@ -69,7 +69,6 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
 
     char *p_log_name = "base_log.txt";
     char *p_sentinel_name = "sentinel.txt";
-    int tsunami_upperbound = threshold + ALTIMETER_RANGE;
     int terminate = 0, quit;
     struct basesummary summary;
     struct timespec start;
@@ -246,6 +245,7 @@ void base_station(int num_rows, int num_cols, float threshold, int max_iteration
         /* one thread for the satellite altimeter */ 
         #pragma omp section
         {
+            int tsunami_upperbound = threshold + ALTIMETER_RANGE;
             float rand_sea_height;
             struct timespec alt_time;
             int i, l_terminate;
